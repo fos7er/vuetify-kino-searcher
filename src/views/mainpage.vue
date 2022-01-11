@@ -1,0 +1,31 @@
+<template>
+  <div>
+    <movie-list @movieClick="movieClickHandler" />
+    <v-dialog v-model="movieDialog" max-width="600px">
+      <movie-dialog-content @closeDialog="movieDialog = false" />
+    </v-dialog>
+  </div>
+</template>
+
+<script>
+import MovieList from '../components/mainpage/MovieList.vue'
+import movieDialogContent from '../components/mainpage/MovieDialog.vue'
+export default {
+  components: {
+    MovieList,
+    movieDialogContent,
+  },
+  data() {
+    return {
+      movieDialog: false,
+    }
+  },
+  methods: {
+    movieClickHandler() {
+      this.movieDialog = true
+    },
+  },
+}
+</script>
+
+<style lang="scss" scoped></style>
