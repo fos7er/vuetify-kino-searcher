@@ -23,6 +23,7 @@ export default {
   methods: {
     movieClickHandler() {
       this.movieDialog = true
+      this.$store.commit('auth/login', { some: 1 })
     },
   },
 }
