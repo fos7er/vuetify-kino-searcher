@@ -1,71 +1,88 @@
 <template>
-  <v-card>
-    <v-card-title>
-      <span class="text-h5">User Profile</span>
-    </v-card-title>
-    <v-card-text>
-      <v-container>
-        <v-row>
-          <v-col cols="12" sm="6" md="4">
-            <v-text-field label="Legal first name*" required></v-text-field>
-          </v-col>
-          <v-col cols="12" sm="6" md="4">
-            <v-text-field label="Legal middle name" hint="example of helper text only on focus"></v-text-field>
-          </v-col>
-          <v-col cols="12" sm="6" md="4">
-            <v-text-field
-              label="Legal last name*"
-              hint="example of persistent helper text"
-              persistent-hint
-              required
-            ></v-text-field>
-          </v-col>
-          <v-col cols="12">
-            <v-text-field label="Email*" required></v-text-field>
-          </v-col>
-          <v-col cols="12">
-            <v-text-field label="Password*" type="password" required></v-text-field>
-          </v-col>
-          <v-col cols="12" sm="6">
-            <v-select :items="['0-17', '18-29', '30-54', '54+']" label="Age*" required></v-select>
-          </v-col>
-          <v-col cols="12" sm="6">
-            <v-autocomplete
-              :items="[
-                'Skiing',
-                'Ice hockey',
-                'Soccer',
-                'Basketball',
-                'Hockey',
-                'Reading',
-                'Writing',
-                'Coding',
-                'Basejump',
-              ]"
-              label="Interests"
-              multiple
-            ></v-autocomplete>
-          </v-col>
-        </v-row>
-      </v-container>
-      <small>*indicates required field</small>
-    </v-card-text>
-    <v-card-actions>
-      <v-spacer></v-spacer>
-      <v-btn color="blue darken-1" text @click="closeDialog"> Close </v-btn>
-      <v-btn color="blue darken-1" text @click="closeDialog"> Save </v-btn>
-    </v-card-actions>
+  <v-card class="card">
+    <v-container>
+      <v-row>
+        <v-col colls="12" md="4">
+          <v-img height="250" :src="posterSrcFull"></v-img>
+        </v-col>
+        <v-col colls="12" md="8">
+          <v-card-title pt-0>
+            <h2>{{ title }}</h2>
+            <span class="release-year">&nbsp;({{ releaseDateYear }})</span>
+          </v-card-title>
+          <v-card-subtitle class="mt-n3">
+            <span v-for="genre in genres" :key="genre.id">{{ genre.name }}&nbsp;</span> &#9679;
+            <span>1h</span>
+          </v-card-subtitle>
+        </v-col>
+      </v-row>
+    </v-container>
   </v-card>
 </template>
 
 <script>
 export default {
+  data() {
+    return {
+      title: 'Spider man: No way home',
+      posterPath: '/1Rr5SrvHxMXHu5RjKpaMba8VTzi.jpg',
+      releaseDate: '2021-12-18',
+      genres: [
+        {
+          id: 16,
+          name: 'мультфильм',
+        },
+        {
+          id: 35,
+          name: 'комедия',
+        },
+        {
+          id: 10751,
+          name: 'семейный',
+        },
+        {
+          id: 10402,
+          name: 'музыка',
+        },
+      ],
+      vote_average: '7.5',
+      tagline: 'First rule of fight club never talk about fight club',
+      runtime: 112,
+      overview:
+        'Тяжело быть продюсером, когда ты коала и у тебя лапки. Еще сложнее, когда твоя верная помощница древнее печатной машинки. И совсем весело, когда твоя труппа — это танцующий без остановки пухляш, колючая девочка-панк, застенчивая школьница, верзила-гангстер и многодетная мама, чьи дети — поросята в прямом смысле слова. Рецепт успеха прост — рвануть в мировую столицу развлечений, завербовать легендарного рок-музыканта и взорвать сцену новым шоу.',
+    }
+  },
   methods: {
     closeDialog() {
       this.$emit('closeDialog')
     },
   },
+  computed: {
+    posterSrcFull() {
+      return `${process.env.VUE_APP_IMAGES_PATH}${this.posterPath}`
+    },
+    releaseDateYear() {
+      return new Date(this.releaseDate).getFullYear()
+    },
+    duration() {
+      const hours = Math.floor(this.runtime / 60)
+      const minutes = this.runtime % 60
+      return `${hours} h ${minutes} m`
+    },
+  },
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.card {
+  & .release-year {
+    font-size: 1.7rem;
+    opacity: 0.8;
+    font-weight: 400;
+  }
+  & .v-card__subtitle {
+    font-size: 1rem;
+    // margin-top: -4px;
+  }
+}
+</style>

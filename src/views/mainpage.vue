@@ -1,7 +1,7 @@
 <template>
   <div>
     <movie-list @movieClick="movieClickHandler" />
-    <v-dialog v-model="movieDialog" max-width="600px">
+    <v-dialog v-model="movieDialog" max-width="1100px">
       <movie-dialog-content @closeDialog="movieDialog = false" />
     </v-dialog>
   </div>

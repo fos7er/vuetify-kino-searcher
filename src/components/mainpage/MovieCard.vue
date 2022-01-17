@@ -6,7 +6,14 @@
 
     <v-card-subtitle> {{ movie.original_title }}</v-card-subtitle>
     <v-row align="center" class="mx-4">
-      <v-rating :value="movie.vote_average / 2" color="amber" dense half-increments readonly size="14"></v-rating>
+      <v-rating
+        :value="movie.vote_average / 2"
+        color="amber"
+        dense
+        half-increments
+        readonly
+        size="14"
+      ></v-rating>
 
       <div class="grey--text ms-4">
         {{ `${movie.vote_average}` }}
@@ -45,7 +52,6 @@ export default {
   },
   computed: {
     srcFull() {
-      console.log(process.env.VUE_APP_IMAGES_PATH)
       return `${process.env.VUE_APP_IMAGES_PATH}${this.movie.backdrop_path}`
     },
   },
