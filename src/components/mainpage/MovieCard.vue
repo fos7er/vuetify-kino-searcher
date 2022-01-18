@@ -6,14 +6,7 @@
 
     <v-card-subtitle> {{ movie.original_title }}</v-card-subtitle>
     <v-row align="center" class="mx-4">
-      <v-rating
-        :value="movie.vote_average / 2"
-        color="amber"
-        dense
-        half-increments
-        readonly
-        size="14"
-      ></v-rating>
+      <v-rating :value="movie.vote_average / 2" color="amber" dense half-increments readonly size="14"></v-rating>
 
       <div class="grey--text ms-4">
         {{ `${movie.vote_average}` }}
@@ -59,7 +52,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.card__title {
-  min-height: 95px;
+.card {
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &__title {
+    min-height: 95px;
+  }
+
+  &:hover {
+    transform: scale(1.02);
+  }
 }
 </style>
