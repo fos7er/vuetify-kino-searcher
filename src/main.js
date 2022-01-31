@@ -5,13 +5,9 @@ import router from './router'
 import store from './store'
 import axios from 'axios'
 import './assets/css/style.scss'
+import { movieAPI } from './api/movieAPI'
 
-const movieAPI = axios.create({
-  baseURL: process.env.VUE_APP_BASE_API_URL,
-  timeout: 5000,
-})
-
-Vue.prototype.movieAPI = movieAPI
+Vue.prototype.movieAPI = new movieAPI(axios)
 Vue.config.productionTip = false
 
 new Vue({
