@@ -9,7 +9,7 @@ class movieAPI {
   }
 
   handleSuccess(response) {
-    return response
+    return response.data
   }
 
   handleError = (err) => {

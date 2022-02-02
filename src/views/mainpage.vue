@@ -2,7 +2,7 @@
   <div>
     <movie-list @movieClick="movieClickHandler" />
     <v-dialog v-model="movieDialog" max-width="1100px">
-      <movie-dialog-content @closeDialog="movieDialog = false" />
+      <movie-dialog-content :movie="movieDailogData" @closeDialog="movieDialog = false" />
     </v-dialog>
   </div>
 </template>
@@ -18,10 +18,12 @@ export default {
   data() {
     return {
       movieDialog: false,
+      movieDailogData: {},
     }
   },
   methods: {
-    movieClickHandler() {
+    movieClickHandler(payload) {
+      this.movieDailogData = payload
       this.movieDialog = true
       this.$store.commit('auth/login', { some: 1 })
     },
