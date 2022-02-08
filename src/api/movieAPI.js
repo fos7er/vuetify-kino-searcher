@@ -31,7 +31,7 @@ class movieAPI {
     return Promise.reject(err.response)
   }
 
-  discover({ sortBy = 'popularity', page = '1' } = {}) {
+  discover({ sortBy = 'popularity', page = 1 } = {}) {
     store.commit('SET_OVERLAY', true)
     const path = `/discover/movie?api_key=${this.API_KEY}&language=${this.language}&sort_by=${sortBy}.desc&include_adult=false&include_video=false&page=${page}&with_watch_monetization_types=flatrate`
     return this.get(path)
