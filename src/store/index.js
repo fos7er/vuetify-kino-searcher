@@ -5,12 +5,31 @@ console.log(modules)
 Vue.use(Vuex)
 
 const state = {
-  movieDialog: false,
+  overlay: false,
+  success: null,
+  warning: null,
+  error: null,
 }
 
 const getters = {}
 
-const mutations = {}
+const mutations = {
+  SET_OVERLAY(state, isOverlay = false) {
+    state.overlay = isOverlay
+  },
+  RESET_SNACKBAR(state) {
+    state.success = state.warning = state.error = null
+  },
+  SET_SUCCESS(state, payload) {
+    state.success = payload
+  },
+  SET_WARNING(state, payload) {
+    state.warning = payload
+  },
+  SET_ERROR(state, payload) {
+    state.error = payload
+  },
+}
 
 const actions = {}
 

@@ -5,6 +5,9 @@
         <movie-card :movie="movie" @click.native="movieClick(movie.id)" />
       </v-col>
     </v-row>
+    <v-row justify="center">
+      <v-pagination v-model="page" :length="1000" :total-visible="9"></v-pagination>
+    </v-row>
   </v-container>
 </template>
 
@@ -17,19 +20,28 @@ export default {
   data() {
     return {
       movies: [],
+      page: 1,
     }
   },
   created() {
-    const url =
-      '/discover/movie?api_key=98f3df32cd6ce21c4254fd6007f462a1&language=ru-RU&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_watch_monetization_types=flatrate'
-    this.movieAPI.get(url).then((response) => (this.movies = response.results))
+    this.getAllMovies()
   },
   methods: {
     movieClick(movieID) {
-      const url = `/movie/${movieID}?api_key=98f3df32cd6ce21c4254fd6007f462a1&language=ru-RU`
-      this.movieAPI.get(url).then((response) => {
+      this.movieAPI.getMovie(movieID).then((response) => {
         this.$emit('movieClick', response)
       })
+    },
+    getAllMovies() {
+      const data = {
+        page: this.page,
+      }
+      this.movieAPI.discover(data).then((response) => (this.movies = response.results))
+    },
+  },
+  watch: {
+    page() {
+      this.getAllMovies()
     },
   },
 }
