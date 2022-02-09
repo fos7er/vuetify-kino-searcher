@@ -19,9 +19,13 @@ export default {
   },
   data() {
     return {
-      movies: [],
       page: 1,
     }
+  },
+  computed: {
+    movies() {
+      return this.$store.getters['mainPage/movies'](this.page)
+    },
   },
   created() {
     this.getAllMovies()
@@ -36,7 +40,7 @@ export default {
       const data = {
         page: this.page,
       }
-      this.movieAPI.discover(data).then((response) => (this.movies = response.results))
+      this.$store.dispatch('mainPage/getAllMovies', data)
     },
   },
   watch: {

@@ -1,12 +1,19 @@
 <template>
   <v-card class="mx-auto card" max-width="344">
-    <v-img :src="srcFull"></v-img>
+    <v-img :src="srcFull" :key="srcFull" lazy-src="@/assets/placeholder-image.png"></v-img>
 
     <v-card-title class="card__title"> {{ movie.title }} </v-card-title>
 
     <v-card-subtitle> {{ movie.original_title }}</v-card-subtitle>
     <v-row align="center" class="mx-4">
-      <v-rating :value="movie.vote_average / 2" color="amber" dense half-increments readonly size="14"></v-rating>
+      <v-rating
+        :value="movie.vote_average / 2"
+        color="amber"
+        dense
+        half-increments
+        readonly
+        size="14"
+      ></v-rating>
 
       <div class="grey--text ms-4">
         {{ `${movie.vote_average}` }}
