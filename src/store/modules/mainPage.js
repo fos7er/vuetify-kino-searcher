@@ -17,7 +17,7 @@ const mutations = {
 const actions = {
   getAllMovies({ commit, state }, payload) {
     if (state.movieList.some((movie) => movie.page === payload.page)) {
-      console.log('already has this page')
+      console.log('already has this page, load from cache')
       return false
     }
     this._vm.movieAPI.discover(payload).then((response) => {

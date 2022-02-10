@@ -5,7 +5,7 @@
         <movie-card :movie="movie" @click.native="movieClick(movie.id)" />
       </v-col>
     </v-row>
-    <v-row justify="center">
+    <v-row v-show="movies.length" justify="center">
       <v-pagination v-model="page" :length="500" :total-visible="9"></v-pagination>
     </v-row>
   </v-container>

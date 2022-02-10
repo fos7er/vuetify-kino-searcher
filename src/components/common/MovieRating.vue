@@ -13,7 +13,7 @@
 <script>
 export default {
   props: {
-    score: Number,
+    score: { type: Number, default: 0 },
   },
   computed: {
     size() {
