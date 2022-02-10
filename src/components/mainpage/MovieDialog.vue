@@ -39,7 +39,7 @@
           </div>
           <h3>Обзор</h3>
           <v-card-text class="pt-1">
-            {{ movie.overview }}
+            {{ movie.overview || 'Описание отсутсвует' }}
           </v-card-text>
         </v-col>
       </v-row>
@@ -48,7 +48,7 @@
 </template>
 
 <script>
-import movieRating from './MovieRating.vue'
+import movieRating from '../common/MovieRating.vue'
 
 export default {
   components: {
