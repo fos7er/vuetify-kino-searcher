@@ -53,7 +53,12 @@ class movieAPI {
         store.commit('SET_OVERLAY')
       })
   }
-
+  searchMovies(query = movieAPI._reqiured()) {
+    const path = `/search/movie?api_key=${this.API_KEY}&language=${this.language}&query=${query}&page=1&include_adult=false`
+    return this.get(path).catch((e) => {
+      movieAPI._error(e)
+    })
+  }
   get(path) {
     return this.service.get(path)
   }
