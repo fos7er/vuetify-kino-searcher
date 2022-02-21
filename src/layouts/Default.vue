@@ -90,7 +90,6 @@ export default {
   },
   methods: {
     changeLang(lang) {
-      console.log('change')
       this.$store.commit('userSettings/setLang', lang)
     },
     setSelectText(isOpen) {
@@ -124,6 +123,8 @@ export default {
 <style lang="scss" scoped>
 .lang-select {
   width: 100px;
-  font-size: 1.2rem;
+  &.v-list-item__title {
+    font-size: 1rem !important;
+  }
 }
 </style>
