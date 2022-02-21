@@ -27,6 +27,12 @@
         <v-icon>mdi-minus</v-icon>
       </v-btn>
       <v-toolbar-title v-text="title" />
+      <v-container>
+        <v-row align="center">
+          <v-col><autocomplete /></v-col>
+          <v-col></v-col>
+        </v-row>
+      </v-container>
     </v-app-bar>
     <v-main class="wrapper">
       <v-container>
@@ -40,7 +46,11 @@
 </template>
 
 <script>
+import autocomplete from '@/components/common/HeaderAutocomplete'
 export default {
+  components: {
+    autocomplete,
+  },
   name: 'DefaultLayout',
   data() {
     return {

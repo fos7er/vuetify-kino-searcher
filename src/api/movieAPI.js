@@ -53,11 +53,18 @@ class movieAPI {
         store.commit('SET_OVERLAY')
       })
   }
-  searchMovies(query = movieAPI._reqiured()) {
+  searchMovies(query = movieAPI._reqiured(), sortBy = 'popularity') {
     const path = `/search/movie?api_key=${this.API_KEY}&language=${this.language}&query=${query}&page=1&include_adult=false`
-    return this.get(path).catch((e) => {
-      movieAPI._error(e)
-    })
+    return this.get(path)
+      .then((res) => {
+        res.results = res.results.sort((a, b) => {
+          return a[sortBy] < b[sortBy] ? 1 : -1
+        })
+        return res
+      })
+      .catch((e) => {
+        movieAPI._error(e)
+      })
   }
   get(path) {
     return this.service.get(path)
