@@ -30,7 +30,20 @@
       <v-container>
         <v-row align="center">
           <v-col><autocomplete /></v-col>
-          <v-col></v-col>
+          <v-col>
+            <v-select
+              class="ml-auto lang-select"
+              solo
+              dense
+              hide-details
+              :items="allLang"
+              :item-text="selectText"
+              item-value="code"
+              :value="$store.getters['userSettings/lang']"
+              @change="changeLang"
+              ref="selectRef"
+            ></v-select>
+          </v-col>
         </v-row>
       </v-container>
     </v-app-bar>
@@ -58,6 +71,7 @@ export default {
       drawer: false,
       fixed: false,
       appBarHeight: 55,
+      selectText: 'shortName',
       items: [
         {
           icon: 'mdi-apps',
@@ -71,13 +85,45 @@ export default {
         },
       ],
       miniVariant: false,
-      title: 'Vuetify.js',
+      title: 'KINO Searcher',
     }
   },
+  methods: {
+    changeLang(lang) {
+      console.log('change')
+      this.$store.commit('userSettings/setLang', lang)
+    },
+    setSelectText(isOpen) {
+      if (isOpen) {
+        this.selectText = 'name'
+        return
+      }
+      this.selectText = 'shortName'
+    },
+  },
+  computed: {
+    allLang() {
+      return this.$store.getters['userSettings/allLang']
+    },
+  },
   mounted() {
+    this.$watch(
+      () => {
+        return this.$refs.selectRef.isMenuActive
+      },
+      (isOpen) => {
+        this.setSelectText(isOpen)
+      }
+    )
     this.appBarHeight = this.$refs.appBar.$el.clientHeight || this.$refs.appBar.$el.offsetHeight
   },
+  watch: {},
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.lang-select {
+  width: 100px;
+  font-size: 1.2rem;
+}
+</style>
