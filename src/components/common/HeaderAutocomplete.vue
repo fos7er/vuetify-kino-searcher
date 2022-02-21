@@ -3,7 +3,7 @@
     v-model="model"
     :items="items"
     :loading="isLoading"
-    :search-input.sync="search"
+    :search-input.sync="searchValue"
     color="white"
     hide-no-data
     hide-selected
@@ -15,34 +15,49 @@
     prepend-icon="mdi-magnify"
     return-object
     solo
+    dense
   ></v-autocomplete>
 </template>
 
 <script>
+import debounce from '@/utils/debounce'
 export default {
   data() {
     return {
       model: null,
       items: [],
       isLoading: false,
-      search: null,
+      searchValue: null,
     }
   },
-  watch: {
-    search(val) {
-      if (!val) return
-      this.movieAPI.searchMovies(val).then((res) => {
+  methods: {
+    search(query) {
+      this.movieAPI.searchMovies(query).then((res) => {
         console.log(res)
         return (this.items = res.results.map((item) => {
-          item.titleWithYear = `${item.title} (${new Date(item.release_date).getFullYear()})`
+          if (item.release_date) {
+            item.titleWithYear = `${item.title} (${new Date(item.release_date).getFullYear()})`
+          } else {
+            item.titleWithYear = item.title
+          }
           return item
         }))
       })
+    },
+  },
+  watch: {
+    searchValue(val) {
+      if (!val) return
+      this.search(val)
     },
     model(val) {
       if (!val || !val.id) return
       this.$router.push('/movie/' + val.id)
     },
+  },
+  created() {
+    //make search with debounce
+    this.search = debounce(this.search, 300)
   },
 }
 </script>
