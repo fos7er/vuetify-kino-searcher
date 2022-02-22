@@ -35,7 +35,7 @@
         <v-icon>mdi-minus</v-icon>
       </v-btn>
       <router-link to="/"
-        ><img class="ml-12 logo" :src="require('../assets/logo-white.png')" height="64" width="auto"
+        ><img class="ml-12 logo" :src="require('../assets/images/logo-white.png')" height="64" width="auto"
       /></router-link>
       <v-container>
         <v-row align="center">
@@ -56,6 +56,37 @@
           </v-col>
         </v-row>
       </v-container>
+      <v-menu offset-y left transition="slide-y-transition">
+        <template v-slot:activator="{ on }">
+          <v-btn v-on="on" fab text>
+            <v-avatar size="30">
+              <img src="@/assets/images/avatar-placeholder.svg" alt="Avatar" />
+            </v-avatar>
+          </v-btn>
+        </template>
+        <v-list>
+          <v-list-item exact to="/settings/profile">
+            <v-list-item-action>
+              <v-icon>mdi-account-circle</v-icon>
+            </v-list-item-action>
+            <v-list-item-title v-text="$t('profile')" />
+          </v-list-item>
+          <v-divider />
+          <v-list-item exact to="/settings">
+            <v-list-item-action>
+              <v-icon>mdi-tune-variant</v-icon>
+            </v-list-item-action>
+            <v-list-item-title v-text="$t('settings')" />
+          </v-list-item>
+          <v-divider></v-divider>
+          <v-list-item exact to="/logout">
+            <v-list-item-action>
+              <v-icon>mdi-exit-to-app</v-icon>
+            </v-list-item-action>
+            <v-list-item-title v-text="$t('logout')" />
+          </v-list-item>
+        </v-list>
+      </v-menu>
     </v-app-bar>
     <v-main class="wrapper">
       <v-container>

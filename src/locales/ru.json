@@ -4,5 +4,8 @@
   "overview": "Обзор",
   "noDescription": "Описание отсутсвует",
   "search": "Поиск",
-  "enterMovieName": "Введите название фильма"
+  "enterMovieName": "Введите название фильма",
+  "profile": "Профиль",
+  "logout": "Выход",
+  "settings": "Настройки"
 }

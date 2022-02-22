@@ -4,5 +4,8 @@
   "overview": "Overview",
   "noDescription": "No description",
   "search": "Search",
-  "enterMovieName": "Enter movie name"
+  "enterMovieName": "Enter movie name",
+  "profile": "Profile",
+  "logout": "Logout",
+  "settings": "Settings"
 }
