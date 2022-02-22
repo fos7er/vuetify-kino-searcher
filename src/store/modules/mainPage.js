@@ -12,6 +12,9 @@ const mutations = {
   SET_MOVIES(state, movies) {
     state.movieList.push(...movies)
   },
+  CLEAR_MOVIES(state) {
+    state.movieList = []
+  },
 }
 
 const actions = {

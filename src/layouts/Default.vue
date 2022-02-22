@@ -8,7 +8,7 @@
       :style="`padding-top:${appBarHeight}px`"
     >
       <v-list>
-        <v-list-item v-for="(item, i) in items" :key="i" :to="item.to" router exact>
+        <v-list-item v-for="(item, i) in drawerItems" :key="i" :to="item.to" router exact>
           <v-list-item-action>
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-item-action>
@@ -80,7 +80,8 @@ export default {
       fixed: false,
       appBarHeight: 55,
       selectText: 'shortName',
-      items: [
+      //genres
+      drawerItems: [
         {
           icon: 'mdi-apps',
           title: 'Welcome',
@@ -107,6 +108,20 @@ export default {
       }
       this.selectText = 'shortName'
     },
+    getAllGenres() {
+      this.movieAPI.getAllGenres().then((res) => {
+        this.generateGenres(res.genres)
+      })
+    },
+    generateGenres(genres) {
+      this.drawerItems = genres.map((genre) => {
+        return {
+          icon: 'mdi-chart-bubble',
+          title: genre.name,
+          to: `/genre/${genre.id}`,
+        }
+      })
+    },
   },
   computed: {
     allLang() {
@@ -124,7 +139,14 @@ export default {
     )
     this.appBarHeight = this.$refs.appBar.$el.clientHeight || this.$refs.appBar.$el.offsetHeight
   },
-  watch: {},
+  created() {
+    this.getAllGenres()
+  },
+  watch: {
+    '$vuetify.lang.current'() {
+      this.getAllGenres()
+    },
+  },
 }
 </script>
 

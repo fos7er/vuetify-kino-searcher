@@ -20,6 +20,7 @@ export default {
   data() {
     return {
       page: 1,
+      genres: '',
     }
   },
   computed: {
@@ -28,6 +29,10 @@ export default {
     },
   },
   created() {
+    this.$store.commit('mainPage/CLEAR_MOVIES')
+    if (this.$route.path.includes('genre') && this.$route.params?.id) {
+      this.genres = this.$route.params.id
+    }
     this.getAllMovies()
   },
   methods: {
@@ -39,6 +44,7 @@ export default {
     getAllMovies() {
       const data = {
         page: this.page,
+        genres: this.genres,
       }
       this.$store.dispatch('mainPage/getAllMovies', data)
     },

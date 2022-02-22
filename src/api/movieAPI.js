@@ -1,7 +1,6 @@
 import store from '@/store'
 class movieAPI {
   get language() {
-    console.log('lang:', store.getters['userSettings/lang'])
     return store.getters['userSettings/lang']
   }
 
@@ -32,9 +31,12 @@ class movieAPI {
     return Promise.reject(err.response)
   }
 
-  discover({ sortBy = 'popularity', page = 1 } = {}) {
+  discover({ sortBy = 'popularity', page = 1, genres = '' } = {}) {
     store.commit('SET_OVERLAY', true)
-    const path = `/discover/movie?api_key=${this.API_KEY}&language=${this.language}&sort_by=${sortBy}.desc&include_adult=false&include_video=false&page=${page}&with_watch_monetization_types=flatrate`
+    let path = `/discover/movie?api_key=${this.API_KEY}&language=${this.language}&sort_by=${sortBy}.desc&include_adult=false&include_video=false&page=${page}&with_watch_monetization_types=flatrate`
+    if (genres.length) {
+      path += `&with_genres=${genres}`
+    }
     return this.get(path)
       .catch((e) => {
         movieAPI._error(e)
@@ -44,6 +46,12 @@ class movieAPI {
       })
   }
 
+  getAllGenres() {
+    const path = `/genre/movie/list?api_key=${this.API_KEY}&language=${this.language}`
+    return this.get(path).catch((e) => {
+      movieAPI._error(e)
+    })
+  }
   getMovie(movieID = movieAPI._reqiured()) {
     const path = `/movie/${movieID}?api_key=${this.API_KEY}&language=${this.language}`
     return this.get(path)

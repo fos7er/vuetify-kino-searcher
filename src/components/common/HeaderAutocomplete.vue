@@ -32,17 +32,22 @@ export default {
   },
   methods: {
     search(query) {
-      this.movieAPI.searchMovies(query).then((res) => {
-        console.log(res)
-        return (this.items = res.results.map((item) => {
-          if (item.release_date) {
-            item.titleWithYear = `${item.title} (${new Date(item.release_date).getFullYear()})`
-          } else {
-            item.titleWithYear = item.title
-          }
-          return item
-        }))
-      })
+      this.isLoading = true
+      this.movieAPI
+        .searchMovies(query)
+        .then((res) => {
+          return (this.items = res.results.map((item) => {
+            if (item.release_date) {
+              item.titleWithYear = `${item.title} (${new Date(item.release_date).getFullYear()})`
+            } else {
+              item.titleWithYear = item.title
+            }
+            return item
+          }))
+        })
+        .finally(() => {
+          this.isLoading = false
+        })
     },
   },
   watch: {
