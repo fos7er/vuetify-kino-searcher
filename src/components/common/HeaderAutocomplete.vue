@@ -10,8 +10,8 @@
     hide-details
     item-text="titleWithYear"
     item-value="id"
-    label="Поиск"
-    placeholder="Введите название фильма"
+    :label="$t('search')"
+    :placeholder="$t('enterMovieName')"
     prepend-icon="mdi-magnify"
     return-object
     solo

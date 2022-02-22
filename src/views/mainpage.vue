@@ -1,6 +1,6 @@
 <template>
   <div>
-    <movie-list @movieClick="movieClickHandler" />
+    <movie-list @movieClick="movieClickHandler" :key="$route.fullPath" />
     <v-dialog v-model="movieDialog" max-width="1100px">
       <movie-dialog-content :movie="movieDailogData" @closeDialog="movieDialog = false" />
     </v-dialog>

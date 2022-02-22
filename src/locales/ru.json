@@ -2,5 +2,7 @@
   "message": "hello i18n !!",
   "explore": "Подробнее",
   "overview": "Обзор",
-  "noDescription": "Описание отсутсвует"
+  "noDescription": "Описание отсутсвует",
+  "search": "Поиск",
+  "enterMovieName": "Введите название фильма"
 }

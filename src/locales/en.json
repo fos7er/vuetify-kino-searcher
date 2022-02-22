@@ -2,5 +2,7 @@
   "message": "hello i18n !!",
   "explore": "Explore",
   "overview": "Overview",
-  "noDescription": "No description"
+  "noDescription": "No description",
+  "search": "Search",
+  "enterMovieName": "Enter movie name"
 }

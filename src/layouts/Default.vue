@@ -34,7 +34,9 @@
       <v-btn icon @click.stop="fixed = !fixed">
         <v-icon>mdi-minus</v-icon>
       </v-btn>
-      <img class="ml-12" :src="require('../assets/logo-white.png')" height="64" width="auto" />
+      <router-link to="/"
+        ><img class="ml-12 logo" :src="require('../assets/logo-white.png')" height="64" width="auto"
+      /></router-link>
       <v-container>
         <v-row align="center">
           <v-col><autocomplete /></v-col>
