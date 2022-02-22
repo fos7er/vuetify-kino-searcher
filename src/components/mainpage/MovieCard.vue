@@ -1,6 +1,6 @@
 <template>
   <v-card class="mx-auto card" max-width="344">
-    <v-img :src="srcFull" :key="srcFull" lazy-src="@/assets/placeholder-image.png"></v-img>
+    <v-img :src="srcFull" :key="srcFull" lazy-src="@/assets/placeholder-image-white.png"></v-img>
 
     <v-card-title class="card__title"> {{ movie.title }} </v-card-title>
 
