@@ -50,5 +50,5 @@ function getDefaultLanguage() {
       return key
     }
   }
-  return 'ru-RU'
+  return 'ru'
 }
