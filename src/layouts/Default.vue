@@ -18,7 +18,15 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
-    <v-app-bar :clipped-left="clipped" fixed app hide-on-scroll scroll-threshold="100" ref="appBar">
+    <v-app-bar
+      :clipped-left="clipped"
+      fixed
+      app
+      hide-on-scroll
+      scroll-threshold="100"
+      height="80"
+      ref="appBar"
+    >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <!-- <v-btn icon @click.stop="miniVariant = !miniVariant">
         <v-icon>mdi-{{ `chevron-${miniVariant ? 'right' : 'left'}` }}</v-icon>
@@ -26,7 +34,7 @@
       <v-btn icon @click.stop="fixed = !fixed">
         <v-icon>mdi-minus</v-icon>
       </v-btn>
-      <v-toolbar-title v-text="title" />
+      <img class="ml-12" :src="require('../assets/logo-white.png')" height="64" width="auto" />
       <v-container>
         <v-row align="center">
           <v-col><autocomplete /></v-col>
@@ -38,7 +46,7 @@
               hide-details
               :items="allLang"
               :item-text="selectText"
-              item-value="code"
+              item-value="id"
               :value="$store.getters['userSettings/lang']"
               @change="changeLang"
               ref="selectRef"

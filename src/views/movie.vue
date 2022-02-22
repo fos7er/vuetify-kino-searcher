@@ -34,9 +34,9 @@
           <div class="d-flex font-italic text--secondary mt-6">
             <h4 v-if="movie.tagline">{{ movie.tagline }}</h4>
           </div>
-          <h3>Обзор</h3>
+          <h3>{{ $t('overview') }}</h3>
           <v-card-text class="pt-1">
-            {{ movie.overview || 'Описание отсутсвует' }}
+            {{ movie.overview || $t('noDescription') }}
           </v-card-text>
         </v-col>
       </v-row>

@@ -1,10 +1,12 @@
 const avaliableLanguages = {
-  'ru-RU': {
+  ru: {
+    id: 'ru',
     code: 'ru-RU',
     name: 'Русский',
     shortName: 'РУС',
   },
-  'en-US': {
+  en: {
+    id: 'en',
     code: 'en-US',
     name: 'English',
     shortName: 'EN',

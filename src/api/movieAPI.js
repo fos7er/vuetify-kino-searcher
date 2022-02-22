@@ -1,7 +1,8 @@
 import store from '@/store'
 class movieAPI {
   get language() {
-    return 'ru-RU'
+    console.log('lang:', store.getters['userSettings/lang'])
+    return store.getters['userSettings/lang']
   }
 
   static _reqiured() {

@@ -6,7 +6,7 @@ import store from './store'
 import axios from 'axios'
 import './assets/css/style.scss'
 import { movieAPI } from './api/movieAPI'
-import i18n from './i18n'
+import i18n from './plugins/i18n'
 
 Vue.prototype.movieAPI = new movieAPI(axios)
 Vue.config.productionTip = false
@@ -16,5 +16,5 @@ new Vue({
   router,
   store,
   i18n,
-  render: (h) => h(App)
+  render: (h) => h(App),
 }).$mount('#app')

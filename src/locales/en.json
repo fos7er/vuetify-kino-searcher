@@ -1,3 +1,6 @@
 {
-  "message": "hello i18n !!"
+  "message": "hello i18n !!",
+  "explore": "Explore",
+  "overview": "Overview",
+  "noDescription": "No description"
 }

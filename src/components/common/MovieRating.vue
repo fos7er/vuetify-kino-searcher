@@ -20,7 +20,6 @@ export default {
       return `c100 p${this.rating} small dark`
     },
     color() {
-      console.log(this.rating)
       if (this.rating >= 70) {
         return 'green-color'
       }
