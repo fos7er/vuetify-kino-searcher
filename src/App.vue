@@ -1,19 +1,19 @@
 <template>
   <v-app>
     <router-view></router-view>
-    <v-snackbar :value="success" bottom multi-line :timeout="2500" color="success">
+    <v-snackbar v-model="success" bottom multi-line :timeout="2500" color="success">
       {{ success }}
       <v-btn text @click="$store.commit('SET_SUCCESS', false)">
         {{ 'Close' }}
       </v-btn>
     </v-snackbar>
-    <v-snackbar :value="warning" bottom multi-line :timeout="6000" color="warning">
+    <v-snackbar v-model="warning" bottom multi-line :timeout="6000" color="warning">
       {{ warning }}
       <v-btn text @click="$store.commit('SET_WARNING', false)">
         {{ 'Close' }}
       </v-btn>
     </v-snackbar>
-    <v-snackbar :value="error" bottom class="error-snackbar" multi-line :timeout="7000" color="error">
+    <v-snackbar v-model="error" bottom class="error-snackbar" multi-line :timeout="7000" color="error">
       {{ error }}
       <v-btn text @click="$store.commit('SET_ERROR', false)">
         {{ 'Close' }}
@@ -37,7 +37,31 @@ export default {
 
   data: () => ({}),
   computed: {
-    ...mapState(['overlay', 'success', 'warning', 'error']),
+    ...mapState(['overlay']),
+    success: {
+      get: function () {
+        return this.$store.state.success
+      },
+      set: function (e) {
+        if (!e) this.$store.commit('SET_SUCCESS', null)
+      },
+    },
+    warning: {
+      get: function () {
+        return this.$store.state.warning
+      },
+      set: function (e) {
+        if (!e) this.$store.commit('SET_WARNING', null)
+      },
+    },
+    error: {
+      get: function () {
+        return this.$store.state.error
+      },
+      set: function (e) {
+        if (!e) this.$store.commit('SET_ERROR', null)
+      },
+    },
   },
   beforeDestroy() {
     this.$store.commit('RESET_SNACKBAR')
