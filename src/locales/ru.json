@@ -10,6 +10,13 @@
   "logout": "Выход",
   "email": "Email",
   "password": "Пароль",
+  "repeatPassword": "Повторите пароль",
   "forgotPassword": "Забыли свой пароль?",
-  "settings": "Настройки"
+  "settings": "Настройки",
+  "registration": "Регистрация",
+  "inputRequired": "заполните это поле",
+  "incorrectEmail": "некорректный email",
+  "notIdenticalPasswords": "not identical passwords",
+  "minLength": "должно быть длиннее чем",
+  "characters": "символов"
 }

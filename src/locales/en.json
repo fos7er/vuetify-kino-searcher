@@ -10,6 +10,13 @@
   "logout": "Logout",
   "email": "Email",
   "password": "Password",
+  "repeatPassword": "Repeat password",
   "forgotPassword": "Forgot your passwrod?",
-  "settings": "Settings"
+  "settings": "Settings",
+  "registration": "Registration",
+  "inputRequired": "required field",
+  "incorrectEmail": "incorrect email",
+  "notIdenticalPasswords": "not identical passwords",
+  "minLength": "must be greater than",
+  "characters": "characters"
 }

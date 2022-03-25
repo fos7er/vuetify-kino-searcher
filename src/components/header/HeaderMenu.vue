@@ -8,9 +8,16 @@
       </v-btn>
     </template>
     <v-list>
+      <v-list-item exact to="/registration">
+        <v-list-item-action>
+          <v-icon>mdi-account-check</v-icon>
+        </v-list-item-action>
+        <v-list-item-title v-text="$t('registration')" />
+      </v-list-item>
+      <v-divider />
       <v-list-item exact to="/login">
         <v-list-item-action>
-          <v-icon>mdi-account-circle</v-icon>
+          <v-icon>mdi-account-key</v-icon>
         </v-list-item-action>
         <v-list-item-title v-text="$t('login')" />
       </v-list-item>
