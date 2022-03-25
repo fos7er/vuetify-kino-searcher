@@ -31,16 +31,20 @@
       <!-- <v-btn icon @click.stop="miniVariant = !miniVariant">
         <v-icon>mdi-{{ `chevron-${miniVariant ? 'right' : 'left'}` }}</v-icon>
       </v-btn> -->
-      <v-btn icon @click.stop="fixed = !fixed">
+      <v-btn class="d-none d-md-flex" icon @click.stop="fixed = !fixed">
         <v-icon>mdi-minus</v-icon>
       </v-btn>
       <router-link to="/"
-        ><img class="ml-12 logo" :src="require('../assets/images/logo-white.png')" height="64" width="auto"
+        ><img
+          class="ml-12 logo d-none d-md-block"
+          :src="require('../assets/images/logo-white.png')"
+          height="64"
+          width="auto"
       /></router-link>
       <v-container>
         <v-row align="center">
           <v-col><autocomplete /></v-col>
-          <v-col>
+          <v-col cols="3">
             <v-select
               class="ml-auto lang-select"
               solo
@@ -185,7 +189,7 @@ export default {
 
 <style lang="scss" scoped>
 .lang-select {
-  width: 100px;
+  width: 115px;
   &.v-list-item__title {
     font-size: 1rem !important;
   }
