@@ -6,6 +6,10 @@
   "search": "Поиск",
   "enterMovieName": "Введите название фильма",
   "profile": "Профиль",
+  "login": "Вход",
   "logout": "Выход",
+  "email": "Email",
+  "password": "Пароль",
+  "forgotPassword": "Забыли свой пароль?",
   "settings": "Настройки"
 }

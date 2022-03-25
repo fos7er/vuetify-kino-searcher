@@ -6,6 +6,10 @@
   "search": "Search",
   "enterMovieName": "Enter movie name",
   "profile": "Profile",
+  "login": "Login",
   "logout": "Logout",
+  "email": "Email",
+  "password": "Password",
+  "forgotPassword": "Forgot your passwrod?",
   "settings": "Settings"
 }
