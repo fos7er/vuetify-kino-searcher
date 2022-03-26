@@ -13,6 +13,7 @@
     "axios": "^0.24.0",
     "compass-mixins": "^0.12.10",
     "core-js": "^3.6.5",
+    "firebase": "^9.6.10",
     "vue": "^2.6.11",
     "vue-i18n": "^8.26.3",
     "vue-router": "^3.5.3",

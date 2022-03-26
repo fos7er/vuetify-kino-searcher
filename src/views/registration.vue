@@ -12,7 +12,7 @@
                 prepend-icon="mdi-account"
                 :label="$t('email')"
                 type="text"
-                v-model="form.email"
+                v-model.trim="form.email"
                 :rules="[globalRules.required, globalRules.email]"
                 autofocus
                 @keypress.enter.prevent="focusPassword"
@@ -24,6 +24,7 @@
                 v-model.trim="form.password"
                 :rules="[globalRules.required, globalRules.minLength(6)]"
                 @keypress.enter.prevent="focusRepeatPassword"
+                @keydown.tab.prevent="focusRepeatPassword"
                 ref="password"
               />
               <password-field
@@ -37,9 +38,7 @@
             </v-card-text>
             <v-card-actions>
               <v-spacer />
-              <v-btn type="submit" :loading="loading" depressed color="accent">{{
-                $t('registration')
-              }}</v-btn>
+              <v-btn type="submit" :loading="loading" depressed color="accent">{{ $t('registration') }}</v-btn>
             </v-card-actions>
           </v-form>
         </v-card>
@@ -49,10 +48,13 @@
 </template>
 <script>
 import PasswordField from '@/components/common/fields/Password'
+import clearForm from '@/plugins/mixins/clearForm'
+
 export default {
   components: {
     PasswordField,
   },
+  mixins: [clearForm],
   data() {
     return {
       loading: false,
@@ -66,7 +68,10 @@ export default {
   methods: {
     register() {
       if (!this.$refs.form.validate()) return
-      this.$store.commit('SET_SUCCESS', 'SUCCESS!!!!!')
+      const { email, password } = this.form
+      this.$store.dispatch('auth/register', { email, password }).then(() => {
+        this.clearForm()
+      })
     },
     focusPassword() {
       this.$refs.password.focus()

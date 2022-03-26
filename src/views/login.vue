@@ -12,7 +12,8 @@
                 prepend-icon="mdi-account"
                 :label="$t('email')"
                 type="text"
-                v-model="form.email"
+                v-model.trim="form.email"
+                :rules="[globalRules.required, globalRules.email]"
                 autofocus
                 @keypress.enter.prevent="focusPassword"
               />
@@ -21,6 +22,7 @@
                 :label="$t('password')"
                 validate-on-blur
                 v-model.trim="form.password"
+                :rules="[globalRules.required, globalRules.minLength(6)]"
                 ref="password"
               />
               <div class="d-flex justify-end">
@@ -39,10 +41,13 @@
 </template>
 <script>
 import PasswordField from '@/components/common/fields/Password'
+import clearForm from '@/plugins/mixins/clearForm'
+
 export default {
   components: {
     PasswordField,
   },
+  mixins: [clearForm],
   data() {
     return {
       loading: false,
@@ -53,7 +58,13 @@ export default {
     }
   },
   methods: {
-    doLogin() {},
+    doLogin() {
+      if (!this.$refs.form.validate()) return
+      const { email, password } = this.form
+      this.$store.dispatch('auth/login', { email, password }).then(() => {
+        this.clearForm()
+      })
+    },
     focusPassword() {
       this.$refs.password.focus()
     },

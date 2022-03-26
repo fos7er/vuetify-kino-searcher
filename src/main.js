@@ -26,9 +26,7 @@ Vue.mixin({
         },
         minLength: (length) => {
           return (v) => {
-            return v.length >= length
-              ? true
-              : `${this.$t('minLength')} ${length - 1} ${this.$t('characters')}`
+            return v.length >= length ? true : `${this.$t('minLength')} ${length - 1} ${this.$t('characters')}`
           }
         },
       },
