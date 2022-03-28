@@ -18,5 +18,6 @@
   "incorrectEmail": "некорректный email",
   "notIdenticalPasswords": "not identical passwords",
   "minLength": "должно быть длиннее чем",
-  "characters": "символов"
+  "characters": "символов",
+  "pleaseLogin": "Пожалуйста войдите в свой аккаунт"
 }

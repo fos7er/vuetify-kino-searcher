@@ -12,12 +12,17 @@ const routes = [
     path: '/',
     component: DefaultLayout,
     children: [
-      { path: '', component: MainPage },
-      { path: 'movie/:id', component: MoviePage },
-      { path: 'genre/:id', component: MainPage },
-      { path: 'login', component: LoginPage },
-      { path: 'registration', component: RegistrationPage },
-      { path: 'profile', component: Profile, children: [{ path: 'settings', component: UserSettings }] },
+      { path: '', component: MainPage, meta: { requiresAuth: false } },
+      { path: 'movie/:id', component: MoviePage, meta: { requiresAuth: false } },
+      { path: 'genre/:id', component: MainPage, meta: { requiresAuth: false } },
+      { path: 'login', component: LoginPage, meta: { requiresAuth: false } },
+      { path: 'registration', component: RegistrationPage, meta: { requiresAuth: false } },
+      {
+        path: 'profile',
+        component: Profile,
+        meta: { requiresAuth: true },
+        children: [{ path: 'settings', component: UserSettings, meta: { requiresAuth: true } }],
+      },
     ],
   },
   {

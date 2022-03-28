@@ -75,6 +75,11 @@ export default {
       this.$refs.password.focus()
     },
   },
+  created() {
+    if (this.$route.query.redirect) {
+      this.$store.commit('SET_WARNING', this.$t('pleaseLogin'))
+    }
+  },
 }
 </script>
 

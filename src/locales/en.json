@@ -18,5 +18,6 @@
   "incorrectEmail": "incorrect email",
   "notIdenticalPasswords": "not identical passwords",
   "minLength": "must be greater than",
-  "characters": "characters"
+  "characters": "characters",
+  "pleaseLogin": "Please login to your account"
 }
