@@ -38,7 +38,9 @@
             </v-card-text>
             <v-card-actions>
               <v-spacer />
-              <v-btn type="submit" :loading="loading" depressed color="accent">{{ $t('registration') }}</v-btn>
+              <v-btn type="submit" :loading="loading" depressed color="accent">{{
+                $t('registration')
+              }}</v-btn>
             </v-card-actions>
           </v-form>
         </v-card>
@@ -69,9 +71,15 @@ export default {
     register() {
       if (!this.$refs.form.validate()) return
       const { email, password } = this.form
-      this.$store.dispatch('auth/register', { email, password }).then(() => {
-        this.clearForm()
-      })
+      this.loading = true
+      this.$store
+        .dispatch('auth/register', { email, password })
+        .then(() => {
+          this.clearForm()
+        })
+        .finally(() => {
+          this.loading = false
+        })
     },
     focusPassword() {
       this.$refs.password.focus()

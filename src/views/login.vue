@@ -61,9 +61,15 @@ export default {
     doLogin() {
       if (!this.$refs.form.validate()) return
       const { email, password } = this.form
-      this.$store.dispatch('auth/login', { email, password }).then(() => {
-        this.clearForm()
-      })
+      this.loading = true
+      this.$store
+        .dispatch('auth/login', { email, password })
+        .then(() => {
+          this.clearForm()
+        })
+        .finally(() => {
+          this.loading = false
+        })
     },
     focusPassword() {
       this.$refs.password.focus()
