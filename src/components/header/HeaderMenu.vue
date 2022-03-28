@@ -22,14 +22,14 @@
         <v-list-item-title v-text="$t('login')" />
       </v-list-item>
       <v-divider />
-      <v-list-item exact to="/settings/profile">
+      <v-list-item exact to="/profile">
         <v-list-item-action>
           <v-icon>mdi-account-circle</v-icon>
         </v-list-item-action>
         <v-list-item-title v-text="$t('profile')" />
       </v-list-item>
       <v-divider />
-      <v-list-item exact to="/settings">
+      <v-list-item exact to="/profile/settings">
         <v-list-item-action>
           <v-icon>mdi-tune-variant</v-icon>
         </v-list-item-action>
