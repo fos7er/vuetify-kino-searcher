@@ -16,6 +16,7 @@ module.exports = {
     quotes: ['error', 'single'],
     'comma-dangle': ['error', 'never'],
     'no-unused-vars': 1,
+    'no-debugger': 'off',
     'vuetify/no-deprecated-classes': 'error',
     'vuetify/grid-unknown-attributes': 'error',
     'vuetify/no-legacy-grid': 'error',
