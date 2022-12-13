@@ -20,17 +20,14 @@ const mutations = {
 }
 
 const actions = {
-  getAllMovies ({ commit, state }, payload) {
+  async getAllMovies ({ commit, state }, payload) {
     if (state.movieList.some((movie) => movie.page === payload.page)) {
       console.log('already has this page, load from cache')
       return false
     }
-    movieAPI.discover(payload)
-      .then((response) => {
-      response.results.forEach((item) => (item.page = payload.page))
-      commit('SET_MOVIES', response.results)
-    })
-      .catch(() => {console.log(111)})
+    const res = await movieAPI.getAllMovies(payload)
+    res.results.forEach((item) => (item.page = payload.page))
+    commit('SET_MOVIES', res.results)
   }
 }
 

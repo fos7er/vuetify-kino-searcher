@@ -34,7 +34,7 @@ class movieAPI {
     return Promise.reject(err.response)
   }
 
-  async discover ({ sortBy = 'popularity', page = 1, genres = '' } = {}) {
+  async getAllMovies ({ sortBy = 'popularity', page = 1, genres = '' } = {}) {
     store.commit('ADD_OVERLAY')
     let path = `/discover/movie?api_key=${this.API_KEY}&language=${this.language}&sort_by=${sortBy}.desc&include_adult=false&include_video=false&page=${page}&with_watch_monetization_types=flatrate`
     if (genres.length) {
