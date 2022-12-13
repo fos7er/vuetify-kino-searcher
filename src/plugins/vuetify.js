@@ -9,15 +9,15 @@ Vue.use(Vuetify)
 export default new Vuetify({
   lang: {
     locales: { ru, en },
-    current: 'en',
+    current: 'en'
   },
   //theme: { dark: true },
   theme: {
     dark: true,
     themes: {
       dark: {
-        accent: colors.amber.darken4,
-      },
-    },
-  },
+        accent: colors.amber.darken4
+      }
+    }
+  }
 })

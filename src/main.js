@@ -12,7 +12,7 @@ Vue.prototype.movieAPI = new movieAPI(axios)
 Vue.config.productionTip = false
 
 Vue.mixin({
-  data() {
+  data () {
     return {
       globalRules: {
         required: (v) => !!v || this.$t('inputRequired'),
@@ -28,10 +28,10 @@ Vue.mixin({
           return (v) => {
             return v.length >= length ? true : `${this.$t('minLength')} ${length - 1} ${this.$t('characters')}`
           }
-        },
-      },
+        }
+      }
     }
-  },
+  }
 })
 
 new Vue({
@@ -39,5 +39,5 @@ new Vue({
   router,
   store,
   i18n,
-  render: (h) => h(App),
+  render: (h) => h(App)
 }).$mount('#app')

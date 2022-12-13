@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from 'firebase/app'
 import { getAnalytics } from 'firebase/analytics'
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth'
+import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword } from 'firebase/auth'
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -14,7 +14,7 @@ const firebaseConfig = {
   storageBucket: 'kino-searcher.appspot.com',
   messagingSenderId: '354658137429',
   appId: '1:354658137429:web:ab09736c49b81aa2d3ebdc',
-  measurementId: 'G-NRZ5L9M407',
+  measurementId: 'G-NRZ5L9M407'
 }
 
 // Initialize Firebase

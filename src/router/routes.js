@@ -21,14 +21,14 @@ const routes = [
         path: 'profile',
         component: Profile,
         meta: { requiresAuth: true },
-        children: [{ path: 'settings', component: UserSettings, meta: { requiresAuth: true } }],
-      },
-    ],
+        children: [{ path: 'settings', component: UserSettings, meta: { requiresAuth: true } }]
+      }
+    ]
   },
   {
     path: '*',
-    component: page404,
-  },
+    component: page404
+  }
 ]
 
 export default routes

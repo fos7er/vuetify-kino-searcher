@@ -3,19 +3,19 @@ import { auth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from
 const state = {
   isAuthorized: false,
   signInPassword: null,
-  user: null,
+  user: null
 }
 
 const getters = {}
 
 const mutations = {
-  SET_USER(state, payload) {
+  SET_USER (state, payload) {
     state.user = payload
-  },
+  }
 }
 
 const actions = {
-  register({ commit }, { email, password }) {
+  register ({ commit }, { email, password }) {
     return createUserWithEmailAndPassword(auth, email, password)
       .then((res) => {
         commit('SET_SUCCESS', 'SUCCESS!!!!!', { root: true })
@@ -24,7 +24,7 @@ const actions = {
         commit('SET_ERROR', error.message, { root: true })
       })
   },
-  login({ commit }, { email, password }) {
+  login ({ commit }, { email, password }) {
     return signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         console.log(userCredential)
@@ -35,7 +35,7 @@ const actions = {
       .catch((error) => {
         commit('SET_ERROR', error.message, { root: true })
       })
-  },
+  }
 }
 
 export default {
@@ -43,5 +43,5 @@ export default {
   state,
   getters,
   actions,
-  mutations,
+  mutations
 }

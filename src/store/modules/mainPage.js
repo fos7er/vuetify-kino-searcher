@@ -1,24 +1,24 @@
 const state = {
-  movieList: [],
+  movieList: []
 }
 
 const getters = {
   movies: (state) => (page) => {
     return state.movieList.filter((movie) => movie.page === page)
-  },
+  }
 }
 
 const mutations = {
-  SET_MOVIES(state, movies) {
+  SET_MOVIES (state, movies) {
     state.movieList.push(...movies)
   },
-  CLEAR_MOVIES(state) {
+  CLEAR_MOVIES (state) {
     state.movieList = []
-  },
+  }
 }
 
 const actions = {
-  getAllMovies({ commit, state }, payload) {
+  getAllMovies ({ commit, state }, payload) {
     if (state.movieList.some((movie) => movie.page === payload.page)) {
       console.log('already has this page, load from cache')
       return false
@@ -27,7 +27,7 @@ const actions = {
       response.results.forEach((item) => (item.page = payload.page))
       commit('SET_MOVIES', response.results)
     })
-  },
+  }
 }
 
 export default {
@@ -35,5 +35,5 @@ export default {
   state,
   getters,
   actions,
-  mutations,
+  mutations
 }

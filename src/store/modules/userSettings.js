@@ -4,30 +4,30 @@ import vuetify from '@/plugins/vuetify'
 
 const state = {
   lang: getDefaultLanguage(),
-  avaliableLanguages: languages,
+  availableLanguages: languages
 }
 
 const getters = {
-  lang(state) {
+  lang (state) {
     return state.lang
   },
-  allLang(state) {
-    const languages = state.avaliableLanguages
+  allLang (state) {
+    const languages = state.availableLanguages
     const result = []
     for (const key in languages) {
       result.push(languages[key])
     }
     return result
-  },
+  }
 }
 
 const mutations = {
-  setLang(state, payload) {
+  setLang (state, payload) {
     state.lang = payload
     vuetify.framework.lang.current = state.lang
     i18n.locale = state.lang
     localStorage.setItem('lang', payload)
-  },
+  }
 }
 
 const actions = {}
@@ -37,10 +37,10 @@ export default {
   state,
   getters,
   actions,
-  mutations,
+  mutations
 }
 
-function getDefaultLanguage() {
+function getDefaultLanguage () {
   if (localStorage.getItem('lang')) {
     return localStorage.getItem('lang')
   }

@@ -1,16 +1,16 @@
-const avaliableLanguages = {
+const availableLanguages = {
   ru: {
     id: 'ru',
     code: 'ru-RU',
     name: 'Русский',
-    shortName: 'РУС',
+    shortName: 'РУС'
   },
   en: {
     id: 'en',
     code: 'en-US',
     name: 'English',
-    shortName: 'EN',
-  },
+    shortName: 'EN'
+  }
 }
 
-export default avaliableLanguages
+export default availableLanguages

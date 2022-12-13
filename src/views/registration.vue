@@ -1,46 +1,47 @@
 <template>
   <v-container class="fill-height">
     <v-row align="center" justify="center">
-      <v-col cols="11" sm="8" md="7" lg="5" xl="4">
+      <v-col cols="11" lg="5" md="7" sm="8" xl="4">
         <v-card>
-          <v-toolbar dark color="secondary">
+          <v-toolbar color="secondary" dark>
             <v-toolbar-title>{{ $t('registration') }}</v-toolbar-title>
           </v-toolbar>
           <v-form ref="form" lazy-validation @submit.prevent="register">
             <v-card-text>
               <v-text-field
-                prepend-icon="mdi-account"
-                :label="$t('email')"
-                type="text"
                 v-model.trim="form.email"
+                :label="$t('email')"
                 :rules="[globalRules.required, globalRules.email]"
                 autofocus
+                prepend-icon="mdi-account"
+                type="text"
                 @keypress.enter.prevent="focusPassword"
               />
               <password-field
-                prepend-icon="mdi-lock"
-                :label="$t('password')"
-                validate-on-blur
+                ref="password"
                 v-model.trim="form.password"
+                :label="$t('password')"
                 :rules="[globalRules.required, globalRules.minLength(6)]"
+                prepend-icon="mdi-lock"
+                validate-on-blur
                 @keypress.enter.prevent="focusRepeatPassword"
                 @keydown.tab.prevent="focusRepeatPassword"
-                ref="password"
               />
               <password-field
-                prepend-icon="mdi-lock"
-                :label="$t('repeatPassword')"
-                validate-on-blur
-                v-model.trim="form.repeatPassword"
-                :rules="[globalRules.required, globalRules.same(this.form.password)]"
                 ref="repeatPassword"
+                v-model.trim="form.repeatPassword"
+                :label="$t('repeatPassword')"
+                :rules="[globalRules.required, globalRules.same(this.form.password)]"
+                prepend-icon="mdi-lock"
+                validate-on-blur
               />
             </v-card-text>
             <v-card-actions>
-              <v-spacer />
-              <v-btn type="submit" :loading="loading" depressed color="accent">{{
-                $t('registration')
-              }}</v-btn>
+              <v-spacer/>
+              <v-btn :loading="loading" color="accent" depressed type="submit">{{
+                  $t('registration')
+                }}
+              </v-btn>
             </v-card-actions>
           </v-form>
         </v-card>
@@ -49,46 +50,46 @@
   </v-container>
 </template>
 <script>
-import PasswordField from '@/components/common/fields/Password'
-import clearForm from '@/plugins/mixins/clearForm'
+  import PasswordField from '@/components/common/fields/Password'
+  import clearForm from '@/plugins/mixins/clearForm'
 
-export default {
-  components: {
-    PasswordField,
-  },
-  mixins: [clearForm],
-  data() {
-    return {
-      loading: false,
-      form: {
-        email: '',
-        password: '',
-        repeatPassword: '',
+  export default {
+    components: {
+      PasswordField
+    },
+    mixins: [clearForm],
+    data () {
+      return {
+        loading: false,
+        form: {
+          email: '',
+          password: '',
+          repeatPassword: ''
+        }
+      }
+    },
+    methods: {
+      register () {
+        if (!this.$refs.form.validate()) return
+        const { email, password } = this.form
+        this.loading = true
+        this.$store
+          .dispatch('auth/register', { email, password })
+          .then(() => {
+            this.clearForm()
+          })
+          .finally(() => {
+            this.loading = false
+          })
       },
+      focusPassword () {
+        this.$refs.password.focus()
+      },
+      focusRepeatPassword () {
+        this.$refs.repeatPassword.focus()
+      }
     }
-  },
-  methods: {
-    register() {
-      if (!this.$refs.form.validate()) return
-      const { email, password } = this.form
-      this.loading = true
-      this.$store
-        .dispatch('auth/register', { email, password })
-        .then(() => {
-          this.clearForm()
-        })
-        .finally(() => {
-          this.loading = false
-        })
-    },
-    focusPassword() {
-      this.$refs.password.focus()
-    },
-    focusRepeatPassword() {
-      this.$refs.repeatPassword.focus()
-    },
-  },
-}
+  }
 </script>
 
 <style lang="scss" scoped></style>
