@@ -1,10 +1,14 @@
 <template>
   <v-menu left offset-y transition="slide-y-transition">
-    <template v-slot:activator="{ on }">
-      <v-btn fab text v-on="on">
-        <v-avatar size="30">
-          <img alt="Avatar" src="@/assets/images/avatar-placeholder.svg"/>
+    <template v-slot:activator="{on, value}">
+      <v-btn elevation="0" v-on="on" large style="text-transform:none;">
+        <v-avatar size="30" class="mr-1">
+          <img alt="Avatar" src="@/assets/images/avatar-placeholder.svg">
         </v-avatar>
+        <slot name="user-name">FosteR</slot>
+        <v-icon right>
+          {{ value ? 'mdi-chevron-up' : 'mdi-chevron-down' }}
+        </v-icon>
       </v-btn>
     </template>
     <v-list>
