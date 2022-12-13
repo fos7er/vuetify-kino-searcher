@@ -31,7 +31,7 @@
                 ref="repeatPassword"
                 v-model.trim="form.repeatPassword"
                 :label="$t('repeatPassword')"
-                :rules="[globalRules.required, globalRules.same(this.form.password)]"
+                :rules="[globalRules.required, globalRules.samePassword(this.form.password)]"
                 prepend-icon="mdi-lock"
                 validate-on-blur
               />

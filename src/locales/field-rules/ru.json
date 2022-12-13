@@ -1,9 +1,14 @@
 {
   "field-rules": {
-    "invalid-phone-number": "Введен некорректный номер телефона",
+    "characters": "символов",
+    "incorrect-email": "Некорректный email",
+    "input-required": "Заполните это поле",
     "invalid-format-date": "Введена некорректная дата",
     "invalid-format-time": "Введено некорректное время",
+    "invalid-phone-number": "Введен некорректный номер телефона",
     "invalid-phone-number-length": "Допустимая длина номера телефона - 10-15 цифр",
+    "min-length": "Должно быть длиннее чем",
+    "not-identical-passwords": "Пароли должны совпадать",
     "password-must-at-least-eight-characters": "Длина пароля должна быть не менее восьми символов",
     "password-must-one-number": "Убедитесь, что пароль содержит как минимум одну цифру",
     "password-must-three-lowercase": "Убедитесь, что пароль содержит как минимум три символа нижнего регистра",
