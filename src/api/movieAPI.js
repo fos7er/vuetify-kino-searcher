@@ -1,4 +1,5 @@
 import store from '@/store'
+import axios from 'axios'
 
 class movieAPI {
   constructor (axios) {
@@ -93,4 +94,4 @@ class movieAPI {
   }
 }
 
-export { movieAPI }
+export default new movieAPI(axios)
