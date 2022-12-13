@@ -15,12 +15,12 @@
                 <v-col
                 >
                   <v-text-field
-                      v-model.trim="form.name"
-                      :label="$t('name')"
-                      :rules="[globalRules.required, globalRules.minLength(2)]"
-                      autofocus
-                      type="text"
-                      @keypress.enter.prevent="focusGender"
+                    v-model.trim="form.name"
+                    :label="$t('name')"
+                    :rules="[globalRules.required, globalRules.minLength(2)]"
+                    autofocus
+                    type="text"
+                    @keypress.enter.prevent="focusGender"
                   />
                 </v-col>
               </v-row>
@@ -42,29 +42,10 @@
                   <v-icon aria-hidden="false" large> mdi-calendar</v-icon>
                 </v-col>
                 <v-col>
-                  <v-menu
-                      v-model="datePickerMenu"
-                      :close-on-content-click="false"
-                      :nudge-right="40"
-                      min-width="auto"
-                      offset-y
-                      transition="scale-transition"
-                  >
-                    <template v-slot:activator="{ on, attrs }">
-                      <v-text-field
-                          v-model="form.birthDate"
-                          :label="$t('birthDate')"
-                          readonly
-                          v-bind="attrs"
-                          v-on="on"
-                      ></v-text-field>
-                    </template>
-                    <v-date-picker
-                        v-model="form.birthDate"
-                        no-title
-                        @input="datePickerMenu = false"
-                    ></v-date-picker>
-                  </v-menu>
+                  <field-date-picker
+                    v-model="form.birthDate"
+                    :rules="[globalRules.required]"
+                  />
                 </v-col>
               </v-row>
               <v-row align="center">
@@ -101,17 +82,19 @@
 </template>
 
 <script>
+  import dayjs from 'dayjs'
+  import fieldDatePicker from '@/components/common/fields/DatePicker'
   import vuetify from '@/plugins/vuetify'
 
   export default {
-    components: {},
+    components: { fieldDatePicker },
     data () {
       return {
         loading: false,
         form: {
           name: '',
           gender: 'male',
-          birthDate: new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().substr(0, 10),
+          birthDate: dayjs().format('YYYY-MM-DD'),
           contacts: '',
           darkTheme: true
         },
@@ -120,13 +103,13 @@
     },
     methods: {
       focusGender () {},
-      save() {
+      save () {
         const data = this.prepareData()
         vuetify.framework.theme.dark = data.darkTheme
         document.documentElement.style.setProperty('--colorTheme', data.darkTheme ? 'dark' : 'light')
       },
-      saveTheme() {},
-      prepareData() {
+      saveTheme () {},
+      prepareData () {
         return this.form
       }
     }

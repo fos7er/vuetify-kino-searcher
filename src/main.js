@@ -1,16 +1,19 @@
-import Vue from 'vue'
+import './assets/css/style.scss'
 import App from './App.vue'
-import vuetify from './plugins/vuetify'
+import i18n from './plugins/i18n'
+import movieAPI from './api/movieAPI'
 import router from './router'
 import store from './store'
-import './assets/css/style.scss'
-import movieAPI from './api/movieAPI'
-import i18n from './plugins/i18n'
+import Vue from 'vue'
+import vuetify from './plugins/vuetify'
+import { VueMaskDirective } from 'v-mask'
 
 Vue.prototype.movieAPI = movieAPI
 Vue.config.productionTip = false
 
 vuetify.framework.theme.dark = true
+
+Vue.directive('mask', VueMaskDirective)
 
 Vue.mixin({
   data () {

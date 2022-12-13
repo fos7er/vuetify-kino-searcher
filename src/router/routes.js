@@ -7,21 +7,28 @@ import RegistrationPage from '@/views/registration'
 import Profile from '@/views/profile/'
 import UserSettings from '@/views/profile/userSettings'
 
+const reqAuth = {
+  reqAuth: true
+}
+
+const noAuth = {
+  reqAuth: false
+}
+
 const routes = [
   {
     path: '/',
     component: DefaultLayout,
     children: [
-      { path: '', component: MainPage, meta: { requiresAuth: false } },
-      { path: 'movie/:id', component: MoviePage, meta: { requiresAuth: false } },
-      { path: 'genre/:id', component: MainPage, meta: { requiresAuth: false } },
-      { path: 'login', component: LoginPage, meta: { requiresAuth: false } },
-      { path: 'registration', component: RegistrationPage, meta: { requiresAuth: false } },
+      { path: '', component: MainPage, meta: { ...noAuth } },
+      { path: 'movie/:id', component: MoviePage, meta: { ...noAuth } },
+      { path: 'genre/:id', component: MainPage, meta: { ...noAuth } },
+      { path: 'login', component: LoginPage, meta: { ...noAuth } },
+      { path: 'registration', component: RegistrationPage, meta: { ...noAuth } },
       {
         path: 'profile',
         component: Profile,
-        meta: { requiresAuth: true },
-        children: [{ path: 'settings', component: UserSettings, meta: { requiresAuth: true } }]
+        children: [{ path: 'settings', component: UserSettings, meta: { ...noAuth } }]
       }
     ]
   },

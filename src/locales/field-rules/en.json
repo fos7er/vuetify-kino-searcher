@@ -1,0 +1,14 @@
+{
+  "field-rules": {
+    "invalid-phone-number": "Invalid phone number entered",
+    "invalid-format-date": "Invalid date entered",
+    "invalid-format-time": "Invalid time entered",
+    "invalid-phone-number-length": "The allowed length of a phone number is 10-15 digits",
+    "password-must-at-least-eight-characters": "Ensure password is of length at least 8 letters",
+    "password-must-one-number": "Ensure password least has one digit",
+    "password-must-three-lowercase": "Ensure password least has three lowercase letters",
+    "password-must-two-uppercase": "Ensure password least has two uppercase letters",
+    "passwords-must-match": "Password must match",
+    "sms-code": "Incorrect code"
+  }
+}

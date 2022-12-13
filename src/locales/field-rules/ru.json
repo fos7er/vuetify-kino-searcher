@@ -1,0 +1,14 @@
+{
+  "field-rules": {
+    "invalid-phone-number": "Введен некорректный номер телефона",
+    "invalid-format-date": "Введена некорректная дата",
+    "invalid-format-time": "Введено некорректное время",
+    "invalid-phone-number-length": "Допустимая длина номера телефона - 10-15 цифр",
+    "password-must-at-least-eight-characters": "Длина пароля должна быть не менее восьми символов",
+    "password-must-one-number": "Убедитесь, что пароль содержит как минимум одну цифру",
+    "password-must-three-lowercase": "Убедитесь, что пароль содержит как минимум три символа нижнего регистра",
+    "password-must-two-uppercase": "Убедитесь, что пароль содержит как минимум два символа верхнего регистра",
+    "passwords-must-match": "Пароли должны совпадать",
+    "sms-code": "Некорректный код"
+  }
+}

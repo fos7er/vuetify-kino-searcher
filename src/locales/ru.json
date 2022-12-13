@@ -2,7 +2,7 @@
   "message": "hello i18n !!",
   "explore": "Подробнее",
   "overview": "Обзор",
-  "noDescription": "Описание отсутсвует",
+  "noDescription": "Описание отсутствует",
   "search": "Поиск",
   "enterMovieName": "Введите название фильма",
   "profile": "Профиль",
@@ -14,10 +14,10 @@
   "forgotPassword": "Забыли свой пароль?",
   "settings": "Настройки",
   "registration": "Регистрация",
-  "inputRequired": "заполните это поле",
-  "incorrectEmail": "некорректный email",
-  "notIdenticalPasswords": "not identical passwords",
-  "minLength": "должно быть длиннее чем",
+  "inputRequired": "Заполните это поле",
+  "incorrectEmail": "Некорректный email",
+  "notIdenticalPasswords": "Пароли должны совпадать",
+  "minLength": "Должно быть длиннее чем",
   "characters": "символов",
   "pleaseLogin": "Пожалуйста войдите в свой аккаунт"
 }
