@@ -23,10 +23,12 @@ const actions = {
       console.log('already has this page, load from cache')
       return false
     }
-    this._vm.movieAPI.discover(payload).then((response) => {
+    this._vm.movieAPI.discover(payload)
+      .then((response) => {
       response.results.forEach((item) => (item.page = payload.page))
       commit('SET_MOVIES', response.results)
     })
+      .catch(() => {console.log(111)})
   }
 }
 

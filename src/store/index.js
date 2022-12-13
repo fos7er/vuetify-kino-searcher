@@ -14,8 +14,11 @@ const state = {
 const getters = {}
 
 const mutations = {
-  SET_OVERLAY (state, isOverlay = false) {
-    state.overlay = isOverlay
+  ADD_OVERLAY (state) {
+    state.overlay = true
+  },
+  REMOVE_OVERLAY (state) {
+    state.overlay = false
   },
   RESET_SNACKBAR (state) {
     state.success = state.warning = state.error = null
