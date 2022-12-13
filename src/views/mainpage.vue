@@ -2,7 +2,7 @@
   <div>
     <movie-list :key="$route.fullPath" @movieClick="movieClickHandler"/>
     <v-dialog v-model="movieDialog" max-width="1100px">
-      <movie-dialog-content :movie="movieDailogData" @closeDialog="movieDialog = false"/>
+      <movie-dialog-content :movie="movieDialogData" @closeDialog="movieDialog = false"/>
     </v-dialog>
   </div>
 </template>
@@ -19,12 +19,12 @@
     data () {
       return {
         movieDialog: false,
-        movieDailogData: {}
+        movieDialogData: {}
       }
     },
     methods: {
       movieClickHandler (payload) {
-        this.movieDailogData = payload
+        this.movieDialogData = payload
         this.movieDialog = true
         this.$store.commit('auth/login', { some: 1 })
       }
