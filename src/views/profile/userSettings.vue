@@ -1,12 +1,12 @@
 <template>
   <v-container class="">
     <v-row align="center" justify="center">
-      <v-col cols="12" lg="5" md="7" sm="8">
+      <v-col lg="5" md="7" sm="8">
         <v-card>
           <v-toolbar color="secondary" dark>
             <v-toolbar-title>{{ $t('settings') }}</v-toolbar-title>
           </v-toolbar>
-          <v-form ref="form" lazy-validation @submit.prevent="saveSettings">
+          <v-form ref="form" lazy-validation @submit.prevent="save">
             <v-card-text>
               <v-row align="center">
                 <v-col cols="2">
@@ -75,6 +75,19 @@
                   <v-textarea :label="$t('aboutYou')" name="input-7-4" outlined solo></v-textarea>
                 </v-col>
               </v-row>
+              <v-row align="center">
+                <v-col cols="2">
+                  <v-icon aria-hidden="false" large> mdi-palette</v-icon>
+                </v-col>
+                <v-col
+                >
+                  <v-switch
+                    v-model="form.darkTheme"
+                    :label="$t('Dark theme')"
+                    @change="saveTheme({ theme: $event ? 'dark' : 'light' })"
+                  />
+                </v-col>
+              </v-row>
             </v-card-text>
             <v-card-actions>
               <v-spacer/>
@@ -88,6 +101,8 @@
 </template>
 
 <script>
+  import vuetify from '@/plugins/vuetify'
+
   export default {
     components: {},
     data () {
@@ -97,13 +112,23 @@
           name: '',
           gender: 'male',
           birthDate: new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().substr(0, 10),
-          contacts: ''
+          contacts: '',
+          darkTheme: true
         },
         datePickerMenu: false
       }
     },
     methods: {
-      focusGender () {}
+      focusGender () {},
+      save() {
+        const data = this.prepareData()
+        vuetify.framework.theme.dark = data.darkTheme
+        document.documentElement.style.setProperty('--colorTheme', data.darkTheme ? 'dark' : 'light')
+      },
+      saveTheme() {},
+      prepareData() {
+        return this.form
+      }
     }
   }
 </script>

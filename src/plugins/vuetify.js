@@ -13,7 +13,6 @@ export default new Vuetify({
   },
   //theme: { dark: true },
   theme: {
-    dark: true,
     themes: {
       dark: {
         accent: colors.amber.darken4

@@ -10,6 +10,8 @@ import i18n from './plugins/i18n'
 Vue.prototype.movieAPI = movieAPI
 Vue.config.productionTip = false
 
+vuetify.framework.theme.dark = true
+
 Vue.mixin({
   data () {
     return {

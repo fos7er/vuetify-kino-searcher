@@ -68,3 +68,9 @@
     }
   }
 </script>
+
+<style>
+  :root {
+    color-scheme: var(--colorTheme);
+  }
+</style>
