@@ -13,6 +13,7 @@
     "axios": "^0.24.0",
     "compass-mixins": "^0.12.10",
     "core-js": "^3.20.3",
+    "dayjs": "^1.11.7",
     "firebase": "^9.6.10",
     "vue": "^2.6.14",
     "vue-i18n": "^8.27.0",
@@ -21,11 +22,11 @@
     "vuex": "^3.6.2"
   },
   "devDependencies": {
+    "@babel/eslint-parser": "^7.16.5",
     "@intlify/vue-i18n-loader": "^1.1.0",
     "@vue/cli-plugin-babel": "^5.0.8",
     "@vue/cli-plugin-eslint": "^5.0.8",
     "@vue/cli-service": "^5.0.8",
-    "@babel/eslint-parser": "^7.16.5",
     "eslint": "^8.8.0",
     "eslint-plugin-vue": "^8.4.0",
     "eslint-plugin-vuetify": "^1.1.0",
