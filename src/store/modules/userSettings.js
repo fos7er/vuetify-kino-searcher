@@ -3,7 +3,7 @@ import i18n from '@/plugins/i18n'
 import vuetify from '@/plugins/vuetify'
 
 const state = {
-  lang: getDefaultLanguage(),
+  lang: null,
   availableLanguages: languages
 }
 
@@ -22,7 +22,7 @@ const getters = {
 }
 
 const mutations = {
-  setLang (state, payload) {
+  SET_LANG (state, payload) {
     state.lang = payload
     vuetify.framework.lang.current = state.lang
     i18n.locale = state.lang
@@ -38,17 +38,4 @@ export default {
   getters,
   actions,
   mutations
-}
-
-function getDefaultLanguage () {
-  if (localStorage.getItem('lang')) {
-    return localStorage.getItem('lang')
-  }
-  const browserLang = navigator.language || navigator.userLanguage
-  for (const key in languages) {
-    if (languages[key].code === browserLang) {
-      return key
-    }
-  }
-  return 'ru'
 }

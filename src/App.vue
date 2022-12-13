@@ -27,15 +27,13 @@
 
 <script>
   import { mapState } from 'vuex'
+  import defaultLang from '@/utils/defaultLang'
 
   export default {
     name: 'App',
-
-    components: {
-      //HelloWorld,
+    created () {
+      this.$store.commit('userSettings/SET_LANG', defaultLang())
     },
-
-    data: () => ({}),
     computed: {
       ...mapState(['overlay']),
       success: {

@@ -112,7 +112,7 @@
     },
     methods: {
       changeLang (lang) {
-        this.$store.commit('userSettings/setLang', lang)
+        this.$store.commit('userSettings/SET_LANG', lang)
       },
       setSelectText (isOpen) {
         if (isOpen) {
