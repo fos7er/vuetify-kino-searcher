@@ -1,43 +1,46 @@
 <template>
-  <v-menu
-    ref="timePickerMenu"
-    v-model="menu"
-    :close-on-content-click="false"
-    :nudge-left="40"
-    min-width="300"
-    offset-y
-  >
-    <template v-slot:activator="{ on, attrs }">
-      <v-text-field
-        v-mask="'##:##'"
-        :placeholder="$t('Time')"
-        :rules="applyRules"
+  <div>
+    <v-menu
+      ref="timePickerMenu"
+      v-model="menu"
+      :close-on-content-click="false"
+      :nudge-left="40"
+      min-width="300"
+      offset-y
+    >
+      <template v-slot:activator="{ on, attrs }">
+        <v-text-field
+          v-mask="'##:##'"
+          :placeholder="$t('Time')"
+          :rules="applyRules"
+          :value="value"
+          clearable
+          inputmode='none'
+          maxlength="5"
+          v-bind="attrs"
+          @click="selectOnClick"
+          @input="setDate"
+          v-on="on"
+          @click:clear="$emit('input','')"
+          @keyup.enter="menu = false"
+          @keydown.up.prevent="upDownHandler"
+          @keydown.down.prevent="upDownHandler"
+          @keydown.left.prevent="leftRightHandler"
+          @keydown.right.prevent="leftRightHandler"
+        ></v-text-field>
+      </template>
+      <v-time-picker
+        v-if="menu"
         :value="value"
-        clearable
-        inputmode='none'
-        maxlength="5"
-        v-bind="attrs"
-        @click="selectOnClick"
-        @input="setDate"
-        v-on="on"
-        @click:clear="$emit('input','')"
-        @keyup.enter="menu = false"
-        @keydown.up.prevent="upDownHandler"
-        @keydown.down.prevent="upDownHandler"
-        @keydown.left.prevent="leftRightHandler"
-        @keydown.right.prevent="leftRightHandler"
-      ></v-text-field>
-    </template>
-    <v-time-picker
-      v-if="menu"
-      :value="value"
-      format="24hr"
-      full-width
-      scrollable
-      @input="$emit('input', $event)"
-      @click:minute="menu = false"
-    ></v-time-picker>
-  </v-menu>
+        format="24hr"
+        full-width
+        scrollable
+        @input="$emit('input', $event)"
+        @click:minute="menu = false"
+      ></v-time-picker>
+    </v-menu>
+    <v-overlay v-if="localOverlay" :value="menu"/>
+  </div>
 </template>
 
 <script>
@@ -61,6 +64,16 @@
       rules: {
         type: Array,
         required: false
+      },
+      overlay: {
+        type: String,
+        required: false,
+        default: null
+      }
+    },
+    created () {
+      if (this.overlay === '') {
+        this.localOverlay = true
       }
     },
     computed: {

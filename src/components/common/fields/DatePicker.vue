@@ -1,39 +1,42 @@
 <template>
-  <v-menu
-    v-model="menu"
-    :close-on-content-click="false"
-    min-width="auto"
-    offset-y
-  >
-    <template v-slot:activator="{ on, attrs }">
-      <v-text-field
-        ref="input"
-        v-mask="'##.##.####'"
-        :label="label"
-        :placeholder="$t('Date')"
-        :rules="applyRules"
-        :value="dateFormat"
-        clearable
-        inputmode='none'
-        maxlength="10"
-        v-bind="attrs"
-        @click="selectOnClick"
-        @input="setDate"
-        v-on="on"
-        @click:clear="$emit('input',''); menu = true"
-        @keyup.enter="menu = false"
-        @keydown.up.prevent="upDownHandler"
-        @keydown.down.prevent="upDownHandler"
-        @keydown.left.prevent="leftRightHandler"
-        @keydown.right.prevent="leftRightHandler"
-      ></v-text-field>
-    </template>
-    <v-date-picker
-      :show-current="false"
-      :value="value"
-      @input="save"
-    ></v-date-picker>
-  </v-menu>
+  <div>
+    <v-menu
+      v-model="menu"
+      :close-on-content-click="false"
+      min-width="auto"
+      offset-y
+    >
+      <template v-slot:activator="{ on, attrs }">
+        <v-text-field
+          ref="input"
+          v-mask="'##.##.####'"
+          :label="label"
+          :placeholder="$t('Date')"
+          :rules="applyRules"
+          :value="dateFormat"
+          clearable
+          inputmode='none'
+          maxlength="10"
+          v-bind="attrs"
+          @click="selectOnClick"
+          @input="setDate"
+          v-on="on"
+          @click:clear="$emit('input',''); menu = true"
+          @keyup.enter="menu = false"
+          @keydown.up.prevent="upDownHandler"
+          @keydown.down.prevent="upDownHandler"
+          @keydown.left.prevent="leftRightHandler"
+          @keydown.right.prevent="leftRightHandler"
+        ></v-text-field>
+      </template>
+      <v-date-picker
+        :show-current="false"
+        :value="value"
+        @input="save"
+      ></v-date-picker>
+    </v-menu>
+    <v-overlay v-if="localOverlay" :value="menu"/>
+  </div>
 </template>
 
 <script>
@@ -61,6 +64,16 @@
       label: {
         type: String,
         required: false
+      },
+      overlay: {
+        type: String,
+        required: false,
+        default: null
+      }
+    },
+    created () {
+      if (this.overlay === '') {
+        this.localOverlay = true
       }
     },
     computed: {
