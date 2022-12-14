@@ -39,7 +39,7 @@
         @click:minute="menu = false"
       ></v-time-picker>
     </v-menu>
-    <v-overlay v-if="localOverlay" :value="menu"/>
+    <v-overlay :value="overlay && menu"></v-overlay>
   </div>
 </template>
 
@@ -66,14 +66,9 @@
         required: false
       },
       overlay: {
-        type: String,
+        type: Boolean,
         required: false,
-        default: null
-      }
-    },
-    created () {
-      if (this.overlay === '') {
-        this.localOverlay = true
+        default: false
       }
     },
     computed: {
@@ -109,10 +104,10 @@
         }
         // ArrowUp
         if (e.keyCode === 38) {
-          this.$emit('input', dayjs(`2022-01-01 ${this.value}`,'YYYY-MM-DD HH:mm').add(1, this.selectedPeriod).format('HH:mm'))
+          this.$emit('input', dayjs(`2022-01-01 ${this.value}`, 'YYYY-MM-DD HH:mm').add(1, this.selectedPeriod).format('HH:mm'))
 
         } else {
-          this.$emit('input', dayjs(`2022-01-01 ${this.value}`,'YYYY-MM-DD HH:mm').subtract(1, this.selectedPeriod).format('HH:mm'))
+          this.$emit('input', dayjs(`2022-01-01 ${this.value}`, 'YYYY-MM-DD HH:mm').subtract(1, this.selectedPeriod).format('HH:mm'))
         }
         this.setSelection(e.target)
       },

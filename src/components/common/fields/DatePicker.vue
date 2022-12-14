@@ -35,7 +35,7 @@
         @input="save"
       ></v-date-picker>
     </v-menu>
-    <v-overlay v-if="localOverlay" :value="menu"/>
+    <v-overlay :value="overlay && menu"></v-overlay>
   </div>
 </template>
 
@@ -66,14 +66,9 @@
         required: false
       },
       overlay: {
-        type: String,
+        type: Boolean,
         required: false,
-        default: null
-      }
-    },
-    created () {
-      if (this.overlay === '') {
-        this.localOverlay = true
+        default: false
       }
     },
     computed: {
