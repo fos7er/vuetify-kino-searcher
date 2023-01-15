@@ -60,7 +60,6 @@
     mixins: [clearForm],
     data () {
       return {
-        loading: false,
         form: {
           email: '',
           password: '',
@@ -68,19 +67,23 @@
         }
       }
     },
+    computed: {
+      loading() {
+        return this.$store.state.auth.isLoading
+      }
+    },
     methods: {
-      register () {
+      async register () {
         if (!this.$refs.form.validate()) return
         const { email, password } = this.form
-        this.loading = true
-        this.$store
-          .dispatch('auth/register', { email, password })
-          .then(() => {
-            this.clearForm()
-          })
-          .finally(() => {
-            this.loading = false
-          })
+        try {
+          await this.$store.dispatch('auth/register', { email, password })
+          await this.$router.push('/profile/settings')
+          this.$store.commit('SET_SUCCESS', 'Successfully registration', { root: true })
+        } catch (e) {
+          this.clearForm()
+          this.form.email = email
+        }
       },
       focusPassword () {
         this.$refs.password.focus()
