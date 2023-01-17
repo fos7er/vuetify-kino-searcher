@@ -36,7 +36,7 @@
       </v-btn>
       <router-link to="/"
       ><img
-        :src="require('../assets/images/logo-white.png')"
+        :src="isDarkTheme ? require('../assets/images/logo-white.png') : require('../assets/images/logo-black.png') "
         class="ml-12 logo d-none d-md-block"
         height="64"
         width="auto"
@@ -79,6 +79,7 @@
 <script>
   import autocomplete from '@/components/common/HeaderAutocomplete'
   import HeaderMenu from '@/components/header/HeaderMenu'
+  import { mapGetters } from 'vuex'
 
   export default {
     components: {
@@ -137,9 +138,10 @@
       }
     },
     computed: {
-      allLang () {
-        return this.$store.getters['userSettings/allLang']
-      }
+      ...mapGetters({
+        allLang: 'userSettings/allLang',
+        isDarkTheme: 'userSettings/isDarkTheme'
+      })
     },
     mounted () {
       this.$watch(

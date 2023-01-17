@@ -18,6 +18,9 @@ const getters = {
       result.push(languages[key])
     }
     return result
+  },
+  isDarkTheme() {
+    return vuetify.framework.theme.dark === true
   }
 }
 
