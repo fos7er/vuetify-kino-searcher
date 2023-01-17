@@ -1,15 +1,20 @@
 import languages from '@/locales/languages'
 import i18n from '@/plugins/i18n'
 import vuetify from '@/plugins/vuetify'
+import { LocalStorage } from '@/utils/WebStorage'
+import defaultLang from '@/utils/defaultLang'
 
 const state = {
-  lang: null,
-  availableLanguages: languages
+  availableLanguages: languages,
+  settings: LocalStorage.settings || {
+    lang: defaultLang(),
+    theme: vuetify.framework.theme.dark === true ? 'dark' : 'light'
+  }
 }
 
 const getters = {
   lang (state) {
-    return state.lang
+    return state.settings.lang
   },
   allLang (state) {
     const languages = state.availableLanguages
@@ -19,17 +24,19 @@ const getters = {
     }
     return result
   },
-  isDarkTheme() {
-    return vuetify.framework.theme.dark === true
+  theme (state) {
+    return state.settings.theme
   }
 }
 
 const mutations = {
-  SET_LANG (state, payload) {
-    state.lang = payload
-    vuetify.framework.lang.current = state.lang
-    i18n.locale = state.lang
-    localStorage.setItem('lang', payload)
+  SET_SETTINGS (state, payload) {
+    //TODO check settings: every settings in default settings
+    state.settings = { ...state.settings, ...payload }
+    vuetify.framework.lang.current = i18n.locale = state.settings.lang
+    LocalStorage.settings = state.settings
+    vuetify.framework.theme.dark = state.settings.theme === 'dark'
+    document.documentElement.style.setProperty('--colorTheme', state.settings.theme)
   }
 }
 

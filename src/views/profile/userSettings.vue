@@ -63,9 +63,11 @@
                 <v-col
                 >
                   <v-switch
-                    v-model="form.darkTheme"
+                    v-model="form.theme"
                     :label="$t('Dark theme')"
-                    @change="saveTheme({ theme: $event ? 'dark' : 'light' })"
+                    true-value="dark"
+                    false-value="light"
+                    @change="themePreview"
                   />
                 </v-col>
               </v-row>
@@ -84,7 +86,6 @@
 <script>
   import dayjs from 'dayjs'
   import fieldDatePicker from '@/components/common/fields/DatePicker'
-  import vuetify from '@/plugins/vuetify'
 
   export default {
     components: { fieldDatePicker },
@@ -96,7 +97,7 @@
           gender: 'male',
           birthDate: dayjs().format('YYYY-MM-DD'),
           contacts: '',
-          darkTheme: true
+          theme: this.$store.getters['userSettings/theme']
         },
         datePickerMenu: false
       }
@@ -105,10 +106,11 @@
       focusGender () {},
       save () {
         const data = this.prepareData()
-        vuetify.framework.theme.dark = data.darkTheme
-        document.documentElement.style.setProperty('--colorTheme', data.darkTheme ? 'dark' : 'light')
+        this.$store.commit('userSettings/SET_SETTINGS', { theme: data.theme })
       },
-      saveTheme () {},
+      themePreview () {
+        this.$store.commit('userSettings/SET_SETTINGS', { theme: this.form.theme })
+      },
       prepareData () {
         return this.form
       }

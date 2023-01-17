@@ -46,7 +46,7 @@
       </v-btn>
       <router-link to="/"
       ><img
-        :src="isDarkTheme ? require('../assets/images/logo-white.png') : require('../assets/images/logo-black.png') "
+        :src="theme === 'dark' ? require('../assets/images/logo-white.png') : require('../assets/images/logo-black.png') "
         class="ml-12 logo d-none d-md-block"
         height="64"
         width="auto"
@@ -63,7 +63,7 @@
               :item-text="selectText"
               :items="allLang"
               :value="$store.getters['userSettings/lang']"
-              class="ml-auto lang-select"
+              class="ml-auto lang-select elevation-0"
               dense
               hide-details
               item-value="id"
@@ -123,7 +123,7 @@
     },
     methods: {
       changeLang (lang) {
-        this.$store.commit('userSettings/SET_LANG', lang)
+        this.$store.commit('userSettings/SET_SETTINGS', { lang })
       },
       setSelectText (isOpen) {
         if (isOpen) {
@@ -150,7 +150,7 @@
     computed: {
       ...mapGetters({
         allLang: 'userSettings/allLang',
-        isDarkTheme: 'userSettings/isDarkTheme'
+        theme: 'userSettings/theme'
       })
     },
     mounted () {

@@ -3,17 +3,16 @@ import App from './App.vue'
 import i18n from './plugins/i18n'
 import movieAPI from './api/movieAPI'
 import router from './router'
-import store from './store'
 import Vue from 'vue'
 import vuetify from './plugins/vuetify'
+import store from './store'
 import { VueMaskDirective } from 'v-mask'
 import globalRules from '@/plugins/mixins/globalRules'
 import DialogConfirm from './components/common/DialogConfirm'
 
 Vue.prototype.movieAPI = movieAPI
 Vue.config.productionTip = false
-
-vuetify.framework.theme.dark = true
+document.documentElement.style.setProperty('--colorTheme', store.getters['userSettings/theme'])
 
 Vue.directive('mask', VueMaskDirective)
 Vue.component('dialog-confirm', DialogConfirm)

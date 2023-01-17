@@ -17,6 +17,7 @@ export default new Vuetify({
       dark: {
         accent: colors.amber.darken4
       }
-    }
+    },
+    dark:true
   }
 })

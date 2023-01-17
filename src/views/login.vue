@@ -50,18 +50,21 @@
     mixins: [clearForm],
     data () {
       return {
-        loading: false,
         form: {
           email: '',
           password: ''
         }
       }
     },
+    computed: {
+      loading() {
+        return this.$store.state.isLoading
+      }
+    },
     methods: {
       async doLogin () {
         if (!this.$refs.form.validate()) return
         const { email, password } = this.form
-        this.loading = true
         try {
           await this.$store.dispatch('auth/login', { email, password })
           this.$store.commit('SET_SUCCESS', 'Logged in', { root: true })
