@@ -26,7 +26,6 @@
       movieClickHandler (payload) {
         this.movieDialogData = payload
         this.movieDialog = true
-        this.$store.commit('auth/login', { some: 1 })
       }
     }
   }

@@ -8,7 +8,7 @@
       fixed
     >
       <v-list>
-        <v-list-item v-for="(item, i) in drawerItems" :key="i" :to="item.to" exact router>
+        <v-list-item  @click="drawer = false" v-for="(item, i) in drawerItems" :key="i" :to="item.to" exact router>
           <v-list-item-action>
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-item-action>
@@ -19,7 +19,7 @@
       </v-list>
       <template #append>
         <v-list dense>
-          <v-list-item @click.stop="miniVariant = !miniVariant">
+          <v-list-item @click.stop="drawer = false">
             <v-list-item-icon>
               <v-icon v-text="miniVariant ? 'mdi-arrow-collapse-right' : 'mdi-arrow-collapse-left'"/>
             </v-list-item-icon>
@@ -36,6 +36,7 @@
       height="80"
       hide-on-scroll
       scroll-threshold="100"
+      @click="drawer = false"
     >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"/>
       <!-- <v-btn icon @click.stop="miniVariant = !miniVariant">
@@ -76,11 +77,11 @@
       <header-menu/>
     </v-app-bar>
     <v-main class="wrapper">
-      <v-container>
+      <v-container @click="drawer = false">
         <router-view></router-view>
       </v-container>
     </v-main>
-    <v-footer :absolute="!fixed" app>
+    <v-footer :absolute="!fixed" app @click="drawer = false">
       <span>&copy; {{ new Date().getFullYear() }}</span>
     </v-footer>
   </div>
@@ -105,18 +106,7 @@
         appBarHeight: 55,
         selectText: 'shortName',
         //genres
-        drawerItems: [
-          {
-            icon: 'mdi-apps',
-            title: 'Welcome',
-            to: '/'
-          },
-          {
-            icon: 'mdi-chart-bubble',
-            title: 'Inspire',
-            to: '/inspire'
-          }
-        ],
+        drawerItems: [],
         miniVariant: false,
         title: 'KINO Searcher'
       }
