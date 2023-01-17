@@ -1,8 +1,9 @@
 {
   "email": "Email",
+  "collapse": "Collapse",
   "enterMovieName": "Enter movie name",
   "explore": "Explore",
-  "forgotPassword": "Forgot your passwrod?",
+  "forgotPassword": "Forgot your password?",
   "login": "Login",
   "logout": "Logout",
   "logoutConfirm": "Are you sure you want to logout?",

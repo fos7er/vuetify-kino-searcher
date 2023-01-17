@@ -17,6 +17,16 @@
           </v-list-item-content>
         </v-list-item>
       </v-list>
+      <template #append>
+        <v-list dense>
+          <v-list-item @click.stop="miniVariant = !miniVariant">
+            <v-list-item-icon>
+              <v-icon v-text="miniVariant ? 'mdi-arrow-collapse-right' : 'mdi-arrow-collapse-left'"/>
+            </v-list-item-icon>
+            <v-list-item-title v-text="$t('collapse')"/>
+          </v-list-item>
+        </v-list>
+      </template>
     </v-navigation-drawer>
     <v-app-bar
       ref="appBar"
