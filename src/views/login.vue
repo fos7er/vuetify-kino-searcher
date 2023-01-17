@@ -58,26 +58,21 @@
       }
     },
     methods: {
-      doLogin () {
+      async doLogin () {
         if (!this.$refs.form.validate()) return
         const { email, password } = this.form
         this.loading = true
-        this.$store
-          .dispatch('auth/login', { email, password })
-          .then(() => {
-            this.clearForm()
-          })
-          .finally(() => {
-            this.loading = false
-          })
+        try {
+          await this.$store.dispatch('auth/login', { email, password })
+          this.$store.commit('SET_SUCCESS', 'Logged in', { root: true })
+          this.clearForm()
+          this.$router.push('/')
+        } catch (e) {
+          this.form.email = email
+        }
       },
       focusPassword () {
         this.$refs.password.focus()
-      }
-    },
-    created () {
-      if (this.$route.query.redirect) {
-        this.$store.commit('SET_WARNING', this.$t('pleaseLogin'))
       }
     }
   }

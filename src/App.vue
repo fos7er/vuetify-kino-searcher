@@ -63,6 +63,9 @@
     },
     beforeDestroy () {
       this.$store.commit('RESET_SNACKBAR')
+    },
+    beforeMount () {
+      this.$store.dispatch('auth/refresh')
     }
   }
 </script>

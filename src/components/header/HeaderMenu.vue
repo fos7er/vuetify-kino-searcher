@@ -12,35 +12,35 @@
       </v-btn>
     </template>
     <v-list>
-      <v-list-item exact to="/registration">
+      <v-list-item v-if="!isLoggedIn" exact to="/registration">
         <v-list-item-action>
           <v-icon>mdi-account-check</v-icon>
         </v-list-item-action>
         <v-list-item-title v-text="$t('registration')"/>
       </v-list-item>
       <v-divider/>
-      <v-list-item exact to="/login">
+      <v-list-item v-if="!isLoggedIn" exact to="/login">
         <v-list-item-action>
           <v-icon>mdi-account-key</v-icon>
         </v-list-item-action>
         <v-list-item-title v-text="$t('login')"/>
       </v-list-item>
       <v-divider/>
-      <v-list-item exact to="/profile">
+      <v-list-item v-if="isLoggedIn" exact to="/profile">
         <v-list-item-action>
           <v-icon>mdi-account-circle</v-icon>
         </v-list-item-action>
         <v-list-item-title v-text="$t('profile')"/>
       </v-list-item>
       <v-divider/>
-      <v-list-item exact to="/profile/settings">
+      <v-list-item v-if="isLoggedIn" exact to="/profile/settings">
         <v-list-item-action>
           <v-icon>mdi-tune-variant</v-icon>
         </v-list-item-action>
         <v-list-item-title v-text="$t('settings')"/>
       </v-list-item>
       <v-divider/>
-      <v-list-item exact to="/logout">
+      <v-list-item v-if="isLoggedIn" exact @click="logout">
         <v-list-item-action>
           <v-icon>mdi-exit-to-app</v-icon>
         </v-list-item-action>
@@ -51,7 +51,21 @@
 </template>
 
 <script>
-  export default {}
+  import { mapGetters } from 'vuex'
+  export default {
+    computed: {
+      ...mapGetters({
+        isLoggedIn: 'auth/isLoggedIn'
+      })
+    },
+    methods:{
+      async logout() {
+        await this.$store.dispatch('auth/logout')
+        this.$router.push('/')
+      }
+    }
+
+  }
 </script>
 
 <style lang="scss" scoped></style>

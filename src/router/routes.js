@@ -28,7 +28,7 @@ const routes = [
       {
         path: 'profile',
         component: Profile,
-        children: [{ path: 'settings', component: UserSettings, meta: { ...noAuth } }]
+        children: [{ path: 'settings', component: UserSettings, meta: { ...reqAuth } }]
       }
     ]
   },

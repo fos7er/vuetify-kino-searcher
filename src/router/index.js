@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import routes from './routes'
+import store from '@/store/index'
 
 Vue.use(VueRouter)
 
@@ -10,14 +11,9 @@ const router = new VueRouter({
   routes
 })
 
-const auth = {
-  isLoggedIn () {
-    return false
-  }
-}
-
 router.beforeEach((to, from, next) => {
-  if (to.meta.requiresAuth && !auth.isLoggedIn()) {
+  const isLoggedIn = store.getters['auth/isLoggedIn']
+  if (to.meta.reqAuth && !isLoggedIn) {
     next({
       path: '/login',
       query: { redirect: to.fullPath }
