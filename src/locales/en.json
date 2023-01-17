@@ -5,6 +5,7 @@
   "forgotPassword": "Forgot your passwrod?",
   "login": "Login",
   "logout": "Logout",
+  "logoutConfirm": "Are you sure you want to logout?",
   "message": "hello i18n !!",
   "noDescription": "No description",
   "overview": "Overview",

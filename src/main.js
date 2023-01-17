@@ -8,6 +8,7 @@ import Vue from 'vue'
 import vuetify from './plugins/vuetify'
 import { VueMaskDirective } from 'v-mask'
 import globalRules from '@/plugins/mixins/globalRules'
+import DialogConfirm from './components/common/DialogConfirm'
 
 Vue.prototype.movieAPI = movieAPI
 Vue.config.productionTip = false
@@ -15,6 +16,7 @@ Vue.config.productionTip = false
 vuetify.framework.theme.dark = true
 
 Vue.directive('mask', VueMaskDirective)
+Vue.component('dialog-confirm', DialogConfirm)
 
 Vue.mixin({
   data () {

@@ -5,6 +5,7 @@
   "forgotPassword": "Забыли свой пароль?",
   "login": "Вход",
   "logout": "Выход",
+  "logoutConfirm": "Вы уверены, что хотите выйти?",
   "message": "hello i18n !!",
   "noDescription": "Описание отсутствует",
   "overview": "Обзор",
