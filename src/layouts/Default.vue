@@ -19,7 +19,7 @@
       </v-list>
       <template #append>
         <v-list dense>
-          <v-list-item @click.stop="drawer = false">
+          <v-list-item>
             <v-list-item-icon>
               <v-icon v-text="miniVariant ? 'mdi-arrow-collapse-right' : 'mdi-arrow-collapse-left'"/>
             </v-list-item-icon>
@@ -91,6 +91,7 @@
   import autocomplete from '@/components/common/HeaderAutocomplete'
   import HeaderMenu from '@/components/header/HeaderMenu'
   import { mapGetters } from 'vuex'
+  import {movieGenreIcons} from '@/dicts/index'
 
   export default {
     components: {
@@ -130,7 +131,7 @@
       generateGenres (genres) {
         this.drawerItems = genres.map((genre) => {
           return {
-            icon: 'mdi-chart-bubble',
+            icon: movieGenreIcons[genre.id],
             title: genre.name,
             to: `/genre/${genre.id}`
           }
