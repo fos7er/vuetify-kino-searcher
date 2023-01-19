@@ -1,0 +1,76 @@
+<template>
+  <v-navigation-drawer
+    :value="$store.getters['controls/isShowDrawer']"
+    :clipped="$store.getters['controls/isClippedDrawer']"
+    :mini-variant="$store.getters['controls/isMiniDrawer']"
+    :style="`padding-top:${$store.getters['controls/headerHeight']}px`"
+    fixed
+  >
+    <v-list>
+      <v-list-item  @click="setDrawer(false)" v-for="(item, i) in drawerItems" :key="i" :to="item.to" exact router>
+        <v-list-item-action>
+          <v-icon>{{ item.icon }}</v-icon>
+        </v-list-item-action>
+        <v-list-item-content>
+          <v-list-item-title v-text="item.title"/>
+        </v-list-item-content>
+      </v-list-item>
+    </v-list>
+    <template #append>
+      <v-list dense>
+        <v-list-item>
+          <v-list-item-icon>
+            <v-icon v-text="$store.getters['controls/isMiniDrawer'] ? 'mdi-arrow-collapse-right' : 'mdi-arrow-collapse-left'"/>
+          </v-list-item-icon>
+          <v-list-item-title v-text="$t('collapse')"/>
+        </v-list-item>
+      </v-list>
+    </template>
+  </v-navigation-drawer>
+</template>
+
+<script>
+  import { movieGenreIcons } from '@/dicts'
+
+  export default {
+    components: {},
+    data () {
+      return {
+        drawerItems: []
+      }
+    },
+    created () {
+      this.getAllGenres()
+    },
+    watch: {
+      '$vuetify.lang.current' () {
+        this.getAllGenres()
+      }
+    },
+    computed: {
+    },
+    methods: {
+      setDrawer(value) {
+        this.$store.commit('controls/SET_DRAWER', value)
+      },
+      getAllGenres () {
+        this.movieAPI.getAllGenres().then((res) => {
+          this.generateGenres(res.genres)
+        })
+      },
+      generateGenres (genres) {
+        this.drawerItems = genres.map((genre) => {
+          return {
+            icon: movieGenreIcons[genre.id],
+            title: genre.name,
+            to: `/genre/${genre.id}`
+          }
+        })
+      }
+    }
+  }
+</script>
+
+<style lang="scss" scoped>
+
+</style>

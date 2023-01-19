@@ -1,33 +1,6 @@
 <template>
   <div>
-    <v-navigation-drawer
-      v-model="drawer"
-      :clipped="clipped"
-      :mini-variant="miniVariant"
-      :style="`padding-top:${appBarHeight}px`"
-      fixed
-    >
-      <v-list>
-        <v-list-item  @click="drawer = false" v-for="(item, i) in drawerItems" :key="i" :to="item.to" exact router>
-          <v-list-item-action>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title v-text="item.title"/>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-      <template #append>
-        <v-list dense>
-          <v-list-item>
-            <v-list-item-icon>
-              <v-icon v-text="miniVariant ? 'mdi-arrow-collapse-right' : 'mdi-arrow-collapse-left'"/>
-            </v-list-item-icon>
-            <v-list-item-title v-text="$t('collapse')"/>
-          </v-list-item>
-        </v-list>
-      </template>
-    </v-navigation-drawer>
+    <Drawer/>
     <v-app-bar
       ref="appBar"
       :clipped-left="clipped"
@@ -42,7 +15,7 @@
       <!-- <v-btn icon @click.stop="miniVariant = !miniVariant">
         <v-icon>mdi-{{ `chevron-${miniVariant ? 'right' : 'left'}` }}</v-icon>
       </v-btn> -->
-      <v-btn class="d-none d-md-flex" icon @click.stop="fixed = !fixed">
+      <v-btn class="d-none d-md-flex" icon @click.stop="toggleFooter">
         <v-icon>mdi-minus</v-icon>
       </v-btn>
       <router-link to="/"
@@ -77,42 +50,40 @@
       <header-menu/>
     </v-app-bar>
     <v-main class="wrapper">
-      <v-container @click="drawer = false">
+      <v-container @click="setDrawer(false)">
         <router-view></router-view>
       </v-container>
     </v-main>
-    <v-footer :absolute="!fixed" app @click="drawer = false">
-      <span>&copy; {{ new Date().getFullYear() }}</span>
-    </v-footer>
+    <Footer/>
   </div>
 </template>
 
 <script>
-  import autocomplete from '@/components/common/HeaderAutocomplete'
-  import HeaderMenu from '@/components/header/HeaderMenu'
+  import autocomplete from '@/components/controls/header/HeaderAutocomplete'
+  import HeaderMenu from '@/components/controls/header/HeaderMenu'
+  import Footer from '@/components/controls/Footer'
+  import Drawer from '@/components/controls/Drawer'
   import { mapGetters } from 'vuex'
-  import {movieGenreIcons} from '@/dicts/index'
 
   export default {
     components: {
       autocomplete,
-      HeaderMenu
+      Drawer,
+      HeaderMenu,
+      Footer
     },
     name: 'DefaultLayout',
     data () {
       return {
-        clipped: true,
-        drawer: false,
-        fixed: false,
         appBarHeight: 55,
         selectText: 'shortName',
-        //genres
-        drawerItems: [],
-        miniVariant: false,
         title: 'KINO Searcher'
       }
     },
     methods: {
+      setDrawer(value) {
+        this.$store.commit('controls/SET_DRAWER', value)
+      },
       changeLang (lang) {
         this.$store.commit('userSettings/SET_SETTINGS', { lang })
       },
@@ -123,19 +94,8 @@
         }
         this.selectText = 'shortName'
       },
-      getAllGenres () {
-        this.movieAPI.getAllGenres().then((res) => {
-          this.generateGenres(res.genres)
-        })
-      },
-      generateGenres (genres) {
-        this.drawerItems = genres.map((genre) => {
-          return {
-            icon: movieGenreIcons[genre.id],
-            title: genre.name,
-            to: `/genre/${genre.id}`
-          }
-        })
+      toggleFooter() {
+        this.$store.commit('controls/TOGGLE_FOOTER')
       }
     },
     computed: {
@@ -154,14 +114,6 @@
         }
       )
       this.appBarHeight = this.$refs.appBar.$el.clientHeight || this.$refs.appBar.$el.offsetHeight
-    },
-    created () {
-      this.getAllGenres()
-    },
-    watch: {
-      '$vuetify.lang.current' () {
-        this.getAllGenres()
-      }
     }
   }
 </script>
