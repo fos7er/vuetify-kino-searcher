@@ -1,6 +1,6 @@
 <template>
   <v-footer :absolute="!isFixedFooter" app>
-    <span>&copy; {{ new Date().getFullYear() }}</span>
+    <span>{{$t('author')}} &copy; {{ new Date().getFullYear() }}</span>
   </v-footer>
 </template>
 

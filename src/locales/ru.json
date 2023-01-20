@@ -1,4 +1,5 @@
 {
+  "author": "Александр Куркин",
   "email": "Email",
   "collapse": "Свернуть",
   "enterMovieName": "Введите название фильма",
@@ -7,7 +8,6 @@
   "login": "Вход",
   "logout": "Выход",
   "logoutConfirm": "Вы уверены, что хотите выйти?",
-  "message": "hello i18n !!",
   "noDescription": "Описание отсутствует",
   "overview": "Обзор",
   "password": "Пароль",

@@ -16,7 +16,9 @@
     prepend-icon="mdi-magnify"
     return-object
     solo
-  ></v-autocomplete>
+    append-icon=""
+  >
+  </v-autocomplete>
 </template>
 
 <script>
