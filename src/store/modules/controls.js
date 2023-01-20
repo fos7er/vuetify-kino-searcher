@@ -1,7 +1,6 @@
-
 const state = {
+  isClipped: true,
   drawer: {
-    isClipped: true,
     isShow: false,
     //genres
     drawerItems: [],
@@ -10,32 +9,38 @@ const state = {
   header: {
     height: 55
   },
-  footer: {isFixed: false}
+  footer: { isFixed: false }
 }
 const getters = {
-  isFixedFooter(state) {
+  isFixedFooter (state) {
     return state.footer.isFixed
   },
-  isShowDrawer(state) {
+  isShowDrawer (state) {
     return state.drawer.isShow
   },
-  isMiniDrawer(state) {
+  isMiniDrawer (state) {
     return state.drawer.isMini
   },
-  isClippedDrawer(state) {
-    return state.drawer.isClipped
+  isClipped (state) {
+    return state.isClipped
   },
-  headerHeight(state) {
+  headerHeight (state) {
     return state.header.height
   }
 }
 const actions = {}
 const mutations = {
-  TOGGLE_FOOTER(state) {
-    state.footer.isFixed = !state.footer.isFixed
+  SET_HEADER_HEIGHT (state, payload) {
+    state.header.height = payload
   },
-  SET_DRAWER(state, payload) {
+  SET_DRAWER (state, payload) {
     state.drawer.isShow = payload
+  },
+  TOGGLE_DRAWER (state) {
+    state.drawer.isShow = !state.drawer.isShow
+  },
+  TOGGLE_FOOTER (state) {
+    state.footer.isFixed = !state.footer.isFixed
   }
 }
 export default {

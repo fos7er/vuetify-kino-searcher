@@ -1,7 +1,7 @@
 <template>
   <v-navigation-drawer
     :value="$store.getters['controls/isShowDrawer']"
-    :clipped="$store.getters['controls/isClippedDrawer']"
+    :clipped="$store.getters['controls/isClipped']"
     :mini-variant="$store.getters['controls/isMiniDrawer']"
     :style="`padding-top:${$store.getters['controls/headerHeight']}px`"
     fixed
@@ -18,7 +18,7 @@
     </v-list>
     <template #append>
       <v-list dense>
-        <v-list-item>
+        <v-list-item @click="setDrawer(false)">
           <v-list-item-icon>
             <v-icon v-text="$store.getters['controls/isMiniDrawer'] ? 'mdi-arrow-collapse-right' : 'mdi-arrow-collapse-left'"/>
           </v-list-item-icon>
@@ -33,7 +33,6 @@
   import { movieGenreIcons } from '@/dicts'
 
   export default {
-    components: {},
     data () {
       return {
         drawerItems: []
@@ -46,8 +45,6 @@
       '$vuetify.lang.current' () {
         this.getAllGenres()
       }
-    },
-    computed: {
     },
     methods: {
       setDrawer(value) {
@@ -70,7 +67,3 @@
     }
   }
 </script>
-
-<style lang="scss" scoped>
-
-</style>
