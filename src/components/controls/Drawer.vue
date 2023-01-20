@@ -7,12 +7,12 @@
     fixed
   >
     <v-list>
-      <v-list-item  @click="setDrawer(false)" v-for="(item, i) in drawerItems" :key="i" :to="item.to" exact router>
+      <v-list-item  @click="setDrawer(false)" v-for="(item, i) in items" :key="i" :to="item.to" exact router>
         <v-list-item-action>
           <v-icon>{{ item.icon }}</v-icon>
         </v-list-item-action>
         <v-list-item-content>
-          <v-list-item-title v-text="item.title"/>
+          <v-list-item-title v-text="item.name"/>
         </v-list-item-content>
       </v-list-item>
     </v-list>
@@ -30,16 +30,15 @@
 </template>
 
 <script>
-  import { movieGenreIcons } from '@/dicts'
 
   export default {
-    data () {
-      return {
-        drawerItems: []
-      }
-    },
     created () {
       this.getAllGenres()
+    },
+    computed: {
+      items() {
+        return this.$store.getters['mainPage/genres']
+      }
     },
     watch: {
       '$vuetify.lang.current' () {
@@ -50,19 +49,8 @@
       setDrawer(value) {
         this.$store.commit('controls/SET_DRAWER', value)
       },
-      getAllGenres () {
-        this.movieAPI.getAllGenres().then((res) => {
-          this.generateGenres(res.genres)
-        })
-      },
-      generateGenres (genres) {
-        this.drawerItems = genres.map((genre) => {
-          return {
-            icon: movieGenreIcons[genre.id],
-            title: genre.name,
-            to: `/genre/${genre.id}`
-          }
-        })
+      getAllGenres() {
+        this.$store.dispatch('mainPage/getAllGenres')
       }
     }
   }

@@ -1,34 +1,41 @@
 <template>
-  <div>
-    <movie-list :key="$route.fullPath" @movieClick="movieClickHandler"/>
-    <v-dialog v-model="movieDialog" max-width="1100px">
-      <movie-dialog-content :movie="movieDialogData" @closeDialog="movieDialog = false"/>
-    </v-dialog>
-  </div>
+  <v-row justify="center">
+    <v-col xl="10">
+      <h2 v-if="genreName" class="text-center"> {{ $t('genresPageTitle', [genreName]) }}</h2>
+      <movie-list :key="$route.fullPath" @movieClick="movieClickHandler"/>
+      <movie-dialog :movie="movieDialogData" ref="dialog"/>
+    </v-col>
+  </v-row>
+
+
 </template>
 
 <script>
-  import MovieList from '../components/mainpage/MovieList.vue'
-  import movieDialogContent from '../components/mainpage/MovieDialog.vue'
+  import MovieList from '@/components/mainpage/MovieList'
+  import MovieDialog from '@/components/mainpage/MovieDialog'
 
   export default {
     components: {
-      MovieList,
-      movieDialogContent
+      MovieDialog,
+      MovieList
     },
     data () {
       return {
-        movieDialog: false,
         movieDialogData: {}
+      }
+    },
+    computed: {
+      genreName () {
+        const genreID = +this.$route.params.genreID || null
+        return this.$store.getters['mainPage/genre'](genreID)?.name || ''
       }
     },
     methods: {
       movieClickHandler (payload) {
         this.movieDialogData = payload
-        this.movieDialog = true
+        this.$refs.dialog.open()
       }
     }
+
   }
 </script>
-
-<style lang="scss" scoped></style>

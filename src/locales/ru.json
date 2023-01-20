@@ -16,5 +16,6 @@
   "registration": "Регистрация",
   "repeatPassword": "Повторите пароль",
   "search": "Поиск",
-  "settings": "Настройки"
+  "settings": "Настройки",
+  "genresPageTitle": "Фильмы в жанре {0}"
 }

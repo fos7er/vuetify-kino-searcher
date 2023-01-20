@@ -16,5 +16,6 @@
   "registration": "Registration",
   "repeatPassword": "Repeat password",
   "search": "Search",
-  "settings": "Settings"
+  "settings": "Settings",
+  "genresPageTitle": "{0} movies"
 }

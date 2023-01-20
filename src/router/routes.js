@@ -21,8 +21,8 @@ const routes = [
     component: DefaultLayout,
     children: [
       { path: '', component: MainPage, meta: { ...noAuth } },
-      { path: 'movie/:id', component: MoviePage, meta: { ...noAuth } },
-      { path: 'genre/:id', component: MainPage, meta: { ...noAuth } },
+      { path: 'movie/:movieID', component: MoviePage, meta: { ...noAuth } },
+      { path: 'genre/:genreID', component: MainPage, meta: { ...noAuth } },
       { path: 'login', component: LoginPage, meta: { ...noAuth } },
       { path: 'registration', component: RegistrationPage, meta: { ...noAuth } },
       {
