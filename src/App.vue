@@ -34,6 +34,11 @@
       //TODO get settings from backend
       this.$store.commit('userSettings/SET_SETTINGS', {})
     },
+    watch: {
+      '$vuetify.lang.current' () {
+        this.$store.dispatch('mainPage/getAllGenres')
+      }
+    },
     computed: {
       ...mapState(['overlay']),
       success: {

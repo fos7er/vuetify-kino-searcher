@@ -33,24 +33,16 @@
 
   export default {
     created () {
-      this.getAllGenres()
+      this.$store.dispatch('mainPage/getAllGenres')
     },
     computed: {
       items() {
         return this.$store.getters['mainPage/genres']
       }
     },
-    watch: {
-      '$vuetify.lang.current' () {
-        this.getAllGenres()
-      }
-    },
     methods: {
       setDrawer(value) {
         this.$store.commit('controls/SET_DRAWER', value)
-      },
-      getAllGenres() {
-        this.$store.dispatch('mainPage/getAllGenres')
       }
     }
   }
