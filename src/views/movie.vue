@@ -76,12 +76,12 @@
       }
     },
     created () {
-      this.$store.commit('SET_OVERLAY', true)
+      this.$store.commit('ADD_OVERLAY')
       this.movieID = this.$route.params.id
       this.movieAPI
         .getMovie(this.movieID)
         .then((res) => (this.movie = res))
-        .finally(() => this.$store.commit('SET_OVERLAY'))
+        .finally(() => this.$store.commit('REMOVE_OVERLAY'))
     }
   }
 </script>

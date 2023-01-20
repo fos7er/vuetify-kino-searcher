@@ -23,6 +23,10 @@
   import debounce from '@/utils/debounce'
 
   export default {
+    created () {
+      //make search with debounce
+      this.search = debounce(this.search, 300)
+    },
     data () {
       return {
         model: null,
@@ -32,23 +36,21 @@
       }
     },
     methods: {
-      search (query) {
+      async search (query) {
         this.isLoading = true
-        this.movieAPI
-          .searchMovies(query)
-          .then((res) => {
-            return (this.items = res.results.map((item) => {
-              if (item.release_date) {
-                item.titleWithYear = `${item.title} (${new Date(item.release_date).getFullYear()})`
-              } else {
-                item.titleWithYear = item.title
-              }
-              return item
-            }))
-          })
-          .finally(() => {
-            this.isLoading = false
-          })
+        try {
+          const res = await this.movieAPI.searchMovies(query)
+          return (this.items = res.map((item) => {
+            if (item.release_date) {
+              item.titleWithYear = `${item.title} (${new Date(item.release_date).getFullYear()})`
+            } else {
+              item.titleWithYear = item.title
+            }
+            return item
+          }))
+        } finally {
+          this.isLoading = false
+        }
       }
     },
     watch: {
@@ -60,12 +62,6 @@
         if (!val || !val.id) return
         this.$router.push('/movie/' + val.id)
       }
-    },
-    created () {
-      //make search with debounce
-      this.search = debounce(this.search, 300)
     }
   }
 </script>
-
-<style lang="scss" scoped></style>
