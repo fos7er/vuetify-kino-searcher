@@ -12,7 +12,7 @@
           </v-card-title>
           <v-card-subtitle class="mt-n3">
             <span v-for="genre in movie.genres" :key="genre.id">{{ genre.name }}&nbsp;</span> &#9679;
-            <span>{{ duration }}</span>
+            <span> {{ $t('duration') }} {{ duration }}</span>
           </v-card-subtitle>
           <div class="my-4 pl-2">
             <v-row align="center">
@@ -46,6 +46,7 @@
 
 <script>
   import movieRating from '@/components/common/MovieRating'
+  import dayjs from '@/utils/dayjs'
 
   export default {
     components: {
@@ -53,7 +54,10 @@
     },
     data () {
       return {
-        movie: {},
+        movie: {
+          release_date: '2023-01-01',
+          runtime: 60
+        },
         movieID: null
       }
     },
@@ -62,12 +66,10 @@
         return `${process.env.VUE_APP_IMAGES_PATH}${this.movie.poster_path}`
       },
       releaseDateYear () {
-        return new Date(this.movie.release_date).getFullYear()
+        return dayjs(this.movie.release_date).format('YYYY')
       },
       duration () {
-        const hours = Math.floor(this.movie.runtime / 60)
-        const minutes = this.movie.runtime % 60
-        return `${hours} h ${minutes} m`
+        return dayjs.duration(this.movie.runtime, 'minutes').format('HH:mm')
       }
     },
     created () {

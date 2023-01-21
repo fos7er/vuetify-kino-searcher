@@ -20,5 +20,6 @@
   "genresPageTitle": "{0} movies",
   "favorites": "Favorites",
   "watchLater": "Watch later",
-  "genres": "genres"
+  "genres": "Genres",
+  "duration": "duration"
 }

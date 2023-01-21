@@ -50,7 +50,8 @@
 </template>
 
 <script>
-  import movieRating from '../common/MovieRating.vue'
+  import dayjs from '@/utils/dayjs'
+  import movieRating from '../common/MovieRating'
 
   export default {
     components: {
@@ -75,12 +76,10 @@
         return `${process.env.VUE_APP_IMAGES_PATH}${this.movie.poster_path}`
       },
       releaseDateYear () {
-        return new Date(this.movie.release_date).getFullYear()
+        return dayjs(this.movie.release_date || 0).format('YYYY')
       },
       duration () {
-        const hours = Math.floor(this.movie.runtime / 60)
-        const minutes = this.movie.runtime % 60
-        return `${hours} h ${minutes} m`
+        return dayjs.duration(this.movie.runtime || 0, 'minutes').format('HH:mm')
       }
     },
     updated () {

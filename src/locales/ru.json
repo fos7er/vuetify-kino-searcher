@@ -20,5 +20,6 @@
   "genresPageTitle": "Фильмы в жанре {0}",
   "favorites": "Избранное",
   "watchLater": "Смотреть позже",
-  "genres": "Жанры"
+  "genres": "Жанры",
+  "duration": "продолжительность"
 }

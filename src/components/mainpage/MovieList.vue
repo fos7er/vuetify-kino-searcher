@@ -37,10 +37,9 @@
       this.getAllMovies()
     },
     methods: {
-      movieClick (movieID) {
-        this.movieAPI.getMovie(movieID).then((response) => {
-          this.$emit('movieClick', response)
-        })
+      async movieClick (movieID) {
+        const r = await this.movieAPI.getMovie(movieID)
+        this.$emit('movieClick', r)
       },
       getAllMovies () {
         const data = {
