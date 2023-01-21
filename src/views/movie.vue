@@ -77,7 +77,7 @@
     },
     created () {
       this.$store.commit('ADD_OVERLAY')
-      this.movieID = this.$route.params.id
+      this.movieID = this.$route.params.movieID
       this.movieAPI
         .getMovie(this.movieID)
         .then((res) => (this.movie = res))
