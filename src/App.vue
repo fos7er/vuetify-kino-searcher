@@ -26,7 +26,7 @@
 </template>
 
 <script>
-  import { mapState } from 'vuex'
+  import { mapGetters, mapState } from 'vuex'
 
   export default {
     name: 'App',
@@ -37,10 +37,18 @@
     watch: {
       '$vuetify.lang.current' () {
         this.$store.dispatch('mainPage/getAllGenres')
+      },
+      isLoggedIn(v) {
+        if (v) {
+          this.$store.dispatch('userSettings/getSettings')
+        }
       }
     },
     computed: {
       ...mapState(['overlay']),
+      ...mapGetters({
+        isLoggedIn: 'auth/isLoggedIn'
+      }),
       success: {
         get: function () {
           return this.$store.state.success

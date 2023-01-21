@@ -3,6 +3,7 @@ import i18n from '@/plugins/i18n'
 import vuetify from '@/plugins/vuetify'
 import { LocalStorage } from '@/utils/WebStorage'
 import defaultLang from '@/utils/defaultLang'
+import { DB, ref, update, onValue } from '@/firebase'
 
 const state = {
   availableLanguages: languages,
@@ -40,7 +41,24 @@ const mutations = {
   }
 }
 
-const actions = {}
+const actions = {
+  async setSettings ({ commit, rootGetters }, payload) {
+    const userID = rootGetters['auth/userID']
+    if (!userID) throw Error('no user id')
+    const updates = {}
+    updates[`users/${userID}/settings`] = {...state.settings, ...payload }
+    await update(ref(DB), updates)
+    commit('SET_SETTINGS', payload)
+  },
+  getSettings({ commit,  rootGetters }) {
+    const userID = rootGetters['auth/userID']
+    const settings = ref(DB, `users/${userID}/settings`)
+    onValue(settings, (snapshot) => {
+      const data = snapshot.val()
+      commit('SET_SETTINGS', data)
+    })
+  }
+}
 
 export default {
   namespaced: true,

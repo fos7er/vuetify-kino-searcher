@@ -106,13 +106,16 @@
       focusGender () {},
       save () {
         const data = this.prepareData()
-        this.$store.commit('userSettings/SET_SETTINGS', { theme: data.theme })
+        this.$store.dispatch('userSettings/setSettings',data)
       },
       themePreview () {
         this.$store.commit('userSettings/SET_SETTINGS', { theme: this.form.theme })
       },
       prepareData () {
-        return this.form
+        return {
+          name: this.form.name,
+          theme: this.form.theme
+        }
       }
     }
   }
