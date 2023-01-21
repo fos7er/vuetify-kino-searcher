@@ -7,7 +7,7 @@ class movieAPI {
       baseURL: process.env.VUE_APP_BASE_API_URL,
       timeout: 5000
     })
-    service.interceptors.request.use( (config) => this.addRequestParams(config))
+    service.interceptors.request.use((config) => this.addRequestParams(config))
     service.interceptors.response.use(this.handleSuccess, this.handleError)
     this.service = service
     this.API_KEY = process.env.VUE_APP_API_KEY
@@ -24,15 +24,6 @@ class movieAPI {
   static _error (e) {
     const message = e?.data?.status_message || 'Something went wrong'
     store.commit('SET_ERROR', message)
-    console.error(e)
-  }
-
-  handleSuccess (response) {
-    return response.data
-  }
-
-  handleError = (err) => {
-    return Promise.reject(err.response)
   }
 
   addRequestParams (config) {
@@ -45,6 +36,15 @@ class movieAPI {
     return config
   }
 
+  handleSuccess (response) {
+    return response.data
+  }
+
+  handleError = (err) => {
+    movieAPI._error(err.response)
+    return Promise.reject(err.response)
+  }
+
   async getAllMovies ({ sortBy = 'popularity', page = 1, genres = '' } = {}) {
     store.commit('ADD_OVERLAY')
     let path = `/discover/movie?sort_by=${sortBy}.desc&include_adult=false&include_video=false&page=${page}&with_watch_monetization_types=flatrate`
@@ -54,7 +54,7 @@ class movieAPI {
     try {
       return await this.get(path)
     } catch (e) {
-      movieAPI._error(e)
+      return Promise.reject(e)
     } finally {
       store.commit('REMOVE_OVERLAY')
     }
@@ -65,7 +65,7 @@ class movieAPI {
     try {
       return await this.get(path)
     } catch (e) {
-      movieAPI._error(e)
+      return Promise.reject(e)
     }
   }
 
@@ -74,7 +74,7 @@ class movieAPI {
     try {
       return await this.get(path)
     } catch (e) {
-      movieAPI._error(e)
+      return Promise.reject(e)
     } finally {
       store.commit('REMOVE_OVERLAY')
     }
@@ -88,7 +88,7 @@ class movieAPI {
         return a[sortBy] < b[sortBy] ? 1 : -1
       })
     } catch (e) {
-      movieAPI._error(e)
+      return Promise.reject(e)
     }
   }
 

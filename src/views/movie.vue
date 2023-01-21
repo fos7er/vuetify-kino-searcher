@@ -81,6 +81,11 @@
       this.movieAPI
         .getMovie(this.movieID)
         .then((res) => (this.movie = res))
+        .catch(e => {
+          if (e.status === 404) {
+            this.$router.push('/404')
+          }
+        })
         .finally(() => this.$store.commit('REMOVE_OVERLAY'))
     }
   }
