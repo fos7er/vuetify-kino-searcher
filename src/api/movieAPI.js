@@ -7,6 +7,7 @@ class movieAPI {
       baseURL: process.env.VUE_APP_BASE_API_URL,
       timeout: 5000
     })
+    service.interceptors.request.use( (config) => this.addRequestParams(config))
     service.interceptors.response.use(this.handleSuccess, this.handleError)
     this.service = service
     this.API_KEY = process.env.VUE_APP_API_KEY
@@ -34,9 +35,19 @@ class movieAPI {
     return Promise.reject(err.response)
   }
 
+  addRequestParams (config) {
+    let startSymbol = '&'
+    if (config.url.indexOf('?') === -1) {
+      startSymbol = '?'
+    }
+    config.url = `${config.url}${startSymbol}api_key=${this.API_KEY}&language=${this.language}`
+
+    return config
+  }
+
   async getAllMovies ({ sortBy = 'popularity', page = 1, genres = '' } = {}) {
     store.commit('ADD_OVERLAY')
-    let path = `/discover/movie?api_key=${this.API_KEY}&language=${this.language}&sort_by=${sortBy}.desc&include_adult=false&include_video=false&page=${page}&with_watch_monetization_types=flatrate`
+    let path = `/discover/movie?sort_by=${sortBy}.desc&include_adult=false&include_video=false&page=${page}&with_watch_monetization_types=flatrate`
     if (genres.length) {
       path += `&with_genres=${genres}`
     }
@@ -50,7 +61,7 @@ class movieAPI {
   }
 
   async getAllGenres () {
-    const path = `/genre/movie/list?api_key=${this.API_KEY}&language=${this.language}`
+    const path = '/genre/movie/list'
     try {
       return await this.get(path)
     } catch (e) {
@@ -59,7 +70,7 @@ class movieAPI {
   }
 
   async getMovie (movieID = movieAPI._required()) {
-    const path = `/movie/${movieID}?api_key=${this.API_KEY}&language=${this.language}`
+    const path = `/movie/${movieID}`
     try {
       return await this.get(path)
     } catch (e) {
@@ -70,7 +81,7 @@ class movieAPI {
   }
 
   async searchMovies (query = movieAPI._required(), sortBy = 'popularity') {
-    const path = `/search/movie?api_key=${this.API_KEY}&language=${this.language}&query=${query}&page=1&include_adult=false`
+    const path = `/search/movie?query=${query}&page=1&include_adult=false`
     try {
       const res = await this.get(path)
       return res.results.sort((a, b) => {
