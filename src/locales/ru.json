@@ -17,5 +17,8 @@
   "repeatPassword": "Повторите пароль",
   "search": "Поиск",
   "settings": "Настройки",
-  "genresPageTitle": "Фильмы в жанре {0}"
+  "genresPageTitle": "Фильмы в жанре {0}",
+  "favorites": "Избранное",
+  "watchLater": "Смотреть позже",
+  "genres": "Жанры"
 }

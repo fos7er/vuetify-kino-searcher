@@ -17,5 +17,8 @@
   "repeatPassword": "Repeat password",
   "search": "Search",
   "settings": "Settings",
-  "genresPageTitle": "{0} movies"
+  "genresPageTitle": "{0} movies",
+  "favorites": "Favorites",
+  "watchLater": "Watch later",
+  "genres": "genres"
 }
