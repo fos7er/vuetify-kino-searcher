@@ -45,7 +45,7 @@
 </template>
 
 <script>
-  import movieRating from '@/components/common/MovieRating.vue'
+  import movieRating from '@/components/common/MovieRating'
 
   export default {
     components: {
@@ -55,11 +55,6 @@
       return {
         movie: {},
         movieID: null
-      }
-    },
-    methods: {
-      closeDialog () {
-        this.$emit('closeDialog')
       }
     },
     computed: {
