@@ -21,7 +21,7 @@ class movieAPI {
   }
 
   static _error (e) {
-    const message = e.data?.status_message || 'Something went wrong'
+    const message = e?.data?.status_message || 'Something went wrong'
     store.commit('SET_ERROR', message)
     console.error(e)
   }
