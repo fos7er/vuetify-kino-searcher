@@ -11,13 +11,16 @@ const router = new VueRouter({
   routes
 })
 
-router.beforeEach((to, from, next) => {
-  const isLoggedIn = store.getters['auth/isLoggedIn']
-  if (to.meta.reqAuth && !isLoggedIn) {
-    next({
-      path: '/login',
-      query: { redirect: to.fullPath }
-    })
+router.beforeEach(async (to, from, next) => {
+  if (to.meta.reqAuth && !store.getters['auth/isLoggedIn']) {
+    await store.dispatch('auth/refresh')
+    if (!store.getters['auth/isLoggedIn']) {
+      next({
+        path: '/login',
+        query: { redirect: to.fullPath }
+      })
+    } else next()
+
   } else next()
 })
 

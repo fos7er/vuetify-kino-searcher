@@ -8,7 +8,7 @@ const state = {
 }
 
 const getters = {
-  isLoggedIn(state) {
+  isLoggedIn (state) {
     const user = state.user
     return !!user &&
       !!user.stsTokenManager &&
@@ -65,14 +65,17 @@ const actions = {
   async refresh ({ commit }) {
     try {
       state.isLoading = true
-      auth.onAuthStateChanged(async user => {
-        if (user === null) {
-          commit('CLEAR_USER')
-        } else {
-          if (!validUser(user)) return commit('SET_ERROR', 'Invalid user structure', { root: true })
-          commit('SET_USER', user)
-        }
-        state.isLoading = true
+      return new Promise((resolve) => {
+        auth.onAuthStateChanged(async user => {
+          if (user === null) {
+            commit('CLEAR_USER')
+          } else {
+            if (!validUser(user)) return commit('SET_ERROR', 'Invalid user structure', { root: true })
+            commit('SET_USER', user)
+          }
+          state.isLoading = false
+          resolve()
+        })
       })
     } catch (e) {
       state.isLoading = false
