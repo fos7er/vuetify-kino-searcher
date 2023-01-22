@@ -3,10 +3,11 @@ import i18n from '@/plugins/i18n'
 import vuetify from '@/plugins/vuetify'
 import { LocalStorage } from '@/utils/WebStorage'
 import defaultLang from '@/utils/defaultLang'
-import { DB, ref, update, onValue } from '@/firebase'
+import { DB, onValue, ref, update } from '@/firebase'
 
 const state = {
   availableLanguages: languages,
+  subscribed: false,
   settings: LocalStorage.settings || {
     lang: defaultLang(),
     theme: vuetify.framework.theme.dark === true ? 'dark' : 'light'
@@ -38,6 +39,9 @@ const mutations = {
     LocalStorage.settings = state.settings
     vuetify.framework.theme.dark = state.settings.theme === 'dark'
     document.documentElement.style.setProperty('--colorTheme', state.settings.theme)
+  },
+  SUBSCRIBE (state) {
+    state.subscribed = true
   }
 }
 
@@ -46,17 +50,20 @@ const actions = {
     const userID = rootGetters['auth/userID']
     if (!userID) throw Error('no user id')
     const updates = {}
-    updates[`users/${userID}/settings`] = {...state.settings, ...payload }
+    updates[`users/${userID}/settings`] = { ...state.settings, ...payload }
     await update(ref(DB), updates)
     commit('SET_SETTINGS', payload)
   },
-  getSettings({ commit,  rootGetters }) {
+  getSettings ({ commit, state, rootGetters }) {
     const userID = rootGetters['auth/userID']
     const settings = ref(DB, `users/${userID}/settings`)
-    onValue(settings, (snapshot) => {
-      const data = snapshot.val()
-      commit('SET_SETTINGS', data)
-    })
+    if (!state.subscribed) {
+      onValue(settings, (snapshot) => {
+        const data = snapshot.val()
+        commit('SET_SETTINGS', data)
+      })
+      commit('SUBSCRIBE')
+    }
   }
 }
 

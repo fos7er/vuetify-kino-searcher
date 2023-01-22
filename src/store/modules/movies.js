@@ -20,13 +20,45 @@
  *  }
  * **/
 
-import { DB, ref, update } from '@/firebase'
+import { DB, onValue, ref, update } from '@/firebase'
 
 const state = {
+  subscribed: false,
   movies: {}
 }
 
-const getters = {}
+const getters = {
+  favoritesList(state) {
+    const result = []
+    for (const item of Object.values(state.movies) ) {
+      if (item.inFavorites) {
+        //TODO ADD DEEP-CLONE
+        result.push(item)
+      }
+    }
+    return result
+  },
+  watchLaterList(state) {
+    const result = []
+    for (const item of Object.values(state.movies) ) {
+      if (item.inWatchLater) {
+        //TODO ADD DEEP-CLONE
+        result.push(item)
+      }
+    }
+    return result
+  },
+  isFavorite(state) {
+    return (id) => {
+      return state.movies[id]?.inFavorites === true
+    }
+  },
+  isWatchLater(state) {
+    return (id) => {
+      return state.movies[id]?.inWatchLater === true
+    }
+  }
+}
 
 const mutations = {
   SET_MOVIE (state, payload) {
@@ -34,18 +66,29 @@ const mutations = {
   },
   UPDATE_MOVIE (state, payload) {
     if (!state.movies[payload.id]) {
-      state.movies.id = {}
+      state.movies[payload.id] = {}
     }
-    state.movies.id = { ...state.movies.id, ...payload }
+    state.movies[payload.id] = { ...state.movies[payload.id], ...payload }
   },
   SET_MOVIES (state, payload) {
     state.movies = payload
+  },
+  SUBSCRIBE (state) {
+    state.subscribed = true
   }
 }
 
 const actions = {
-  getAllMovies () {
-
+  getUserMovies ({ commit, state, rootGetters }) {
+    const userID = rootGetters['auth/userID']
+    const settings = ref(DB, `users/${userID}/movies`)
+    if (!state.subscribed) {
+      onValue(settings, (snapshot) => {
+        const data = snapshot.val()
+        commit('SET_MOVIES', data)
+      })
+      commit('SUBSCRIBE')
+    }
   },
   async updateMovie ({ commit, state, rootGetters }, payload) {
     const userID = rootGetters['auth/userID']
@@ -54,7 +97,7 @@ const actions = {
     const updates = {}
     updates[`users/${userID}/movies/${movieID}`] = { ...state.movies[movieID], ...payload }
     await update(ref(DB), updates)
-    commit('SET_MOVIE', payload)
+    commit('UPDATE_MOVIE', payload)
   }
 }
 

@@ -40,6 +40,7 @@
       isLoggedIn(v) {
         if (v) {
           this.$store.dispatch('userSettings/getSettings')
+          this.$store.dispatch('movies/getUserMovies')
         }
       }
     },

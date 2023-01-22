@@ -21,17 +21,29 @@
             <div class="my-4 pl-2">
               <v-row align="center">
                 <movie-rating :score="movie.vote_average"/>
-                <v-btn class="custom-btn" @click="addToFav">
+                <v-btn
+                  v-if="!isFavorite"
+                  class="custom-btn"
+                  @click="addToFav">
                   <v-icon>mdi-heart</v-icon>
                 </v-btn>
-                <v-btn class="custom-btn" @click="removeFromFav">
+                <v-btn
+                  v-if="isFavorite"
+                  class="custom-btn"
+                  @click="removeFromFav">
                   <v-icon>mdi-heart-outline</v-icon>
                 </v-btn>
-                <v-btn class="custom-btn">
-                  <v-icon>mdi-bookmark</v-icon>
+                <v-btn
+                  v-if="!isWatchLater"
+                  class="custom-btn"
+                  @click="addToWatchLater">
+                  <v-icon>mdi-timer-star</v-icon>
                 </v-btn>
-                <v-btn class="custom-btn">
-                  <v-icon>mdi-bookmark-outline</v-icon>
+                <v-btn
+                  v-if="isWatchLater"
+                  class="custom-btn"
+                  @click="removeFromWatchLater">
+                  <v-icon>mdi-timer-remove</v-icon>
                 </v-btn>
               </v-row>
             </div>
@@ -63,30 +75,6 @@
         dialog: false
       }
     },
-    methods: {
-      close () {
-        this.dialog = false
-      },
-      open () {
-        this.dialog = true
-      },
-      addToFav() {
-        const data = {
-          id: this.movie.id,
-          inFavorites: true,
-          dateAddedToFavorites: new Date().toISOString()
-        }
-        this.$store.dispatch('movies/updateMovie', data)
-      },
-      removeFromFav() {
-        const data = {
-          id: this.movie.id,
-          inFavorites: null,
-          dateAddedToFavorites: null
-        }
-        this.$store.dispatch('movies/updateMovie', data)
-      }
-    },
     computed: {
       posterSrcFull () {
         return `${process.env.VUE_APP_IMAGES_PATH}${this.movie.poster_path}`
@@ -96,6 +84,52 @@
       },
       duration () {
         return dayjs.duration(this.movie.runtime || 0, 'minutes').format('HH:mm')
+      },
+      isFavorite () {
+        return this.$store.getters['movies/isFavorite'](this.movie.id)
+      },
+      isWatchLater () {
+        return this.$store.getters['movies/isWatchLater'](this.movie.id)
+      }
+    },
+    methods: {
+      close () {
+        this.dialog = false
+      },
+      open () {
+        this.dialog = true
+      },
+      addToFav () {
+        const data = {
+          id: this.movie.id,
+          inFavorites: true,
+          dateAddedToFavorites: new Date().toISOString()
+        }
+        this.$store.dispatch('movies/updateMovie', data)
+      },
+      removeFromFav () {
+        const data = {
+          id: this.movie.id,
+          inFavorites: null,
+          dateAddedToFavorites: null
+        }
+        this.$store.dispatch('movies/updateMovie', data)
+      },
+      addToWatchLater () {
+        const data = {
+          id: this.movie.id,
+          inWatchLater: true,
+          dateAddedToWatchLater: new Date().toISOString()
+        }
+        this.$store.dispatch('movies/updateMovie', data)
+      },
+      removeFromWatchLater () {
+        const data = {
+          id: this.movie.id,
+          inWatchLater: null,
+          dateAddedToWatchLater: null
+        }
+        this.$store.dispatch('movies/updateMovie', data)
       }
     },
     updated () {
