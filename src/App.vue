@@ -31,8 +31,7 @@
   export default {
     name: 'App',
     created () {
-      //TODO get settings from backend
-      this.$store.commit('userSettings/SET_SETTINGS', {})
+      this.$store.dispatch('auth/refresh')
     },
     watch: {
       '$vuetify.lang.current' () {

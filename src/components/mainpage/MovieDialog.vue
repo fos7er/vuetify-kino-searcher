@@ -21,10 +21,10 @@
             <div class="my-4 pl-2">
               <v-row align="center">
                 <movie-rating :score="movie.vote_average"/>
-                <v-btn class="custom-btn">
+                <v-btn class="custom-btn" @click="addToFav">
                   <v-icon>mdi-heart</v-icon>
                 </v-btn>
-                <v-btn class="custom-btn">
+                <v-btn class="custom-btn" @click="removeFromFav">
                   <v-icon>mdi-heart-outline</v-icon>
                 </v-btn>
                 <v-btn class="custom-btn">
@@ -69,6 +69,22 @@
       },
       open () {
         this.dialog = true
+      },
+      addToFav() {
+        const data = {
+          id: this.movie.id,
+          inFavorites: true,
+          dateAddedToFavorites: new Date().toISOString()
+        }
+        this.$store.dispatch('movies/updateMovie', data)
+      },
+      removeFromFav() {
+        const data = {
+          id: this.movie.id,
+          inFavorites: null,
+          dateAddedToFavorites: null
+        }
+        this.$store.dispatch('movies/updateMovie', data)
       }
     },
     computed: {
