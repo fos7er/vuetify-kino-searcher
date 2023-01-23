@@ -73,6 +73,9 @@ const mutations = {
   SET_MOVIES (state, payload) {
     state.movies = payload
   },
+  CLEAR_MOVIES (state) {
+    state.movies = {}
+  },
   SUBSCRIBE (state) {
     state.subscribed = true
   }

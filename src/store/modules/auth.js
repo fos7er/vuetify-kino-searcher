@@ -1,5 +1,5 @@
-import { auth, DB, ref, set, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from '@/firebase'
 import AuthError from '@/error/authError'
+import { auth, createUserWithEmailAndPassword, DB, ref, set, signInWithEmailAndPassword, signOut } from '@/firebase'
 
 const state = {
   signInPassword: null,
@@ -15,11 +15,10 @@ const getters = {
       !!user.stsTokenManager.accessToken &&
       !!user.stsTokenManager.refreshToken
   },
-  userID(state) {
+  userID (state) {
     return state.user?.uid || null
   }
 }
-
 
 const mutations = {
   SET_USER (state, payload) {
@@ -37,17 +36,11 @@ const actions = {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password)
       if (!validUser(userCredential.user)) return commit('SET_ERROR', 'Invalid user structure', { root: true })
       commit('SET_USER', userCredential.user)
-      state.isLoading = false
       const userID = getters.userID
-      console.log(42,JSON.stringify(state.user))
-
       await set(ref(DB, `users/${userID}`), {
-        //playLists:'{}',
-        userID:userID
-        //settings: '{}',
-        //movies: '{}'
+        userID: userID
       })
-
+      state.isLoading = false
       return userCredential
     } catch (e) {
       state.isLoading = false
@@ -70,6 +63,8 @@ const actions = {
     try {
       await signOut(auth)
       commit('CLEAR_USER')
+      commit('userSettings/CLEAR_SETTINGS', null, { root: true })
+      commit('movies/CLEAR_MOVIES', null, { root: true })
     } catch (e) {
       state.isLoading = false
       throw new AuthError(e)
