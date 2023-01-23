@@ -60,9 +60,16 @@
       }
     },
     created () {
-      this.getTableData()
+      this.$store.dispatch('movies/getFavoriteMovies')
     },
-    watch: {},
+    watch: {
+      userMovies: {
+        handler () {
+          this.$store.dispatch('movies/getFavoriteMovies')
+        },
+        deep: true
+      }
+    },
     computed: {
       tableData () {
         return [{
@@ -149,12 +156,12 @@
       },
       loading () {
         return false
+      },
+      userMovies () {
+        return this.$store.getters['movies/favoritesList']
       }
     },
     methods: {
-      async getTableData () {
-        await this.$store.dispatch('movies/getFavoriteMovies')
-      },
       dropTable () {
         this.tableOptions.page = 1
       },

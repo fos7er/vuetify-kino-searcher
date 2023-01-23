@@ -29,6 +29,9 @@ const state = {
 }
 
 const getters = {
+  movies (state) {
+    return state.movies
+  },
   favoritesList (state) {
     const result = []
     for (const item of Object.values(state.movies)) {
@@ -105,18 +108,22 @@ const actions = {
     commit('UPDATE_MOVIE', payload)
   },
   async getFavoriteMovies ({ state, getters }) {
+    console.log('get FAVS')
     const promises = []
     getters.favoritesList.forEach(item => {
       if (getters.isFavorite(item.id) && !state.list.find(el => el.id === item.id)) {
+        console.log('new ID in favorites ', item.id)
         promises.push(MovieAPI.getMovie(item.id))
       }
     })
     state.list.push(...await Promise.all(promises))
   },
   async getWatchLaterMovies ({ state, getters }) {
+    console.log('get WL')
     const promises = []
     getters.watchLaterList.forEach(item => {
       if (getters.isWatchLater(item.id) && !state.list.find(el => el.id === item.id)) {
+        console.log('new ID in watchLater ', item.id)
         promises.push(MovieAPI.getMovie(item.id))
       }
     })
