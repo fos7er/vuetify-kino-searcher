@@ -59,12 +59,11 @@ const actions = {
       throw new AuthError(e)
     }
   },
-  async logout ({ commit, state }) {
+  async logout ({ commit, state, dispatch }) {
     try {
+      state.isLoading = true
       await signOut(auth)
-      commit('CLEAR_USER')
-      commit('userSettings/CLEAR_SETTINGS', null, { root: true })
-      commit('movies/CLEAR_MOVIES', null, { root: true })
+      state.isLoading = false
     } catch (e) {
       state.isLoading = false
       throw new AuthError(e)
@@ -77,6 +76,8 @@ const actions = {
         auth.onAuthStateChanged(async user => {
           if (user === null) {
             commit('CLEAR_USER')
+            commit('userSettings/CLEAR_SETTINGS', null, { root: true })
+            commit('movies/CLEAR_MOVIES', null, { root: true })
           } else {
             if (!validUser(user)) return commit('SET_ERROR', 'Invalid user structure', { root: true })
             commit('SET_USER', user)
