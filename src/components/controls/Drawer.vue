@@ -85,10 +85,10 @@
             icon: 'mdi-clock'
           },
           {
-            id: 3,
+            id: 2,
             type: 'group',
             name: this.$t('genres'),
-            icon: 'mdi-list',
+            icon: 'mdi-view-list',
             group: this.$store.getters['mainPage/genres']
           }
 

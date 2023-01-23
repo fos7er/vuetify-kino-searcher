@@ -1,7 +1,7 @@
 import store from '@/store'
 import axios from 'axios'
 
-class movieAPI {
+class MovieAPI {
   constructor (axios) {
     let service = axios.create({
       baseURL: process.env.VUE_APP_BASE_API_URL,
@@ -41,7 +41,7 @@ class movieAPI {
   }
 
   handleError = (err) => {
-    movieAPI._error(err.response)
+    MovieAPI._error(err.response)
     return Promise.reject(err.response)
   }
 
@@ -69,7 +69,7 @@ class movieAPI {
     }
   }
 
-  async getMovie (movieID = movieAPI._required()) {
+  async getMovie (movieID = MovieAPI._required()) {
     const path = `/movie/${movieID}`
     try {
       return await this.get(path)
@@ -80,7 +80,7 @@ class movieAPI {
     }
   }
 
-  async searchMovies (query = movieAPI._required(), sortBy = 'popularity') {
+  async searchMovies (query = MovieAPI._required(), sortBy = 'popularity') {
     const path = `/search/movie?query=${query}&page=1`
     try {
       const res = await this.get(path)
@@ -105,4 +105,4 @@ class movieAPI {
   }
 }
 
-export default new movieAPI(axios)
+export default new MovieAPI(axios)

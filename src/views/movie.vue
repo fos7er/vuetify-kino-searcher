@@ -75,7 +75,7 @@
     created () {
       this.$store.commit('ADD_OVERLAY')
       this.movieID = this.$route.params.movieID
-      this.movieAPI
+      this.MovieAPI
         .getMovie(this.movieID)
         .then((res) => (this.movie = res))
         .catch(e => {

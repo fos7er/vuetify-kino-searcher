@@ -153,10 +153,7 @@
     },
     methods: {
       async getTableData () {
-        return Promise.all([
-          //this.$store.dispatch(`${this.API}/GetListTable`),
-          //this.$store.dispatch('RateAreaCustomerAPI/GetListCached')
-        ])
+        await this.$store.dispatch('movies/getFavoriteMovies')
       },
       dropTable () {
         this.tableOptions.page = 1

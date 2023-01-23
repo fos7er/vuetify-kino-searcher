@@ -59,7 +59,7 @@ const actions = {
       throw new AuthError(e)
     }
   },
-  async logout ({ commit, state, dispatch }) {
+  async logout ({ state }) {
     try {
       state.isLoading = true
       await signOut(auth)

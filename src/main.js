@@ -1,7 +1,7 @@
 import './assets/css/style.scss'
 import App from './App.vue'
 import i18n from './plugins/i18n'
-import movieAPI from './api/movieAPI'
+import MovieAPI from './api/movieAPI'
 import router from './router'
 import Vue from 'vue'
 import vuetify from './plugins/vuetify'
@@ -10,7 +10,7 @@ import { VueMaskDirective } from 'v-mask'
 import globalRules from '@/plugins/mixins/globalRules'
 import DialogConfirm from './components/common/DialogConfirm'
 
-Vue.prototype.movieAPI = movieAPI
+Vue.prototype.MovieAPI = MovieAPI
 Vue.config.productionTip = false
 document.documentElement.style.setProperty('--colorTheme', store.getters['userSettings/theme'])
 

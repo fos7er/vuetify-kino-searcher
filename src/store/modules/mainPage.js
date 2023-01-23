@@ -1,4 +1,4 @@
-import movieAPI from '@/api/movieAPI'
+import MovieAPI from '@/api/movieAPI'
 import { movieGenreIcons } from '@/dicts'
 
 const state = {
@@ -43,12 +43,12 @@ const actions = {
       console.log('already has this page, load from cache')
       return false
     }
-    const res = await movieAPI.getAllMovies(payload)
+    const res = await MovieAPI.getAllMovies(payload)
     res.results.forEach((item) => (item.page = payload.page))
     commit('SET_MOVIES', res.results)
   },
   async getAllGenres ({ commit }) {
-    const res = await movieAPI.getAllGenres()
+    const res = await MovieAPI.getAllGenres()
     commit('SET_GENRES', res.genres)
   }
 }

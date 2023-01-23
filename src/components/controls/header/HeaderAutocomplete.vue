@@ -41,7 +41,7 @@
       async search (query) {
         this.isLoading = true
         try {
-          const res = await this.movieAPI.searchMovies(query)
+          const res = await this.MovieAPI.searchMovies(query)
           return (this.items = res.map((item) => {
             if (item.release_date) {
               item.titleWithYear = `${item.title} (${new Date(item.release_date).getFullYear()})`
