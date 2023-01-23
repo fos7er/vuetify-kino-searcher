@@ -1,4 +1,3 @@
-
 /**
  *  This is List of all users movies which stores data in firebase about user interaction with movies
  *  in DB we have JSON like this
@@ -21,16 +20,18 @@
  * **/
 
 import { DB, onValue, ref, update } from '@/firebase'
+import MovieAPI from '@/api/movieAPI'
 
 const state = {
+  list: [],
   subscribed: false,
   movies: {}
 }
 
 const getters = {
-  favoritesList(state) {
+  favoritesList (state) {
     const result = []
-    for (const item of Object.values(state.movies) ) {
+    for (const item of Object.values(state.movies)) {
       if (item.inFavorites) {
         //TODO ADD DEEP-CLONE
         result.push(item)
@@ -38,9 +39,9 @@ const getters = {
     }
     return result
   },
-  watchLaterList(state) {
+  watchLaterList (state) {
     const result = []
-    for (const item of Object.values(state.movies) ) {
+    for (const item of Object.values(state.movies)) {
       if (item.inWatchLater) {
         //TODO ADD DEEP-CLONE
         result.push(item)
@@ -48,12 +49,12 @@ const getters = {
     }
     return result
   },
-  isFavorite(state) {
+  isFavorite (state) {
     return (id) => {
       return state.movies[id]?.inFavorites === true
     }
   },
-  isWatchLater(state) {
+  isWatchLater (state) {
     return (id) => {
       return state.movies[id]?.inWatchLater === true
     }
@@ -102,6 +103,24 @@ const actions = {
     updates[`users/${userID}/movies/${movieID}`] = { ...state.movies[movieID], ...payload }
     await update(ref(DB), updates)
     commit('UPDATE_MOVIE', payload)
+  },
+  async getFavoriteMovies ({ state, getters }) {
+    const promises = []
+    getters.favoritesList.forEach(item => {
+      if (getters.isFavorite(item.id) && !state.list.find(el => el.id === item.id)) {
+        promises.push(MovieAPI.getMovie(item.id))
+      }
+    })
+    state.list.push(...await Promise.all(promises))
+  },
+  async getWatchLaterMovies ({ state, getters }) {
+    const promises = []
+    getters.watchLaterList.forEach(item => {
+      if (getters.isWatchLater(item.id) && !state.list.find(el => el.id === item.id)) {
+        promises.push(MovieAPI.getMovie(item.id))
+      }
+    })
+    state.list.push(...await Promise.all(promises))
   }
 }
 
