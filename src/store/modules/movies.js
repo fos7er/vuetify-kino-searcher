@@ -75,6 +75,7 @@ const mutations = {
   },
   CLEAR_MOVIES (state) {
     state.movies = {}
+    state.subscribed = false
   },
   SUBSCRIBE (state) {
     state.subscribed = true

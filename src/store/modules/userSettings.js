@@ -52,6 +52,7 @@ const mutations = {
   },
   CLEAR_SETTINGS (state) {
     state.settings = defaultSettings()
+    state.subscribed = false
   },
   SUBSCRIBE (state) {
     state.subscribed = true
