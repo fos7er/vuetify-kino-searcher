@@ -59,8 +59,8 @@
           { text: this.$t('genre'), align: 'left', value: 'genres', sortable: false },
           { text: this.$t('year'), align: 'left', value: 'release_date', width: '200' },
           { text: this.$t('time,Min'), align: 'left', value: 'runtime', width: '200' },
-          { text: this.$t('Rating'), align: 'left', value: 'revenue', width: '300' },
-          { text: this.$t('yourRating'), align: 'right', value: 'vote_average', width: '200' }
+          { text: this.$t('yourRating'), align: 'left', value: 'revenue', width: '300' },
+          { text: this.$t('rating'), align: 'left', value: 'vote_average', width: '200' }
         ],
         search: ''
       }
