@@ -4,6 +4,7 @@
       <v-col lg="10">
         <h3 class="mb-2">{{ $t('favorites') }}</h3>
         <v-data-table
+          @click:row="openDialog"
           :footer-props="{ 'items-per-page-text': '', 'items-per-page-options': [15, 30, 50, 100] }"
           :headers="headers"
           :items="tableData"
@@ -38,14 +39,18 @@
         </v-data-table>
       </v-col>
     </v-row>
+    <movie-dialog :movie="movieDialogData" ref="dialog"/>
   </v-container>
 </template>
 
 <script>
   import dayjs from '@/utils/dayjs'
+  import MovieDialog from '@/components/mainpage/MovieDialog'
   export default {
     name: 'Favorites',
-    components: {},
+    components: {
+      MovieDialog
+    },
     data () {
       return {
         tableOptions: {
@@ -62,7 +67,8 @@
           { text: this.$t('yourRating'), align: 'left', value: 'revenue', width: '300' },
           { text: this.$t('rating'), align: 'left', value: 'vote_average', width: '200' }
         ],
-        search: ''
+        search: '',
+        movieDialogData: {}
       }
     },
     created () {
@@ -99,6 +105,10 @@
       },
       movieYear(date) {
         return dayjs(date).format('YYYY')
+      },
+      openDialog (row) {
+        this.movieDialogData = row
+        this.$refs.dialog.open()
       }
     }
   }
