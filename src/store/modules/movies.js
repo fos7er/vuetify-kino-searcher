@@ -32,25 +32,11 @@ const getters = {
   userMovies (state) {
     return state.userMovies
   },
-  favoritesList (state) {
-    const result = []
-    for (const item of Object.values(state.userMovies)) {
-      if (item.inFavorites) {
-        //TODO ADD DEEP-CLONE
-        result.push(item)
-      }
-    }
-    return result
+  favoritesList (state, getters) {
+    return state.movies.filter( item => getters.isFavorite(item.id))
   },
   watchLaterList (state) {
-    const result = []
-    for (const item of Object.values(state.userMovies)) {
-      if (item.inWatchLater) {
-        //TODO ADD DEEP-CLONE
-        result.push(item)
-      }
-    }
-    return result
+    return state.movies.filter( item => getters.isWatchLater(item.id))
   },
   isFavorite (state) {
     return (id) => {
@@ -110,7 +96,7 @@ const actions = {
   async getFavoriteMovies ({ state, getters }) {
     console.log('get FAVS')
     const promises = []
-    getters.favoritesList.forEach(item => {
+    Object.values(getters.userMovies).forEach(item => {
       if (getters.isFavorite(item.id) && !state.movies.find(el => el.id === item.id)) {
         console.log('new ID in favorites ', item.id)
         promises.push(MovieAPI.getMovie(item.id))
@@ -121,7 +107,7 @@ const actions = {
   async getWatchLaterMovies ({ state, getters }) {
     console.log('get WL')
     const promises = []
-    getters.watchLaterList.forEach(item => {
+    Object.values(getters.userMovies).forEach(item => {
       if (getters.isWatchLater(item.id) && !state.movies.find(el => el.id === item.id)) {
         console.log('new ID in watchLater ', item.id)
         promises.push(MovieAPI.getMovie(item.id))

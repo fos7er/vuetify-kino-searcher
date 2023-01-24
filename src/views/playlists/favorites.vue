@@ -29,6 +29,12 @@
           <template v-slot:item.genres="{ item }">
             {{ movieGenreText(item.genres) }}
           </template>
+          <template v-slot:item.release_date="{ item }">
+            {{ movieYear(item.release_date) }}
+          </template>
+          <template v-slot:item.vote_average="{ item }">
+            {{ item.vote_average.toFixed(2) }}
+          </template>
         </v-data-table>
       </v-col>
     </v-row>
@@ -36,7 +42,7 @@
 </template>
 
 <script>
-
+  import dayjs from '@/utils/dayjs'
   export default {
     name: 'Favorites',
     components: {},
@@ -49,12 +55,12 @@
           sortDesc: [false]
         },
         headers: [
-          { text: 'Название', align: 'left', value: 'title' },
-          { text: 'Жанр', align: 'left', value: 'genres', sortable: false },
-          { text: 'Год', align: 'left', value: 'release_date', width: '200' },
-          { text: 'Время, мин', align: 'left', value: 'runtime', width: '200' },
-          { text: 'Ваша оценка', align: 'left', value: 'revenue', width: '300' },
-          { text: 'Рейтинг', align: 'right', value: 'vote_average', width: '200' }
+          { text: this.$t('title'), align: 'left', value: 'title' },
+          { text: this.$t('genre'), align: 'left', value: 'genres', sortable: false },
+          { text: this.$t('year'), align: 'left', value: 'release_date', width: '200' },
+          { text: this.$t('time,Min'), align: 'left', value: 'runtime', width: '200' },
+          { text: this.$t('Rating'), align: 'left', value: 'revenue', width: '300' },
+          { text: this.$t('yourRating'), align: 'right', value: 'vote_average', width: '200' }
         ],
         search: ''
       }
@@ -63,7 +69,7 @@
       this.$store.dispatch('movies/getFavoriteMovies')
     },
     watch: {
-      favoritesList: {
+      userMovies: {
         handler () {
           this.$store.dispatch('movies/getFavoriteMovies')
         },
@@ -72,93 +78,13 @@
     },
     computed: {
       tableData () {
-        return [{
-          'adult': false,
-          'backdrop_path': '/5kAGbi9MFAobQTVfK4kWPnIfnP0.jpg',
-          'belongs_to_collection': {
-            'id': 1071588,
-            'name': 'M3GAN Collection',
-            'poster_path': '/fS57wFKda3h5dtWS3sc9JffE05R.jpg',
-            'backdrop_path': '/uXEJwb8y67vFLaJb4wvHbSH6PjT.jpg'
-          },
-          'budget': 12000000,
-          'genres': [
-            {
-              'id': 878,
-              'name': 'Science Fiction'
-            },
-            {
-              'id': 27,
-              'name': 'Horror'
-            },
-            {
-              'id': 35,
-              'name': 'Comedy'
-            }
-          ],
-          'homepage': 'https://www.m3ganmovie.com',
-          'id': 536554,
-          'imdb_id': 'tt8760708',
-          'original_language': 'en',
-          'original_title': 'M3GAN',
-          'overview': 'A brilliant toy company roboticist uses artificial intelligence to develop M3GAN, a life-like doll programmed to emotionally bond with her newly orphaned niece. But when the doll\'s programming works too well, she becomes overprotective of her new friend with terrifying results.',
-          'popularity': 3751.058,
-          'poster_path': '/7CNCv9uhqdwK7Fv4bR4nmDysnd9.jpg',
-          'production_companies': [
-            {
-              'id': 33,
-              'logo_path': '/8lvHyhjr8oUKOOy2dKXoALWKdp0.png',
-              'name': 'Universal Pictures',
-              'origin_country': 'US'
-            },
-            {
-              'id': 3172,
-              'logo_path': '/kDedjRZwO8uyFhuHamomOhN6fzG.png',
-              'name': 'Blumhouse Productions',
-              'origin_country': 'US'
-            },
-            {
-              'id': 76907,
-              'logo_path': '/hGW1a2skOGoCjK9i7jmLMJjxI7B.png',
-              'name': 'Atomic Monster',
-              'origin_country': 'US'
-            },
-            {
-              'id': 89115,
-              'logo_path': '/zQwTHJVIruUlGsa7zIdfXuSm9GG.png',
-              'name': 'Divide / Conquer',
-              'origin_country': 'US'
-            }
-          ],
-          'production_countries': [
-            {
-              'iso_3166_1': 'US',
-              'name': 'United States of America'
-            }
-          ],
-          'release_date': '2022-12-28',
-          'revenue': 93000000,
-          'runtime': 102,
-          'spoken_languages': [
-            {
-              'english_name': 'English',
-              'iso_639_1': 'en',
-              'name': 'English'
-            }
-          ],
-          'status': 'Released',
-          'tagline': 'Friendship has evolved.',
-          'title': 'M3GAN',
-          'video': false,
-          'vote_average': 7.017,
-          'vote_count': 346
-        }]
+        return this.$store.getters['movies/favoritesList']
       },
       loading () {
         return false
       },
-      favoritesList () {
-        return this.$store.getters['movies/favoritesList']
+      userMovies () {
+        return this.$store.getters['movies/userMovies']
       }
     },
     methods: {
@@ -170,6 +96,9 @@
           i === arr.length - 1 ? acc += `${current.name}` : acc += `${current.name}, `
           return acc
         }, '')
+      },
+      movieYear(date) {
+        return dayjs(date).format('YYYY')
       }
     }
   }

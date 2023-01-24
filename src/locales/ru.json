@@ -1,10 +1,15 @@
 {
   "author": "Александр Куркин",
-  "email": "Email",
   "collapse": "Свернуть",
+  "duration": "продолжительность",
+  "email": "Email",
   "enterMovieName": "Введите название фильма",
   "explore": "Подробнее",
+  "favorites": "Избранное",
   "forgotPassword": "Забыли свой пароль?",
+  "genre": "Жанр",
+  "genres": "Жанры",
+  "genresPageTitle": "Фильмы в жанре {0}",
   "login": "Вход",
   "logout": "Выход",
   "logoutConfirm": "Вы уверены, что хотите выйти?",
@@ -13,13 +18,15 @@
   "password": "Пароль",
   "pleaseLogin": "Пожалуйста войдите в свой аккаунт",
   "profile": "Профиль",
+  "rating": "Оценка",
   "registration": "Регистрация",
   "repeatPassword": "Повторите пароль",
   "search": "Поиск",
   "settings": "Настройки",
-  "genresPageTitle": "Фильмы в жанре {0}",
-  "favorites": "Избранное",
+  "time,Min": "Время, мин",
+  "title": "Название",
   "watchLater": "Смотреть позже",
-  "genres": "Жанры",
-  "duration": "продолжительность"
+  "year": "Год",
+  "yourRating": "Ваша оценка"
+
 }
