@@ -1,13 +1,18 @@
 import languages from '@/locales/languages'
+import dayjs from 'dayjs'
+import defaultLang from '@/utils/defaultLang'
 import i18n from '@/plugins/i18n'
 import vuetify from '@/plugins/vuetify'
-import { LocalStorage } from '@/utils/WebStorage'
-import defaultLang from '@/utils/defaultLang'
 import { DB, onValue, ref, update } from '@/firebase'
+import { LocalStorage } from '@/utils/WebStorage'
 
 const defaultSettings = () => {
   return {
+    about: 'tell about yourself',
+    birthDay: dayjs('1991-01-20').format('YYYY-MM-DD'),
+    gender: 'male',
     lang: defaultLang(),
+    name: 'anon',
     theme: vuetify.framework.theme.dark === true ? 'dark' : 'light'
   }
 }
@@ -33,15 +38,19 @@ const getters = {
   theme (state) {
     return state.settings.theme
   },
-  userName(state) {
+  userName (state) {
     return state.settings.name || 'USER'
+  },
+  settings(state) {
+    //TODO ADD DEEP CLONE
+    return {...state.settings}
   }
 }
 
 const mutations = {
   SET_SETTINGS (state, payload) {
     //TODO check settings: every settings in default settings
-    state.settings = {...defaultSettings(), ...payload}
+    state.settings = { ...defaultSettings(), ...payload }
   },
   UPDATE_SETTINGS (state, payload) {
     state.settings = { ...state.settings, ...payload }

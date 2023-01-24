@@ -43,7 +43,7 @@
                 </v-col>
                 <v-col>
                   <field-date-picker
-                    v-model="form.birthDate"
+                    v-model="form.birthDay"
                     :rules="[globalRules.required]"
                   />
                 </v-col>
@@ -53,7 +53,7 @@
                   <v-icon aria-hidden="false" large> mdi-card-account-details-outline</v-icon>
                 </v-col>
                 <v-col>
-                  <v-textarea :label="$t('aboutYou')" name="input-7-4" outlined solo></v-textarea>
+                  <v-textarea v-model="form.about" :label="$t('aboutYou')" name="input-7-4" outlined solo></v-textarea>
                 </v-col>
               </v-row>
               <v-row align="center">
@@ -84,7 +84,6 @@
 </template>
 
 <script>
-  import dayjs from 'dayjs'
   import fieldDatePicker from '@/components/common/fields/DatePicker'
 
   export default {
@@ -92,27 +91,26 @@
     data () {
       return {
         loading: false,
-        form: {
-          name: '',
-          gender: 'male',
-          birthDate: dayjs().format('YYYY-MM-DD'),
-          contacts: '',
-          theme: this.$store.getters['userSettings/theme']
-        },
+        form: this.$store.getters['userSettings/settings'],
         datePickerMenu: false
       }
     },
     methods: {
       focusGender () {},
-      save () {
+      async save () {
         const data = this.prepareData()
-        this.$store.dispatch('userSettings/updateSettings',data)
+        await this.$store.dispatch('userSettings/updateSettings',data)
+        this.$store.commit('SET_SUCCESS','success')
       },
       themePreview () {
         this.$store.commit('userSettings/UPDATE_SETTINGS', { theme: this.form.theme })
       },
       prepareData () {
+        //TODO ADD COLLECT PROPS
         return {
+          about: this.form.about,
+          birthDay: this.form.birthDay,
+          gender: this.form.gender,
           name: this.form.name,
           theme: this.form.theme
         }
