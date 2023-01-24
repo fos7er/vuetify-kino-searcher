@@ -81,7 +81,7 @@
         return this.$store.getters['movies/favoritesList']
       },
       loading () {
-        return false
+        return this.$store.getters['movies/loading']
       },
       userMovies () {
         return this.$store.getters['movies/userMovies']

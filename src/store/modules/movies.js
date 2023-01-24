@@ -25,18 +25,22 @@ import MovieAPI from '@/api/movieAPI'
 const state = {
   movies: [],
   subscribed: false,
-  userMovies: {}
+  userMovies: {},
+  isLoading: false
 }
 
 const getters = {
   userMovies (state) {
     return state.userMovies
   },
+  loading(state) {
+    return state.isLoading
+  },
   favoritesList (state, getters) {
-    return state.movies.filter( item => getters.isFavorite(item.id))
+    return state.movies.filter(item => getters.isFavorite(item.id))
   },
   watchLaterList (state) {
-    return state.movies.filter( item => getters.isWatchLater(item.id))
+    return state.movies.filter(item => getters.isWatchLater(item.id))
   },
   isFavorite (state) {
     return (id) => {
@@ -74,12 +78,14 @@ const mutations = {
 
 const actions = {
   getUserMovies ({ commit, state, rootGetters }) {
+    state.isLoading = true
     const userID = rootGetters['auth/userID']
     const settings = ref(DB, `users/${userID}/movies`)
     if (!state.subscribed) {
       onValue(settings, (snapshot) => {
         const data = snapshot.val()
         commit('SET_USER_MOVIES', data)
+        state.isLoading = false
       })
       commit('SUBSCRIBE')
     }
@@ -102,7 +108,12 @@ const actions = {
         promises.push(MovieAPI.getMovie(item.id))
       }
     })
-    state.movies.push(...await Promise.all(promises))
+    try {
+      state.isLoading = true
+      state.movies.push(...await Promise.all(promises))
+    } finally {
+      state.isLoading = false
+    }
   },
   async getWatchLaterMovies ({ state, getters }) {
     console.log('get WL')
@@ -113,7 +124,13 @@ const actions = {
         promises.push(MovieAPI.getMovie(item.id))
       }
     })
-    state.movies.push(...await Promise.all(promises))
+    try {
+      state.isLoading = true
+      state.movies.push(...await Promise.all(promises))
+    } finally {
+      state.isLoading = false
+    }
+
   }
 }
 
