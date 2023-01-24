@@ -77,7 +77,7 @@ const actions = {
           if (user === null) {
             commit('CLEAR_USER')
             commit('userSettings/CLEAR_SETTINGS', null, { root: true })
-            commit('movies/CLEAR_MOVIES', null, { root: true })
+            commit('movies/CLEAR_USER_MOVIES', null, { root: true })
           } else {
             if (!validUser(user)) return commit('SET_ERROR', 'Invalid user structure', { root: true })
             commit('SET_USER', user)

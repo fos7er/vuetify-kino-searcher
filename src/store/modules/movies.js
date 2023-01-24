@@ -23,18 +23,18 @@ import { DB, onValue, ref, update } from '@/firebase'
 import MovieAPI from '@/api/movieAPI'
 
 const state = {
-  list: [],
+  movies: [],
   subscribed: false,
-  movies: {}
+  userMovies: {}
 }
 
 const getters = {
-  movies (state) {
-    return state.movies
+  userMovies (state) {
+    return state.userMovies
   },
   favoritesList (state) {
     const result = []
-    for (const item of Object.values(state.movies)) {
+    for (const item of Object.values(state.userMovies)) {
       if (item.inFavorites) {
         //TODO ADD DEEP-CLONE
         result.push(item)
@@ -44,7 +44,7 @@ const getters = {
   },
   watchLaterList (state) {
     const result = []
-    for (const item of Object.values(state.movies)) {
+    for (const item of Object.values(state.userMovies)) {
       if (item.inWatchLater) {
         //TODO ADD DEEP-CLONE
         result.push(item)
@@ -54,31 +54,31 @@ const getters = {
   },
   isFavorite (state) {
     return (id) => {
-      return state.movies[id]?.inFavorites === true
+      return state.userMovies[id]?.inFavorites === true
     }
   },
   isWatchLater (state) {
     return (id) => {
-      return state.movies[id]?.inWatchLater === true
+      return state.userMovies[id]?.inWatchLater === true
     }
   }
 }
 
 const mutations = {
-  SET_MOVIE (state, payload) {
-    state.movies[payload.id] = payload
+  SET_USER_MOVIE (state, payload) {
+    state.userMovies[payload.id] = payload
   },
-  UPDATE_MOVIE (state, payload) {
-    if (!state.movies[payload.id]) {
-      state.movies[payload.id] = {}
+  UPDATE_USER_MOVIE (state, payload) {
+    if (!state.userMovies[payload.id]) {
+      state.userMovies[payload.id] = {}
     }
-    state.movies[payload.id] = { ...state.movies[payload.id], ...payload }
+    state.userMovies[payload.id] = { ...state.userMovies[payload.id], ...payload }
   },
-  SET_MOVIES (state, payload) {
-    state.movies = payload
+  SET_USER_MOVIES (state, payload) {
+    state.userMovies = payload
   },
-  CLEAR_MOVIES (state) {
-    state.movies = {}
+  CLEAR_USER_MOVIES (state) {
+    state.userMovies = {}
     state.subscribed = false
   },
   SUBSCRIBE (state) {
@@ -93,7 +93,7 @@ const actions = {
     if (!state.subscribed) {
       onValue(settings, (snapshot) => {
         const data = snapshot.val()
-        commit('SET_MOVIES', data)
+        commit('SET_USER_MOVIES', data)
       })
       commit('SUBSCRIBE')
     }
@@ -103,31 +103,31 @@ const actions = {
     const movieID = payload.id
     if (!userID || !movieID) throw Error('no id')
     const updates = {}
-    updates[`users/${userID}/movies/${movieID}`] = { ...state.movies[movieID], ...payload }
+    updates[`users/${userID}/movies/${movieID}`] = { ...state.userMovies[movieID], ...payload }
     await update(ref(DB), updates)
-    commit('UPDATE_MOVIE', payload)
+    commit('UPDATE_USER_MOVIE', payload)
   },
   async getFavoriteMovies ({ state, getters }) {
     console.log('get FAVS')
     const promises = []
     getters.favoritesList.forEach(item => {
-      if (getters.isFavorite(item.id) && !state.list.find(el => el.id === item.id)) {
+      if (getters.isFavorite(item.id) && !state.movies.find(el => el.id === item.id)) {
         console.log('new ID in favorites ', item.id)
         promises.push(MovieAPI.getMovie(item.id))
       }
     })
-    state.list.push(...await Promise.all(promises))
+    state.movies.push(...await Promise.all(promises))
   },
   async getWatchLaterMovies ({ state, getters }) {
     console.log('get WL')
     const promises = []
     getters.watchLaterList.forEach(item => {
-      if (getters.isWatchLater(item.id) && !state.list.find(el => el.id === item.id)) {
+      if (getters.isWatchLater(item.id) && !state.movies.find(el => el.id === item.id)) {
         console.log('new ID in watchLater ', item.id)
         promises.push(MovieAPI.getMovie(item.id))
       }
     })
-    state.list.push(...await Promise.all(promises))
+    state.movies.push(...await Promise.all(promises))
   }
 }
 

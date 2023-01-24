@@ -63,7 +63,7 @@
       this.$store.dispatch('movies/getFavoriteMovies')
     },
     watch: {
-      userMovies: {
+      favoritesList: {
         handler () {
           this.$store.dispatch('movies/getFavoriteMovies')
         },
@@ -157,7 +157,7 @@
       loading () {
         return false
       },
-      userMovies () {
+      favoritesList () {
         return this.$store.getters['movies/favoritesList']
       }
     },
