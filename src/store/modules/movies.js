@@ -39,7 +39,7 @@ const getters = {
   favoritesList (state, getters) {
     return state.movies.filter(item => getters.isFavorite(item.id))
   },
-  watchLaterList (state) {
+  watchLaterList (state,getters) {
     return state.movies.filter(item => getters.isWatchLater(item.id))
   },
   isFavorite (state) {

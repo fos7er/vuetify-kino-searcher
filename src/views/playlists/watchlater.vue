@@ -36,6 +36,11 @@
           <template v-slot:item.vote_average="{ item }">
             {{ item.vote_average.toFixed(2) }}
           </template>
+          <template v-slot:item.actions="{ item }">
+            <v-btn icon @click.stop="removeFromWatchLater(item.id)">
+              <v-icon v-text="'mdi-delete'"/>
+            </v-btn>
+          </template>
         </v-data-table>
       </v-col>
     </v-row>
@@ -57,7 +62,7 @@
         tableOptions: {
           itemsPerPage: 15,
           page: 1,
-          sortBy: ['dateAdded'],
+          sortBy: ['dateAddedToWatchLater'],
           sortDesc: [false]
         },
         headers: [
@@ -66,7 +71,9 @@
           { text: this.$t('year'), align: 'left', value: 'release_date', width: '200' },
           { text: this.$t('time,Min'), align: 'left', value: 'runtime', width: '200' },
           { text: this.$t('yourRating'), align: 'left', value: 'revenue', width: '300' },
-          { text: this.$t('rating'), align: 'left', value: 'vote_average', width: '200' }
+          { text: this.$t('rating'), align: 'left', value: 'vote_average', width: '200' },
+          { text: this.$t('actions'), align: 'center', value: 'actions', sortable: false }
+
         ],
         search: '',
         movieDialogData: {}
@@ -97,6 +104,14 @@
     methods: {
       dropTable () {
         this.tableOptions.page = 1
+      },
+      removeFromWatchLater (id) {
+        const data = {
+          id,
+          inWatchLater: null,
+          dateAddedToWatchLater: null
+        }
+        this.$store.dispatch('movies/updateMovie', data)
       },
       movieGenreText (arr) {
         return arr.reduce((acc, current, i) => {
