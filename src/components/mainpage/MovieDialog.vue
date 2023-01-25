@@ -183,6 +183,10 @@
       margin-right: 10px;
       background-color: #2b577c;
       min-width: 0;
+      &.theme--light {
+        background-color: #c4c4c5;
+      }
     }
+
   }
 </style>
