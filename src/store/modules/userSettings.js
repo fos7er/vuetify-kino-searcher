@@ -5,6 +5,7 @@ import i18n from '@/plugins/i18n'
 import vuetify from '@/plugins/vuetify'
 import { DB, onValue, ref, update } from '@/firebase'
 import { LocalStorage } from '@/utils/WebStorage'
+import { deepClone, deepMerge } from '@/utils/deep'
 
 const defaultSettings = () => {
   return {
@@ -41,19 +42,18 @@ const getters = {
   userName (state) {
     return state.settings.name || 'USER'
   },
-  settings(state) {
-    //TODO ADD DEEP CLONE
-    return {...state.settings}
+  settings (state) {
+    return deepClone(state.settings)
   }
 }
 
 const mutations = {
   SET_SETTINGS (state, payload) {
     //TODO check settings: every settings in default settings
-    state.settings = { ...defaultSettings(), ...payload }
+    state.settings = deepMerge({}, defaultSettings(), payload)
   },
   UPDATE_SETTINGS (state, payload) {
-    state.settings = { ...state.settings, ...payload }
+    state.settings =  deepMerge({}, state.settings, payload)
     vuetify.framework.lang.current = i18n.locale = state.settings.lang
     LocalStorage.settings = state.settings
     vuetify.framework.theme.dark = state.settings.theme === 'dark'
@@ -73,7 +73,7 @@ const actions = {
     const userID = rootGetters['auth/userID']
     if (!userID) throw Error('no user id')
     const updates = {}
-    updates[`users/${userID}/settings`] = { ...state.settings, ...payload }
+    updates[`users/${userID}/settings`] = deepMerge({}, state.settings, payload)
     await update(ref(DB), updates)
     commit('UPDATE_SETTINGS', payload)
   },
