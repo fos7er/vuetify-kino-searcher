@@ -25,19 +25,19 @@
                   v-if="!isFavorite"
                   class="custom-btn"
                   @click="addToFav">
-                  <v-icon>mdi-heart</v-icon>
+                  <v-icon>mdi-heart-outline</v-icon>
                 </v-btn>
                 <v-btn
                   v-if="isFavorite"
                   class="custom-btn"
                   @click="removeFromFav">
-                  <v-icon>mdi-heart-outline</v-icon>
+                  <v-icon>mdi-heart</v-icon>
                 </v-btn>
                 <v-btn
                   v-if="!isWatchLater"
                   class="custom-btn"
                   @click="addToWatchLater">
-                  <v-icon>mdi-timer-star</v-icon>
+                  <v-icon>mdi-timer-star-outline</v-icon>
                 </v-btn>
                 <v-btn
                   v-if="isWatchLater"
@@ -141,7 +141,8 @@
             inWatchLater: null,
             dateAddedToWatchLater: null
           }
-          this.$store.dispatch('movies/updateMovie', data)
+          await this.$store.dispatch('movies/updateMovie', data)
+          this.$refs.dialogConfirm.close()
         }
       }
     },

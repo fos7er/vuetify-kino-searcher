@@ -120,7 +120,8 @@
             inWatchLater: null,
             dateAddedToWatchLater: null
           }
-          this.$store.dispatch('movies/updateMovie', data)
+          await this.$store.dispatch('movies/updateMovie', data)
+          this.$refs.dialogConfirm.close()
         }
       },
       movieGenreText (arr) {
