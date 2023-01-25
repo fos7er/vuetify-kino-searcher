@@ -37,20 +37,22 @@
             {{ item.vote_average.toFixed(2) }}
           </template>
           <template v-slot:item.actions="{ item }">
-              <v-btn icon @click.stop="removeFromFav(item.id)">
-                <v-icon v-text="'mdi-delete'"/>
-              </v-btn>
+            <v-btn icon @click.stop="removeFromFav(item.id)">
+              <v-icon v-text="'mdi-delete'"/>
+            </v-btn>
           </template>
         </v-data-table>
       </v-col>
     </v-row>
     <movie-dialog :movie="movieDialogData" ref="dialog"/>
+    <dialog-confirm ref="dialogConfirm"/>
   </v-container>
 </template>
 
 <script>
   import dayjs from '@/utils/dayjs'
   import MovieDialog from '@/components/mainpage/MovieDialog'
+
   export default {
     name: 'Favorites',
     components: {
@@ -103,13 +105,19 @@
       dropTable () {
         this.tableOptions.page = 1
       },
-      removeFromFav (id) {
-        const data = {
-          id,
-          inFavorites: null,
-          dateAddedToFavorites: null
+      async removeFromFav (id) {
+        const confirmDialogText = {
+          title: this.$t('delete'),
+          message: this.$t('deleteFromFavorites')
         }
-        this.$store.dispatch('movies/updateMovie', data)
+        if (await this.$refs.dialogConfirm.open(confirmDialogText)) {
+          const data = {
+            id,
+            inFavorites: null,
+            dateAddedToFavorites: null
+          }
+          this.$store.dispatch('movies/updateMovie', data)
+        }
       },
       movieGenreText (arr) {
         return arr.reduce((acc, current, i) => {
@@ -117,7 +125,7 @@
           return acc
         }, '')
       },
-      movieYear(date) {
+      movieYear (date) {
         return dayjs(date).format('YYYY')
       },
       openDialog (row) {

@@ -58,6 +58,7 @@
         </v-row>
       </v-container>
     </v-card>
+    <dialog-confirm ref="dialogConfirm"/>
   </v-dialog>
 </template>
 
@@ -107,13 +108,19 @@
         }
         this.$store.dispatch('movies/updateMovie', data)
       },
-      removeFromFav () {
-        const data = {
-          id: this.movie.id,
-          inFavorites: null,
-          dateAddedToFavorites: null
+      async removeFromFav () {
+        const confirmDialogText = {
+          title: this.$t('delete'),
+          message: this.$t('deleteFromFavorites')
         }
-        this.$store.dispatch('movies/updateMovie', data)
+        if (await this.$refs.dialogConfirm.open(confirmDialogText)) {
+          const data = {
+            id: this.movie.id,
+            inFavorites: null,
+            dateAddedToFavorites: null
+          }
+          this.$store.dispatch('movies/updateMovie', data)
+        }
       },
       addToWatchLater () {
         const data = {
@@ -123,13 +130,19 @@
         }
         this.$store.dispatch('movies/updateMovie', data)
       },
-      removeFromWatchLater () {
-        const data = {
-          id: this.movie.id,
-          inWatchLater: null,
-          dateAddedToWatchLater: null
+      async removeFromWatchLater () {
+        const confirmDialogText = {
+          title: this.$t('delete'),
+          message: this.$t('deleteFromWatchLater')
         }
-        this.$store.dispatch('movies/updateMovie', data)
+        if (await this.$refs.dialogConfirm.open(confirmDialogText)) {
+          const data = {
+            id: this.movie.id,
+            inWatchLater: null,
+            dateAddedToWatchLater: null
+          }
+          this.$store.dispatch('movies/updateMovie', data)
+        }
       }
     },
     updated () {

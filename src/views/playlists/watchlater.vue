@@ -45,6 +45,7 @@
       </v-col>
     </v-row>
     <movie-dialog :movie="movieDialogData" ref="dialog"/>
+    <dialog-confirm ref="dialogConfirm"/>
   </v-container>
 </template>
 
@@ -105,13 +106,19 @@
       dropTable () {
         this.tableOptions.page = 1
       },
-      removeFromWatchLater (id) {
-        const data = {
-          id,
-          inWatchLater: null,
-          dateAddedToWatchLater: null
+      async removeFromWatchLater (id) {
+        const confirmDialogText = {
+          title: this.$t('delete'),
+          message: this.$t('deleteFromWatchLater')
         }
-        this.$store.dispatch('movies/updateMovie', data)
+        if (await this.$refs.dialogConfirm.open(confirmDialogText)) {
+          const data = {
+            id,
+            inWatchLater: null,
+            dateAddedToWatchLater: null
+          }
+          this.$store.dispatch('movies/updateMovie', data)
+        }
       },
       movieGenreText (arr) {
         return arr.reduce((acc, current, i) => {
