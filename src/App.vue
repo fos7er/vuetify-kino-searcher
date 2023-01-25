@@ -32,6 +32,7 @@
     name: 'App',
     created () {
       this.$store.dispatch('auth/refresh')
+      this.$store.commit('userSettings/UPDATE_SETTINGS')
     },
     watch: {
       '$vuetify.lang.current' () {
