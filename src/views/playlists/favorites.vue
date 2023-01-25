@@ -33,6 +33,9 @@
           <template v-slot:item.release_date="{ item }">
             {{ movieYear(item.release_date) }}
           </template>
+          <template v-slot:item.userRating="{ item }">
+            {{ item.userRating || '—' }}
+          </template>
           <template v-slot:item.vote_average="{ item }">
             {{ item.vote_average.toFixed(2) }}
           </template>
@@ -71,7 +74,7 @@
           { text: this.$t('genre'), align: 'left', value: 'genres', sortable: false },
           { text: this.$t('year'), align: 'left', value: 'release_date', width: '200' },
           { text: this.$t('time,Min'), align: 'left', value: 'runtime', width: '200' },
-          { text: this.$t('yourRating'), align: 'left', value: 'revenue', width: '300' },
+          { text: this.$t('yourRating'), align: 'left', value: 'userRating', width: '200' },
           { text: this.$t('rating'), align: 'left', value: 'vote_average', width: '200' },
           { text: this.$t('actions'), align: 'center', value: 'actions', sortable: false }
         ],

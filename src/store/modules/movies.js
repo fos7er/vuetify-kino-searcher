@@ -33,14 +33,26 @@ const getters = {
   userMovies (state) {
     return state.userMovies
   },
-  loading(state) {
+  loading (state) {
     return state.isLoading
   },
   favoritesList (state, getters) {
-    return state.movies.filter(item => getters.isFavorite(item.id))
+    return state.movies.filter(item => getters.isFavorite(item.id)).map(movie => {
+      const userMovie = state.userMovies[movie.id]
+      return {
+        ...movie,
+        ...userMovie
+      }
+    })
   },
-  watchLaterList (state,getters) {
-    return state.movies.filter(item => getters.isWatchLater(item.id))
+  watchLaterList (state, getters) {
+    return state.movies.filter(item => getters.isWatchLater(item.id)).map(movie => {
+      const userMovie = state.userMovies[movie.id]
+      return {
+        ...movie,
+        ...userMovie
+      }
+    })
   },
   isFavorite (state) {
     return (id) => {
