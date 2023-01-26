@@ -8,9 +8,9 @@ import { getDatabase, onValue, ref, set, update } from 'firebase/database'
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: 'AIzaSyCueauyo2X7lGXSVL6LBffKLICykWlvi0c',
+  apiKey: process.env.VUE_APP_FIREBASE_API_KEY,
   authDomain: 'kino-searcher.firebaseapp.com',
-  databaseURL: 'https://kino-searcher-default-rtdb.europe-west1.firebasedatabase.app/',
+  databaseURL:  process.env.VUE_APP_FIREBASE_DATABASE_URL,
   projectId: 'kino-searcher',
   storageBucket: 'kino-searcher.appspot.com',
   messagingSenderId: '354658137429',
