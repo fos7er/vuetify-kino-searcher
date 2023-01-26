@@ -57,6 +57,9 @@ const getters = {
     return (id) => {
       return state.userMovies[id]?.inWatchLater === true
     }
+  },
+  userRating (state) {
+    return (id) => state.userMovies[id]?.userRating || 0
   }
 }
 

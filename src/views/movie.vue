@@ -17,23 +17,46 @@
           <div class="my-4 pl-2">
             <v-row align="center">
               <movie-rating :score="movie.vote_average"/>
-              <v-btn class="custom-btn">
-                <v-icon>mdi-heart</v-icon>
-              </v-btn>
-              <v-btn class="custom-btn">
+              <v-btn
+                v-if="!isFavorite"
+                class="custom-btn"
+                @click="addToFav">
                 <v-icon>mdi-heart-outline</v-icon>
               </v-btn>
-              <v-btn class="custom-btn">
-                <v-icon>mdi-bookmark</v-icon>
+              <v-btn
+                v-if="isFavorite"
+                class="custom-btn"
+                @click="removeFromFav">
+                <v-icon>mdi-heart</v-icon>
               </v-btn>
-              <v-btn class="custom-btn">
-                <v-icon>mdi-bookmark-outline</v-icon>
+              <v-btn
+                v-if="!isWatchLater"
+                class="custom-btn"
+                @click="addToWatchLater">
+                <v-icon>mdi-timer-star-outline</v-icon>
+              </v-btn>
+              <v-btn
+                v-if="isWatchLater"
+                class="custom-btn"
+                @click="removeFromWatchLater">
+                <v-icon>mdi-timer-remove</v-icon>
               </v-btn>
             </v-row>
           </div>
           <div class="d-flex font-italic text--secondary mt-6">
             <h4 v-if="movie.tagline">{{ movie.tagline }}</h4>
           </div>
+          <h3>{{ $t('rating') }}</h3>
+          <v-rating
+            class="py-2"
+            @input="setRating"
+            background-color="orange lighten-3"
+            hover
+            color="orange"
+            length="10"
+            :value="ratingValue"
+          ></v-rating>
+          <v-divider/>
           <h3>{{ $t('overview') }}</h3>
           <v-card-text class="pt-1">
             {{ movie.overview || $t('noDescription') }}
@@ -41,6 +64,7 @@
         </v-col>
       </v-row>
     </v-container>
+    <dialog-confirm ref="dialogConfirm"/>
   </v-card>
 </template>
 
@@ -70,6 +94,69 @@
       },
       duration () {
         return dayjs.duration(this.movie.runtime, 'minutes').format('HH:mm')
+      },
+      isFavorite () {
+        return this.$store.getters['movies/isFavorite'](this.movie.id)
+      },
+      isWatchLater () {
+        return this.$store.getters['movies/isWatchLater'](this.movie.id)
+      },
+      ratingValue () {
+        return this.$store.getters['movies/userRating'](this.movie.id)
+      }
+    },
+    methods: {
+      addToFav () {
+        const data = {
+          id: this.movie.id,
+          inFavorites: true,
+          dateAddedToFavorites: new Date().toISOString()
+        }
+        this.$store.dispatch('movies/updateMovie', data)
+      },
+      async removeFromFav () {
+        const confirmDialogText = {
+          title: this.$t('delete'),
+          message: this.$t('deleteFromFavorites')
+        }
+        if (await this.$refs.dialogConfirm.open(confirmDialogText)) {
+          const data = {
+            id: this.movie.id,
+            inFavorites: null,
+            dateAddedToFavorites: null
+          }
+          await this.$store.dispatch('movies/updateMovie', data)
+        }
+      },
+      addToWatchLater () {
+        const data = {
+          id: this.movie.id,
+          inWatchLater: true,
+          dateAddedToWatchLater: new Date().toISOString()
+        }
+        this.$store.dispatch('movies/updateMovie', data)
+      },
+      async removeFromWatchLater () {
+        const confirmDialogText = {
+          title: this.$t('delete'),
+          message: this.$t('deleteFromWatchLater')
+        }
+        if (await this.$refs.dialogConfirm.open(confirmDialogText)) {
+          const data = {
+            id: this.movie.id,
+            inWatchLater: null,
+            dateAddedToWatchLater: null
+          }
+          await this.$store.dispatch('movies/updateMovie', data)
+          this.$refs.dialogConfirm.close()
+        }
+      },
+      async setRating (userRating) {
+        const data = {
+          id: this.movie.id,
+          userRating
+        }
+        await this.$store.dispatch('movies/updateMovie', data)
       }
     },
     created () {

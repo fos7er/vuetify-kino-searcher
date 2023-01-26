@@ -104,7 +104,7 @@
         return this.$store.getters['movies/isWatchLater'](this.movie.id)
       },
       ratingValue () {
-        return this.$store.getters['movies/userMovies'][this.movie.id]?.userRating || 0
+        return this.$store.getters['movies/userRating'](this.movie.id)
       }
     },
     methods: {
@@ -133,7 +133,7 @@
             inFavorites: null,
             dateAddedToFavorites: null
           }
-          this.$store.dispatch('movies/updateMovie', data)
+          await this.$store.dispatch('movies/updateMovie', data)
         }
       },
       addToWatchLater () {
