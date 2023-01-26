@@ -68,7 +68,8 @@ const mutations = {
     if (!state.userMovies[payload.id]) {
       state.userMovies[payload.id] = {}
     }
-    state.userMovies[payload.id] = { ...state.userMovies[payload.id], ...payload }
+    //state.userMovies[payload.id] = { ...state.userMovies[payload.id], ...payload }
+    deepMerge(state.userMovies[payload.id], payload)
   },
   SET_USER_MOVIES (state, payload) {
     state.userMovies = payload
