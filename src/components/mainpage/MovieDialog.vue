@@ -47,9 +47,20 @@
                 </v-btn>
               </v-row>
             </div>
-            <div class="d-flex font-italic text--secondary mt-6">
+            <div class="d-flex font-italic text--secondary mt-6 mb-2">
               <h4 v-if="movie.tagline">{{ movie.tagline }}</h4>
             </div>
+            <h3>{{ $t('rating') }}</h3>
+            <v-rating
+              class="py-2"
+              @input="setRating"
+              background-color="orange lighten-3"
+              hover
+              color="orange"
+              length="10"
+              :value="ratingValue"
+            ></v-rating>
+            <v-divider/>
             <h3>{{ $t('overview') }}</h3>
             <v-card-text class="pt-1">
               {{ movie.overview || $t('noDescription') }}
@@ -91,6 +102,9 @@
       },
       isWatchLater () {
         return this.$store.getters['movies/isWatchLater'](this.movie.id)
+      },
+      ratingValue () {
+        return this.$store.getters['movies/userMovies'][this.movie.id]?.userRating || 0
       }
     },
     methods: {
@@ -144,6 +158,13 @@
           await this.$store.dispatch('movies/updateMovie', data)
           this.$refs.dialogConfirm.close()
         }
+      },
+      async setRating (userRating) {
+        const data = {
+          id: this.movie.id,
+          userRating
+        }
+        await this.$store.dispatch('movies/updateMovie', data)
       }
     },
     updated () {
@@ -184,6 +205,7 @@
       margin-right: 10px;
       background-color: #2b577c;
       min-width: 0;
+
       &.theme--light {
         background-color: #c4c4c5;
       }
