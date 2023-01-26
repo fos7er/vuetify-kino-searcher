@@ -7,7 +7,7 @@
         </v-btn>
         <v-row>
           <v-col cols="12" md="4">
-            <v-img :src="posterSrcFull"></v-img>
+            <v-img :src="posterSrcFull" @load="imgLoaded = true"></v-img>
           </v-col>
           <v-col class="card__right-column" md="8">
             <v-card-title pt-0>
@@ -84,7 +84,8 @@
     props: ['movie'],
     data () {
       return {
-        dialog: false
+        dialog: false,
+        imgLoaded: false
       }
     },
     computed: {
