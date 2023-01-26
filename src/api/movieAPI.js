@@ -71,6 +71,7 @@ class MovieAPI {
 
   async getMovie (movieID = MovieAPI._required()) {
     const path = `/movie/${movieID}`
+    store.commit('ADD_OVERLAY')
     try {
       return await this.get(path)
     } catch (e) {
