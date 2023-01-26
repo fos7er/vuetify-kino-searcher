@@ -1,4 +1,4 @@
-import './assets/css/style.scss'
+import './styles/style.scss'
 import App from './App.vue'
 import i18n from './plugins/i18n'
 import MovieAPI from './api/movieAPI'

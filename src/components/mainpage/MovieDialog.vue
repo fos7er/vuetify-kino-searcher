@@ -7,7 +7,12 @@
         </v-btn>
         <v-row>
           <v-col cols="12" md="4">
-            <v-img :src="posterSrcFull" @load="imgLoaded = true"></v-img>
+            <v-skeleton-loader
+              v-show="!imgLoaded"
+              type="image"
+              height="100%"
+            ></v-skeleton-loader>
+            <v-img :src="posterSrcFull" :class="{invisible:!imgLoaded}" @load="loadIMGHandler"></v-img>
           </v-col>
           <v-col class="card__right-column" md="8">
             <v-card-title pt-0>
@@ -109,11 +114,15 @@
       }
     },
     methods: {
+      loadIMGHandler () {
+        this.imgLoaded = true
+      },
       close () {
         this.dialog = false
       },
       open () {
         this.dialog = true
+        this.imgLoaded = false
       },
       addToFav () {
         const data = {
@@ -186,7 +195,6 @@
 
     & .v-card__subtitle {
       font-size: 1rem;
-      // margin-top: -4px;
     }
 
     & .card__right-column div {
@@ -211,6 +219,5 @@
         background-color: #c4c4c5;
       }
     }
-
   }
 </style>
