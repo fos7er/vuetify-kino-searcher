@@ -93,6 +93,11 @@
         imgLoaded: false
       }
     },
+    watch: {
+      posterSrcFull() {
+        this.imgLoaded = false
+      }
+    },
     computed: {
       posterSrcFull () {
         return `${process.env.VUE_APP_IMAGES_PATH}${this.movie.poster_path}`
@@ -122,7 +127,6 @@
       },
       open () {
         this.dialog = true
-        this.imgLoaded = false
       },
       addToFav () {
         const data = {
