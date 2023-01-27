@@ -20,7 +20,7 @@
             <v-toolbar flat>
               <v-text-field
                 v-model.trim="search"
-                :label="$t('Search')"
+                :label="$t('search')"
                 append-icon="mdi-magnify"
                 clearable
                 hide-details

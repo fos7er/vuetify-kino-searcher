@@ -18,12 +18,12 @@
           text
           @click.native="$_confirm"
         >
-          {{ $t('Yes') }}
+          {{ $t('yes') }}
         </v-btn>
         <v-spacer></v-spacer>
         <v-btn
           text
-          v-text="$t('Cancel')"
+          v-text="$t('cancel')"
           @click.native="$_cancel"
         />
       </v-card-actions>

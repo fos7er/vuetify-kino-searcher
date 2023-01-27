@@ -1,11 +1,12 @@
 {
-  "author": "Александр Куркин",
   "actions": "Действия",
+  "author": "Александр Куркин",
+  "cancel": "Отмена",
   "collapse": "Свернуть",
-  "duration": "продолжительность",
   "delete": "Удалить",
   "deleteFromFavorites": "Удалить из избранного?",
   "deleteFromWatchLater": "Удалить из смотреть позже?",
+  "duration": "продолжительность",
   "email": "Email",
   "enterMovieName": "Введите название фильма",
   "explore": "Подробнее",
@@ -31,6 +32,6 @@
   "title": "Название",
   "watchLater": "Смотреть позже",
   "year": "Год",
+  "yes": "Да",
   "yourRating": "Ваша оценка"
-
 }
