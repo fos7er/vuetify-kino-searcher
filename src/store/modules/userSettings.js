@@ -12,7 +12,7 @@ const defaultSettings = () => {
     about: 'tell about yourself',
     birthDay: dayjs('1991-01-20').format('YYYY-MM-DD'),
     gender: 'male',
-    lang: defaultLang(),
+    lang: defaultLang() || 'en',
     name: 'anon',
     theme: vuetify.framework.theme.dark === true ? 'dark' : 'light'
   }
@@ -53,7 +53,7 @@ const mutations = {
     state.settings = deepMerge({}, defaultSettings(), payload)
   },
   UPDATE_SETTINGS (state, payload) {
-    state.settings =  deepMerge({}, state.settings, payload)
+    state.settings = deepMerge({}, state.settings, payload)
     vuetify.framework.lang.current = i18n.locale = state.settings.lang
     LocalStorage.settings = state.settings
     vuetify.framework.theme.dark = state.settings.theme === 'dark'
@@ -61,6 +61,7 @@ const mutations = {
   },
   CLEAR_SETTINGS (state) {
     state.settings = defaultSettings()
+    LocalStorage.settings = defaultSettings()
     state.subscribed = false
   },
   SUBSCRIBE (state) {
