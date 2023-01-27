@@ -23,10 +23,6 @@ jobs:
         run: pnpm install
       - name: build app
         run: pnpm build
-      - name: deploy
-  deploy:
-    needs: install
-    steps:
       - name: Deploy
         run:
           cd dist
