@@ -1,7 +1,8 @@
 name: Deployed to GitHub Pages
-on: [workflow_dispatch, push]
-  branches:
-    - master
+on:
+  workflow_dispatch:
+    branches:
+      - master
 jobs:
   install:
     runs-on: ubuntu-latest
@@ -13,9 +14,11 @@ jobs:
       - uses: pnpm/action-setup@v2
         with:
           version: 7.25.0
-      run: pnpm install
-      run: pnpm build
-          
-          
-          
+      - name: install deps
+        run: pnpm install
+      - name: build app
+        run: pnpm build
+
+
+
 
