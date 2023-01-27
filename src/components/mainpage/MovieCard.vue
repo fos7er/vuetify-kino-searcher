@@ -1,6 +1,6 @@
 <template>
   <v-card class="mx-auto card" max-width="344">
-    <v-img :key="srcFull" :src="srcFull" lazy-src="@/assets/images/placeholder-image-white.png">
+    <v-img height="200px" :key="srcFull" :src="srcFull" lazy-src="@/assets/images/placeholder-image-white.png">
       <template v-slot:placeholder>
         <v-row
           class="fill-height ma-0"

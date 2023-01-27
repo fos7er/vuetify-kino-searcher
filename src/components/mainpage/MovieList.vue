@@ -20,7 +20,7 @@
     },
     data () {
       return {
-        page: 1,
+        page: +this.$router.currentRoute.query.page || 1,
         genres: ''
       }
     },
@@ -34,6 +34,7 @@
       if (this.$route.path.includes('genre') && this.$route.params?.id) {
         this.genres = this.$route.params.id
       }
+      this.$router.replace({path: this.$router.currentRoute.path, query: {page: this.page}})
       this.getAllMovies()
     },
     methods: {
@@ -50,8 +51,9 @@
       }
     },
     watch: {
-      page () {
+      page (val) {
         this.getAllMovies()
+        this.$router.replace({path: this.$router.currentRoute.path, query: {page: val}})
       }
     }
   }
