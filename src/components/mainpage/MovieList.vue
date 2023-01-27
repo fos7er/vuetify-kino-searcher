@@ -31,8 +31,8 @@
     },
     created () {
       this.$store.commit('mainPage/CLEAR_MOVIES')
-      if (this.$route.path.includes('genre') && this.$route.params?.id) {
-        this.genres = this.$route.params.id
+      if (this.$route.path.includes('genre') && this.$route.params?.genreID) {
+        this.genres = this.$route.params.genreID
       }
       this.getAllMovies()
       window.history.replaceState(null, null, `?page=${this.page}`)
