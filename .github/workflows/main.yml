@@ -5,9 +5,9 @@ on:
       - master
 env:
   NODE-ENV: production
-  VUE_APP_API_KEY: ${{secrets.VUE_APP_API_KEY}}
-  VUE_APP_FIREBASE_API_KEY: ${{secrets.VUE_APP_FIREBASE_API_KEY}}
-  VUE_APP_FIREBASE_DATABASE_URL: ${{secrets.VUE_APP_FIREBASE_DATABASE_URL}}
+  VUE_APP_API_KEY: ${{ secrets.VUE_APP_API_KEY }}
+  VUE_APP_FIREBASE_API_KEY: ${{ secrets.VUE_APP_FIREBASE_API_KEY }}
+  VUE_APP_FIREBASE_DATABASE_URL: ${{ secrets.VUE_APP_FIREBASE_DATABASE_URL }}
 jobs:
   install:
     runs-on: ubuntu-latest
@@ -23,6 +23,21 @@ jobs:
         run: pnpm install
       - name: build app
         run: pnpm build
+      - name: deploy
+  deploy:
+    needs: install
+    steps:
+      - name: Deploy
+        run:
+          cd dist
+          ln -s index.html 404.html
+          git config --global user.email "CI@stozen.com"
+          git config --global user.name "CI"
+          git init
+          git add -A
+          git commit -m 'deploy'
+          git push -f https://Stozen-spb:${{ secrets.GH_TOKEN }}@github.com/Stozen-spb/vuetify-kino-searcher.git master:gh-pages
+        shell: bash
 
 
 
