@@ -87,8 +87,12 @@
           release_date: '2023-01-01',
           runtime: 60
         },
-        movieID: null,
         imgLoaded: false
+      }
+    },
+    watch:{
+      '$route.params.movieID'() {
+        this.getMovie()
       }
     },
     computed: {
@@ -166,20 +170,22 @@
           userRating
         }
         await this.$store.dispatch('movies/updateMovie', data)
+      },
+      getMovie() {
+        this.$store.commit('ADD_OVERLAY')
+        this.MovieAPI
+          .getMovie(this.$route.params.movieID)
+          .then((res) => (this.movie = res))
+          .catch(e => {
+            if (e.status === 404) {
+              this.$router.push('/404')
+            }
+          })
+          .finally(() => this.$store.commit('REMOVE_OVERLAY'))
       }
     },
     created () {
-      this.$store.commit('ADD_OVERLAY')
-      this.movieID = this.$route.params.movieID
-      this.MovieAPI
-        .getMovie(this.movieID)
-        .then((res) => (this.movie = res))
-        .catch(e => {
-          if (e.status === 404) {
-            this.$router.push('/404')
-          }
-        })
-        .finally(() => this.$store.commit('REMOVE_OVERLAY'))
+      this.getMovie()
     }
   }
 </script>
