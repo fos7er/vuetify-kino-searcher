@@ -148,6 +148,7 @@
             dateAddedToFavorites: null
           }
           await this.$store.dispatch('movies/updateMovie', data)
+          this.$refs.dialogConfirm.close()
         }
       },
       addToWatchLater () {
