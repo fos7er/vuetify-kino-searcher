@@ -3,6 +3,11 @@ on:
   workflow_dispatch:
     branches:
       - master
+env:
+  NODE-ENV: production
+  VUE_APP_API_KEY: ${{secrets.VUE_APP_API_KEY}}
+  VUE_APP_FIREBASE_API_KEY: ${{secrets.VUE_APP_FIREBASE_API_KEY}}
+  VUE_APP_FIREBASE_DATABASE_URL: ${{secrets.VUE_APP_FIREBASE_DATABASE_URL}}
 jobs:
   install:
     runs-on: ubuntu-latest
