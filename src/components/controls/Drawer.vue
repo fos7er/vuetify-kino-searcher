@@ -31,7 +31,6 @@
               v-for="link in item.group"
               :key="link.id"
               :to="link.to"
-              exact
             >
               <v-list-item-icon v-if="link.icon">
                 <v-icon :class="{ 'white-black-color': item.accent }" v-text="link.icon"/>
@@ -89,6 +88,7 @@
             type: 'group',
             name: this.$t('genres'),
             icon: 'mdi-view-list',
+            expanded: this.$route.params.genreID,
             group: this.$store.getters['mainPage/genres']
           }
 
