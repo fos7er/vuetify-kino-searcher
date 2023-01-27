@@ -3,7 +3,12 @@
     <v-container>
       <v-row>
         <v-col cols="12" md="4">
-          <v-img :src="posterSrcFull"></v-img>
+          <v-skeleton-loader
+            v-show="!imgLoaded"
+            type="image"
+            height="100%"
+          ></v-skeleton-loader>
+          <v-img :src="posterSrcFull" :class="{invisible:!imgLoaded}" @load="loadIMGHandler"></v-img>
         </v-col>
         <v-col class="card__right-column" cols="12" md="8">
           <v-card-title pt-0>
@@ -69,8 +74,8 @@
 </template>
 
 <script>
-  import movieRating from '@/components/common/MovieRating'
   import dayjs from '@/utils/dayjs'
+  import movieRating from '@/components/common/MovieRating'
 
   export default {
     components: {
@@ -82,7 +87,8 @@
           release_date: '2023-01-01',
           runtime: 60
         },
-        movieID: null
+        movieID: null,
+        imgLoaded: false
       }
     },
     computed: {
@@ -106,6 +112,9 @@
       }
     },
     methods: {
+      loadIMGHandler () {
+        this.imgLoaded = true
+      },
       addToFav () {
         const data = {
           id: this.movie.id,

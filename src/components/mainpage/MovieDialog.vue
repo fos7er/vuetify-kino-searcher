@@ -80,7 +80,7 @@
 
 <script>
   import dayjs from '@/utils/dayjs'
-  import movieRating from '../common/MovieRating'
+  import movieRating from '@/components/common/MovieRating'
 
   export default {
     components: {
