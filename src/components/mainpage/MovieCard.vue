@@ -1,6 +1,19 @@
 <template>
   <v-card class="mx-auto card" max-width="344">
-    <v-img :key="srcFull" :src="srcFull" lazy-src="@/assets/images/placeholder-image-white.png"></v-img>
+    <v-img :key="srcFull" :src="srcFull" lazy-src="@/assets/images/placeholder-image-white.png">
+      <template v-slot:placeholder>
+        <v-row
+          class="fill-height ma-0"
+          align="center"
+          justify="center"
+        >
+          <v-progress-circular
+            indeterminate
+            color="grey lighten-5"
+          ></v-progress-circular>
+        </v-row>
+      </template>
+    </v-img>
 
     <v-card-title class="card__title"> {{ movie.title }}</v-card-title>
 
