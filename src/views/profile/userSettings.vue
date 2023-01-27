@@ -64,7 +64,7 @@
                 >
                   <v-switch
                     v-model="form.theme"
-                    :label="$t('Dark theme')"
+                    :label="$t('dark theme')"
                     true-value="dark"
                     false-value="light"
                     @change="themePreview"
