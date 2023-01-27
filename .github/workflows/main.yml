@@ -24,7 +24,7 @@ jobs:
       - name: build app
         run: pnpm build
       - name: Deploy
-        run:
+        run: |
           cd dist
           ln -s index.html 404.html
           git config --global user.email "CI@stozen.com"
