@@ -34,8 +34,8 @@
       if (this.$route.path.includes('genre') && this.$route.params?.id) {
         this.genres = this.$route.params.id
       }
-      this.$router.replace({path: this.$router.currentRoute.path, query: {page: this.page}})
       this.getAllMovies()
+      window.history.replaceState(null, null, `?page=${this.page}`)
     },
     methods: {
       async movieClick (movieID) {
@@ -53,7 +53,7 @@
     watch: {
       page (val) {
         this.getAllMovies()
-        this.$router.replace({path: this.$router.currentRoute.path, query: {page: val}})
+        window.history.replaceState(null, null, `?page=${val}`)
       }
     }
   }
