@@ -3,13 +3,17 @@
     <v-btn
       v-if="!isWatchLater"
       id="custom-btn"
-      @click="addToWatchLater">
+      @click="addToWatchLater"
+      :disabled="!isLoggedIn"
+    >
       <v-icon>mdi-timer-star-outline</v-icon>
     </v-btn>
     <v-btn
       v-if="isWatchLater"
       id="custom-btn"
-      @click="removeFromWatchLater">
+      @click="removeFromWatchLater"
+      :disabled="!isLoggedIn"
+    >
       <v-icon>mdi-timer-remove</v-icon>
     </v-btn>
     <dialog-confirm ref="dialogConfirm"/>

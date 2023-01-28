@@ -3,13 +3,17 @@
     <v-btn
       v-if="!isFavorite"
       id="custom-btn"
-      @click="addToFav">
+      @click="addToFav"
+      :disabled="!isLoggedIn"
+    >
       <v-icon>mdi-heart-outline</v-icon>
     </v-btn>
     <v-btn
       v-if="isFavorite"
       id="custom-btn"
-      @click="removeFromFav">
+      @click="removeFromFav"
+      :disabled="!isLoggedIn"
+    >
       <v-icon>mdi-heart</v-icon>
     </v-btn>
     <dialog-confirm ref="dialogConfirm"/>
