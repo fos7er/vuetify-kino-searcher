@@ -1,21 +1,29 @@
 <template>
   <div>
-    <v-btn
-      v-if="!isFavorite"
-      id="custom-btn"
-      @click="addToFav"
-      :disabled="!isLoggedIn"
-    >
-      <v-icon>mdi-heart-outline</v-icon>
-    </v-btn>
+    <v-tooltip bottom>
+      <template v-slot:activator="{on}">
+        <div v-on="on">
+          <v-btn
+            v-if="!isFavorite"
+            id="custom-btn"
+            :disabled="!isLoggedIn"
+            @click="addToFav"
+          >
+            <v-icon>mdi-heart-outline</v-icon>
+          </v-btn>
+        </div>
+      </template>
+      <span>Войдите чтобы добавить</span>
+    </v-tooltip>
+
     <v-btn
       v-if="isFavorite"
       id="custom-btn"
       @click="removeFromFav"
-      :disabled="!isLoggedIn"
     >
       <v-icon>mdi-heart</v-icon>
     </v-btn>
+
     <dialog-confirm ref="dialogConfirm"/>
   </div>
 </template>

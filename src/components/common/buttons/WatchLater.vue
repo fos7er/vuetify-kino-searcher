@@ -1,21 +1,30 @@
 <template>
   <div>
-    <v-btn
-      v-if="!isWatchLater"
-      id="custom-btn"
-      @click="addToWatchLater"
-      :disabled="!isLoggedIn"
-    >
-      <v-icon>mdi-timer-star-outline</v-icon>
-    </v-btn>
+    <v-tooltip bottom>
+      <template v-slot:activator="{on}">
+        <div v-on="on">
+          <v-btn
+            v-if="!isWatchLater"
+            id="custom-btn"
+            :disabled="!isLoggedIn"
+            @click="addToWatchLater"
+            v-on="on"
+          >
+            <v-icon>mdi-timer-star-outline</v-icon>
+          </v-btn>
+        </div>
+      </template>
+      <span>Войдите чтобы добавить</span>
+    </v-tooltip>
+
     <v-btn
       v-if="isWatchLater"
       id="custom-btn"
       @click="removeFromWatchLater"
-      :disabled="!isLoggedIn"
     >
       <v-icon>mdi-timer-remove</v-icon>
     </v-btn>
+
     <dialog-confirm ref="dialogConfirm"/>
   </div>
 </template>
