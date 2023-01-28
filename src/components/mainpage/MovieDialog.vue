@@ -1,6 +1,6 @@
 <template>
   <v-dialog v-model="dialog" max-width="1100px">
-    <v-card class="card pa-5 pa-md-0">
+    <v-card class="card pa-3 pt-5 pa-md-0">
       <v-btn class="closeBtn" icon @click="close">
         <v-icon> mdi-close</v-icon>
       </v-btn>

@@ -1,7 +1,7 @@
 <template>
   <v-container>
-    <v-row align="stretch">
-      <v-col v-for="movie in movies" :key="movie.id" lg="3" md="4" sm="6">
+    <v-row align="stretch" justify="center">
+      <v-col v-for="movie in movies" :key="movie.id" cols="12" lg="3" md="4" sm="6">
         <movie-card :movie="movie" @click.native="movieClick(movie.id)"/>
       </v-col>
     </v-row>
