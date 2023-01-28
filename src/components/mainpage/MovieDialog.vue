@@ -61,9 +61,9 @@
               @input="setRating"
               background-color="orange lighten-3"
               hover
-              half-increments
+              small
               color="orange"
-              length="5"
+              length="10"
               :value="ratingValue"
               :readonly="!isLoggedIn"
             ></v-rating>
@@ -96,7 +96,7 @@
       }
     },
     watch: {
-      posterSrcFull() {
+      posterSrcFull () {
         this.imgLoaded = false
       }
     },
@@ -194,21 +194,21 @@
   .card {
     position: relative;
 
-    & .release-year {
+    .release-year {
       font-size: 1.7rem;
       opacity: 0.8;
       font-weight: 400;
     }
 
-    & .v-card__subtitle {
+    .v-card__subtitle {
       font-size: 1rem;
     }
 
-    & .card__right-column div {
+    .card__right-column div {
       padding-left: 0;
     }
 
-    & .closeBtn {
+    .closeBtn {
       position: absolute;
       top: 3px;
       right: 3px;
@@ -224,6 +224,16 @@
 
       &.theme--light {
         background-color: #c4c4c5;
+      }
+    }
+  }
+</style>
+
+<style lang="scss">
+  @media screen and (max-width: 480px) {
+    .card {
+      .v-rating .v-icon {
+        padding: 0.2rem;
       }
     }
   }
