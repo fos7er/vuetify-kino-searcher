@@ -34,7 +34,7 @@
       async save (note) {
         const data = {
           id: this.movieID,
-          note
+          note: note.length ? note : null
         }
         await this.$store.dispatch('movies/updateMovie', data)
       }

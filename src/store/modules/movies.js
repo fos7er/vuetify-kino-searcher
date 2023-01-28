@@ -1,8 +1,6 @@
 /**
  *  This is List of all users movies which stores data in firebase about user interaction with movies
- *  in DB we have JSON like this
- *
- *  to delete property from DB send null value
+ *  in DB we have JSON like this:
  *  {
  *    245: {
  *      userRating: 9,
@@ -17,6 +15,7 @@
  *      dateAddedToWatchLater: '2023-01-22T09:32:10.521Z',
  *    }
  *  }
+ *  to delete property from DB send null value
  * **/
 import MovieAPI from '@/api/movieAPI'
 import { DB, onValue, ref, update } from '@/firebase'
@@ -112,7 +111,6 @@ const actions = {
     commit('UPDATE_USER_MOVIE', payload)
   },
   async getFavoriteMovies ({ state, getters }) {
-    console.log('get FAVS')
     const promises = []
     Object.values(getters.userMovies).forEach(item => {
       if (getters.isFavorite(item.id) && !state.movies.find(el => el.id === item.id)) {
@@ -130,7 +128,6 @@ const actions = {
     const promises = []
     Object.values(getters.userMovies).forEach(item => {
       if (getters.isWatchLater(item.id) && !state.movies.find(el => el.id === item.id)) {
-        console.log('new ID in watchLater ', item.id)
         promises.push(MovieAPI.getMovie(item.id))
       }
     })
