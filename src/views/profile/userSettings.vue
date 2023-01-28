@@ -100,7 +100,7 @@
       async save () {
         const data = this.prepareData()
         await this.$store.dispatch('userSettings/updateSettings',data)
-        this.$store.commit('SET_SUCCESS','success')
+        this.$store.commit('SET_SUCCESS',this.$t('saveSettings'))
       },
       themePreview () {
         this.$store.commit('userSettings/UPDATE_SETTINGS', { theme: this.form.theme })
