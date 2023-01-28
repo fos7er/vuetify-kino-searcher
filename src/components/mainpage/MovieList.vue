@@ -6,7 +6,7 @@
       </v-col>
     </v-row>
     <v-row v-show="movies.length" justify="center">
-      <v-pagination v-model="page" :length="500" :total-visible="9"></v-pagination>
+      <v-pagination v-model="page" :length="500" :total-visible="7"></v-pagination>
     </v-row>
   </v-container>
 </template>
