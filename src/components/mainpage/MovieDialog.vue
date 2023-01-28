@@ -83,7 +83,7 @@
     },
     computed: {
       posterSrcFull () {
-        return `${process.env.VUE_APP_IMAGES_PATH}${this.movie.poster_path}`
+        return this.movie.poster_path ? `${process.env.VUE_APP_IMAGES_PATH}${this.movie.poster_path}` : ''
       },
       releaseDateYear () {
         return dayjs(this.movie.release_date || 0).format('YYYY')

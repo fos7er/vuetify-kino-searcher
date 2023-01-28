@@ -22,30 +22,8 @@
           <div class="my-4 pl-2">
             <v-row align="center">
               <movie-rating :score="movie.vote_average"/>
-              <v-btn
-                v-if="!isFavorite"
-                class="custom-btn"
-                @click="addToFav">
-                <v-icon>mdi-heart-outline</v-icon>
-              </v-btn>
-              <v-btn
-                v-if="isFavorite"
-                class="custom-btn"
-                @click="removeFromFav">
-                <v-icon>mdi-heart</v-icon>
-              </v-btn>
-              <v-btn
-                v-if="!isWatchLater"
-                class="custom-btn"
-                @click="addToWatchLater">
-                <v-icon>mdi-timer-star-outline</v-icon>
-              </v-btn>
-              <v-btn
-                v-if="isWatchLater"
-                class="custom-btn"
-                @click="removeFromWatchLater">
-                <v-icon>mdi-timer-remove</v-icon>
-              </v-btn>
+              <btn-favorite :movieID="movieID"/>
+              <btn-watch-later :movieID="movieID"/>
             </v-row>
           </div>
           <div class="d-flex font-italic text--secondary mt-6">
@@ -75,11 +53,15 @@
 </template>
 
 <script>
+  import btnFavorite from '@/components/common/buttons/Favorite'
+  import btnWatchLater from '@/components/common/buttons/WatchLater'
   import dayjs from '@/utils/dayjs'
   import movieRating from '@/components/common/MovieRating'
 
   export default {
     components: {
+      btnFavorite,
+      btnWatchLater,
       movieRating
     },
     data () {
@@ -91,14 +73,14 @@
         imgLoaded: false
       }
     },
-    watch:{
-      '$route.params.movieID'() {
+    watch: {
+      'movieID' () {
         this.getMovie()
       }
     },
     computed: {
       posterSrcFull () {
-        return `${process.env.VUE_APP_IMAGES_PATH}${this.movie.poster_path}`
+        return this.movie.poster_path ? `${process.env.VUE_APP_IMAGES_PATH}${this.movie.poster_path}` : ''
       },
       releaseDateYear () {
         return dayjs(this.movie.release_date).format('YYYY')
@@ -106,64 +88,16 @@
       duration () {
         return dayjs.duration(this.movie.runtime, 'minutes').format('HH:mm')
       },
-      isFavorite () {
-        return this.$store.getters['movies/isFavorite'](this.movie.id)
-      },
-      isWatchLater () {
-        return this.$store.getters['movies/isWatchLater'](this.movie.id)
-      },
       ratingValue () {
         return this.$store.getters['movies/userRating'](this.movie.id)
+      },
+      movieID () {
+        return +this.$route.params.movieID
       }
     },
     methods: {
       loadIMGHandler () {
         this.imgLoaded = true
-      },
-      addToFav () {
-        const data = {
-          id: this.movie.id,
-          inFavorites: true,
-          dateAddedToFavorites: new Date().toISOString()
-        }
-        this.$store.dispatch('movies/updateMovie', data)
-      },
-      async removeFromFav () {
-        const confirmDialogText = {
-          title: this.$t('delete'),
-          message: this.$t('deleteFromFavorites')
-        }
-        if (await this.$refs.dialogConfirm.open(confirmDialogText)) {
-          const data = {
-            id: this.movie.id,
-            inFavorites: null,
-            dateAddedToFavorites: null
-          }
-          await this.$store.dispatch('movies/updateMovie', data)
-        }
-      },
-      addToWatchLater () {
-        const data = {
-          id: this.movie.id,
-          inWatchLater: true,
-          dateAddedToWatchLater: new Date().toISOString()
-        }
-        this.$store.dispatch('movies/updateMovie', data)
-      },
-      async removeFromWatchLater () {
-        const confirmDialogText = {
-          title: this.$t('delete'),
-          message: this.$t('deleteFromWatchLater')
-        }
-        if (await this.$refs.dialogConfirm.open(confirmDialogText)) {
-          const data = {
-            id: this.movie.id,
-            inWatchLater: null,
-            dateAddedToWatchLater: null
-          }
-          await this.$store.dispatch('movies/updateMovie', data)
-          this.$refs.dialogConfirm.close()
-        }
       },
       async setRating (userRating) {
         const data = {
@@ -172,10 +106,10 @@
         }
         await this.$store.dispatch('movies/updateMovie', data)
       },
-      getMovie() {
+      getMovie () {
         this.$store.commit('ADD_OVERLAY')
         this.MovieAPI
-          .getMovie(this.$route.params.movieID)
+          .getMovie(this.movieID)
           .then((res) => (this.movie = res))
           .catch(e => {
             if (e.status === 404) {
@@ -208,15 +142,6 @@
 
     & .card__right-column div {
       padding-left: 0;
-    }
-
-    .custom-btn {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      margin-right: 10px;
-      background-color: #2b577c;
-      min-width: 0;
     }
   }
 </style>
