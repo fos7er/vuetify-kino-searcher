@@ -5,7 +5,7 @@
         <div v-on="on">
           <v-btn
             id="custom-btn"
-            :disabled="!isLoggedIn"
+            :disabled="!isLoggedIn || loading"
             @click="addToWatchLater"
             v-on="on"
           >
@@ -42,6 +42,9 @@
       },
       toolTipText () {
         return this.isLoggedIn ? this.$t('addToWatchLater') : this.$t('loginToAdd')
+      },
+      loading () {
+        return this.$store.getters['movies/loading']
       }
     },
     methods: {

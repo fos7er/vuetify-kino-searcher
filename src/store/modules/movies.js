@@ -60,6 +60,9 @@ const getters = {
   },
   userRating (state) {
     return (id) => state.userMovies[id]?.userRating || 0
+  },
+  userNote (state) {
+    return (id) => state.userMovies[id]?.note || ''
   }
 }
 
@@ -71,7 +74,6 @@ const mutations = {
     if (!state.userMovies[payload.id]) {
       state.userMovies[payload.id] = {}
     }
-    //state.userMovies[payload.id] = { ...state.userMovies[payload.id], ...payload }
     deepMerge(state.userMovies[payload.id], payload)
   },
   SET_USER_MOVIES (state, payload) {
@@ -114,7 +116,6 @@ const actions = {
     const promises = []
     Object.values(getters.userMovies).forEach(item => {
       if (getters.isFavorite(item.id) && !state.movies.find(el => el.id === item.id)) {
-        console.log('new ID in favorites ', item.id)
         promises.push(MovieAPI.getMovie(item.id))
       }
     })
@@ -126,7 +127,6 @@ const actions = {
     }
   },
   async getWatchLaterMovies ({ state, getters }) {
-    console.log('get WL')
     const promises = []
     Object.values(getters.userMovies).forEach(item => {
       if (getters.isWatchLater(item.id) && !state.movies.find(el => el.id === item.id)) {

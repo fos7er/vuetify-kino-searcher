@@ -5,7 +5,7 @@
         <div v-on="on">
           <v-btn
             id="custom-btn"
-            :disabled="!isLoggedIn"
+            :disabled="!isLoggedIn || loading"
             @click="addToFav"
           >
             <v-icon>mdi-heart-outline</v-icon>
@@ -41,6 +41,9 @@
       },
       toolTipText () {
         return this.isLoggedIn ? this.$t('addToFavorites') : this.$t('loginToAdd')
+      },
+      loading () {
+        return this.$store.getters['movies/loading']
       }
     },
     methods: {

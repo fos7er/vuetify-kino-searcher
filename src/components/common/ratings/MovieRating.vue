@@ -4,8 +4,8 @@
       <template v-slot:activator="{on}">
         <div class="d-inline-block" v-on="on">
           <v-rating
-            :readonly="!isLoggedIn"
-            :value="ratingValue"
+            :readonly="!isLoggedIn || loading"
+            :value="value"
             background-color="orange lighten-3"
             class="py-2 d-inline-block"
             color="orange"
@@ -16,7 +16,7 @@
           ></v-rating>
         </div>
       </template>
-      <span>{{toolTipText}}</span>
+      <span>{{ toolTipText }}</span>
     </v-tooltip>
   </div>
 </template>
@@ -30,11 +30,14 @@
       }
     },
     computed: {
-      ratingValue () {
+      value () {
         return this.$store.getters['movies/userRating'](this.movieID)
       },
-      toolTipText() {
-        return this.isLoggedIn ?   this.$t('yourRating') : this.$t('loginToRate')
+      toolTipText () {
+        return this.isLoggedIn ? this.$t('yourRating') : this.$t('loginToRate')
+      },
+      loading () {
+        return this.$store.getters['movies/loading']
       }
     },
     methods: {

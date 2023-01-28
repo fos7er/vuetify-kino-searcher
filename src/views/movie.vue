@@ -36,6 +36,7 @@
           <v-card-text class="pt-1">
             {{ movie.overview || $t('noDescription') }}
           </v-card-text>
+          <note v-if="isLoggedIn" :movieID="movieID"/>
         </v-col>
       </v-row>
     </v-container>
@@ -48,6 +49,7 @@
   import BtnWatchLater from '@/components/common/buttons/WatchLater'
   import dayjs from '@/utils/dayjs'
   import MovieRating from '@/components/common/ratings/MovieRating'
+  import Note from '@/components/common/fields/Note'
   import RoundRating from '@/components/common/ratings/RoundRating'
 
   export default {
@@ -55,6 +57,7 @@
       BtnFavorite,
       BtnWatchLater,
       MovieRating,
+      Note,
       RoundRating
     },
     data () {
