@@ -24,7 +24,7 @@
         alt="Logo"
       />
     </router-link>
-    <v-container>
+    <v-container class="ml-n4 ml-md-2">
       <v-row align="center">
         <v-col>
           <autocomplete/>

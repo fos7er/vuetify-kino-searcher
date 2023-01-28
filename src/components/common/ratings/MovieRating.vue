@@ -51,11 +51,5 @@
 </script>
 
 <style lang="scss">
-  @media screen and (max-width: 480px) {
-    .card {
-      .v-rating .v-icon {
-        padding: 0.2rem;
-      }
-    }
-  }
+
 </style>

@@ -2,7 +2,12 @@
   <div>
     <v-menu left offset-y transition="slide-y-transition">
       <template v-slot:activator="{on, value}">
-        <v-btn elevation="0" v-on="on" large style="text-transform:none;">
+
+        <v-btn v-if="breakpoint" elevation="0" v-on="on" icon>
+          <v-icon>mdi-dots-vertical</v-icon>
+        </v-btn>
+
+        <v-btn v-else elevation="0" v-on="on" large style="text-transform:none;">
           <v-avatar size="30" class="mr-1">
             <img alt="Avatar" src="@/assets/images/avatar-placeholder.svg">
           </v-avatar>
@@ -14,6 +19,7 @@
             {{ value ? 'mdi-chevron-up' : 'mdi-chevron-down' }}
           </v-icon>
         </v-btn>
+
       </template>
       <v-list>
         <v-list-item v-if="!isLoggedIn" exact to="/registration">
@@ -59,6 +65,11 @@
 <script>
 
   export default {
+    computed: {
+      breakpoint () {
+        return this.$vuetify.breakpoint.name === 'xs'
+      }
+    },
     methods: {
       async logout () {
         const confirmDialogText = {
@@ -76,7 +87,6 @@
 
       }
     }
-
   }
 </script>
 

@@ -12,3 +12,16 @@
   opacity: 0;
   height: 0;
 }
+
+@media screen and (max-width: 480px) {
+  .card {
+    .v-rating .v-icon {
+      padding: 0.2rem;
+    }
+  }
+  header {
+    .v-toolbar__content {
+      padding: 4px 8px;
+    }
+  }
+}

@@ -13,7 +13,7 @@
     hide-selected
     item-text="titleWithYear"
     item-value="id"
-    prepend-icon="mdi-magnify"
+    :prepend-icon="icon"
     return-object
     solo
     append-icon=""
@@ -35,6 +35,11 @@
         items: [],
         isLoading: false,
         searchValue: null
+      }
+    },
+    computed: {
+      icon () {
+        return this.$vuetify.breakpoint.name === 'xs' ? '' : 'mdi-magnify'
       }
     },
     methods: {
