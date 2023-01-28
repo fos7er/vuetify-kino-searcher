@@ -9,10 +9,10 @@
           <v-col cols="12" md="4">
             <v-skeleton-loader
               v-show="!imgLoaded"
-              type="image"
               height="100%"
+              type="image"
             ></v-skeleton-loader>
-            <v-img :src="posterSrcFull" :class="{invisible:!imgLoaded}" @load="loadIMGHandler"></v-img>
+            <v-img :class="{invisible:!imgLoaded}" :src="posterSrcFull" @load="loadIMGHandler"></v-img>
           </v-col>
           <v-col class="card__right-column" md="8">
             <v-card-title pt-0>
@@ -35,15 +35,15 @@
             </div>
             <h3>{{ $t('yourRating') }}</h3>
             <v-rating
-              class="py-2"
-              @input="setRating"
-              background-color="orange lighten-3"
-              hover
-              small
-              color="orange"
-              length="10"
-              :value="ratingValue"
               :readonly="!isLoggedIn"
+              :value="ratingValue"
+              background-color="orange lighten-3"
+              class="py-2"
+              color="orange"
+              hover
+              length="10"
+              small
+              @input="setRating"
             ></v-rating>
             <v-divider/>
             <h3>{{ $t('overview') }}</h3>
