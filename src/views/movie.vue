@@ -21,7 +21,7 @@
           </v-card-subtitle>
           <div class="my-4 pl-2">
             <v-row align="center">
-              <movie-rating :score="movie.vote_average"/>
+              <round-rating :score="movie.vote_average"/>
               <btn-favorite :movieID="movieID"/>
               <btn-watch-later :movieID="movieID"/>
             </v-row>
@@ -30,16 +30,7 @@
             <h4 v-if="movie.tagline">{{ movie.tagline }}</h4>
           </div>
           <h3>{{ $t('yourRating') }}</h3>
-          <v-rating
-            class="py-2"
-            @input="setRating"
-            background-color="orange lighten-3"
-            hover
-            color="orange"
-            length="10"
-            :value="ratingValue"
-            :readonly="!isLoggedIn"
-          ></v-rating>
+          <movie-rating :movieID="movieID"/>
           <v-divider/>
           <h3>{{ $t('overview') }}</h3>
           <v-card-text class="pt-1">
@@ -53,16 +44,18 @@
 </template>
 
 <script>
-  import btnFavorite from '@/components/common/buttons/Favorite'
-  import btnWatchLater from '@/components/common/buttons/WatchLater'
+  import BtnFavorite from '@/components/common/buttons/Favorite'
+  import BtnWatchLater from '@/components/common/buttons/WatchLater'
   import dayjs from '@/utils/dayjs'
-  import movieRating from '@/components/common/MovieRating'
+  import MovieRating from '@/components/common/ratings/MovieRating'
+  import RoundRating from '@/components/common/ratings/RoundRating'
 
   export default {
     components: {
-      btnFavorite,
-      btnWatchLater,
-      movieRating
+      BtnFavorite,
+      BtnWatchLater,
+      MovieRating,
+      RoundRating
     },
     data () {
       return {
@@ -88,9 +81,6 @@
       duration () {
         return dayjs.duration(this.movie.runtime, 'minutes').format('HH:mm')
       },
-      ratingValue () {
-        return this.$store.getters['movies/userRating'](this.movie.id)
-      },
       movieID () {
         return +this.$route.params.movieID
       }
@@ -98,13 +88,6 @@
     methods: {
       loadIMGHandler () {
         this.imgLoaded = true
-      },
-      async setRating (userRating) {
-        const data = {
-          id: this.movie.id,
-          userRating
-        }
-        await this.$store.dispatch('movies/updateMovie', data)
       },
       getMovie () {
         this.$store.commit('ADD_OVERLAY')

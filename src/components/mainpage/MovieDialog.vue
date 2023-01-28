@@ -25,7 +25,7 @@
             </v-card-subtitle>
             <div class="my-4 pl-2">
               <v-row align="center">
-                <movie-rating :score="movie.vote_average"/>
+                <round-rating :score="movie.vote_average"/>
                 <btn-favorite :movieID="movie.id"/>
                 <btn-watch-later :movieID="movie.id"/>
               </v-row>
@@ -34,17 +34,7 @@
               <h4 v-if="movie.tagline">{{ movie.tagline }}</h4>
             </div>
             <h3>{{ $t('yourRating') }}</h3>
-            <v-rating
-              :readonly="!isLoggedIn"
-              :value="ratingValue"
-              background-color="orange lighten-3"
-              class="py-2"
-              color="orange"
-              hover
-              length="10"
-              small
-              @input="setRating"
-            ></v-rating>
+            <movie-rating :movieID="movie.id"/>
             <v-divider/>
             <h3>{{ $t('overview') }}</h3>
             <v-card-text class="pt-1">
@@ -58,16 +48,18 @@
 </template>
 
 <script>
-  import btnFavorite from '@/components/common/buttons/Favorite'
-  import btnWatchLater from '@/components/common/buttons/WatchLater'
+  import BtnFavorite from '@/components/common/buttons/Favorite'
+  import BtnWatchLater from '@/components/common/buttons/WatchLater'
   import dayjs from '@/utils/dayjs'
-  import movieRating from '@/components/common/MovieRating'
+  import MovieRating from '@/components/common/ratings/MovieRating'
+  import RoundRating from '@/components/common/ratings/RoundRating'
 
   export default {
     components: {
-      btnFavorite,
-      btnWatchLater,
-      movieRating
+      BtnFavorite,
+      BtnWatchLater,
+      MovieRating,
+      RoundRating
     },
     props: ['movie'],
     data () {
@@ -90,9 +82,6 @@
       },
       duration () {
         return dayjs.duration(this.movie.runtime || 0, 'minutes').format('HH:mm')
-      },
-      ratingValue () {
-        return this.$store.getters['movies/userRating'](this.movie.id)
       }
     },
     methods: {
@@ -104,13 +93,6 @@
       },
       open () {
         this.dialog = true
-      },
-      async setRating (userRating) {
-        const data = {
-          id: this.movie.id,
-          userRating
-        }
-        await this.$store.dispatch('movies/updateMovie', data)
       }
     },
     updated () {
@@ -141,16 +123,6 @@
       position: absolute;
       top: 3px;
       right: 3px;
-    }
-  }
-</style>
-
-<style lang="scss">
-  @media screen and (max-width: 480px) {
-    .card {
-      .v-rating .v-icon {
-        padding: 0.2rem;
-      }
     }
   }
 </style>

@@ -47,7 +47,7 @@
   *****************************************************************/
 
   // Compass utilities
-  @import '~compass-mixins/lib/compass/css3';
+  @import '../../../../node_modules/compass-mixins/lib/compass/css3';
 
   // VARS
   $circle-width: 0.08em;

@@ -1,10 +1,9 @@
 <template>
   <div>
-    <v-tooltip bottom>
+    <v-tooltip v-if="!isWatchLater" bottom>
       <template v-slot:activator="{on}">
         <div v-on="on">
           <v-btn
-            v-if="!isWatchLater"
             id="custom-btn"
             :disabled="!isLoggedIn"
             @click="addToWatchLater"
@@ -14,7 +13,7 @@
           </v-btn>
         </div>
       </template>
-      <span>Войдите чтобы добавить</span>
+      <span>{{ toolTipText }}</span>
     </v-tooltip>
 
     <v-btn
@@ -40,6 +39,9 @@
     computed: {
       isWatchLater () {
         return this.$store.getters['movies/isWatchLater'](this.movieID)
+      },
+      toolTipText () {
+        return this.isLoggedIn ? this.$t('addToWatchLater') : this.$t('loginToAdd')
       }
     },
     methods: {

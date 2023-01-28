@@ -1,10 +1,9 @@
 <template>
   <div>
-    <v-tooltip bottom>
+    <v-tooltip v-if="!isFavorite" bottom>
       <template v-slot:activator="{on}">
         <div v-on="on">
           <v-btn
-            v-if="!isFavorite"
             id="custom-btn"
             :disabled="!isLoggedIn"
             @click="addToFav"
@@ -13,7 +12,7 @@
           </v-btn>
         </div>
       </template>
-      <span>Войдите чтобы добавить</span>
+      <span>{{ toolTipText }}</span>
     </v-tooltip>
 
     <v-btn
@@ -39,6 +38,9 @@
     computed: {
       isFavorite () {
         return this.$store.getters['movies/isFavorite'](this.movieID)
+      },
+      toolTipText () {
+        return this.isLoggedIn ? this.$t('addToFavorites') : this.$t('loginToAdd')
       }
     },
     methods: {
