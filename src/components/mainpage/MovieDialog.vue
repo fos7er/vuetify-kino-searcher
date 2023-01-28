@@ -1,10 +1,10 @@
 <template>
   <v-dialog v-model="dialog" max-width="1100px">
-    <v-card class="card">
+    <v-card class="card pa-5 pa-md-0">
+      <v-btn class="closeBtn" icon @click="close">
+        <v-icon> mdi-close</v-icon>
+      </v-btn>
       <v-container>
-        <v-btn class="closeBtn" icon @click="close">
-          <v-icon> mdi-close</v-icon>
-        </v-btn>
         <v-row>
           <v-col cols="12" md="4">
             <v-skeleton-loader
@@ -61,8 +61,9 @@
               @input="setRating"
               background-color="orange lighten-3"
               hover
+              half-increments
               color="orange"
-              length="10"
+              length="5"
               :value="ratingValue"
               :readonly="!isLoggedIn"
             ></v-rating>
@@ -209,8 +210,8 @@
 
     & .closeBtn {
       position: absolute;
-      top: 5px;
-      right: 5px;
+      top: 3px;
+      right: 3px;
     }
 
     .custom-btn {
