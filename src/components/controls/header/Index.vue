@@ -93,6 +93,10 @@
         this.$store.commit('controls/TOGGLE_DRAWER')
       },
       changeLang (lang) {
+        if (this.isLoggedIn) {
+          this.$store.dispatch('userSettings/updateSettings', { lang })
+          return
+        }
         this.$store.commit('userSettings/UPDATE_SETTINGS', { lang })
       },
       setSelectText (isOpen) {
