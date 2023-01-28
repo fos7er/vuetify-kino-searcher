@@ -97,9 +97,6 @@
       open () {
         this.dialog = true
       }
-    },
-    updated () {
-      console.log(this.movie)
     }
   }
 </script>
