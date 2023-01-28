@@ -2,11 +2,12 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import routes from './routes'
 import store from '@/store/index'
+import { publicPath } from '@/../vue.config'
 
 Vue.use(VueRouter)
 
 const router = new VueRouter({
-  base: '/',
+  base: publicPath,
   mode: 'history',
   routes
 })
