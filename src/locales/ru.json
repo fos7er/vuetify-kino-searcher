@@ -19,6 +19,7 @@
   "genres": "Жанры",
   "genresPageTitle": "Фильмы в жанре {0}",
   "login": "Вход",
+  "successLogin": "Успешный вход",
   "logout": "Выход",
   "logoutConfirm": "Вы уверены, что хотите выйти?",
   "male": "муж.",

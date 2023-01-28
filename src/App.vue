@@ -4,19 +4,19 @@
     <v-snackbar v-model="success" :timeout="2500" bottom color="success" multi-line>
       {{ success }}
       <v-btn text @click="$store.commit('SET_SUCCESS', false)">
-        {{ 'Close' }}
+        {{ 'close' }}
       </v-btn>
     </v-snackbar>
     <v-snackbar v-model="warning" :timeout="6000" bottom color="warning" multi-line>
       {{ warning }}
       <v-btn text @click="$store.commit('SET_WARNING', false)">
-        {{ 'Close' }}
+        {{ 'close' }}
       </v-btn>
     </v-snackbar>
     <v-snackbar v-model="error" :timeout="7000" bottom class="error-snackbar" color="error" multi-line>
       {{ error }}
       <v-btn text @click="$store.commit('SET_ERROR', false)">
-        {{ 'Close' }}
+        {{ 'close' }}
       </v-btn>
     </v-snackbar>
     <v-overlay :value="overlay">

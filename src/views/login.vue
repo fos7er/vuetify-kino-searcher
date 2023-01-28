@@ -67,7 +67,7 @@
         const { email, password } = this.form
         try {
           await this.$store.dispatch('auth/login', { email, password })
-          this.$store.commit('SET_SUCCESS', 'Logged in', { root: true })
+          this.$store.commit('SET_SUCCESS', this.$t('successLogin'), { root: true })
           this.clearForm()
           this.$router.push('/')
         } catch (e) {

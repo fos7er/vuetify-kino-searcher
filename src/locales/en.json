@@ -15,6 +15,7 @@
   "genres": "Genres",
   "genresPageTitle": "{0} movies",
   "login": "Login",
+  "successLogin": "Success login",
   "logout": "Logout",
   "logoutConfirm": "Are you sure you want to logout?",
   "noDescription": "No description",
