@@ -6,9 +6,9 @@
           <v-avatar size="30" class="mr-1">
             <img alt="Avatar" src="@/assets/images/avatar-placeholder.svg">
           </v-avatar>
-          <slot name="user-name">
-            <span v-if="isLoggedIn">{{userName}}</span>
-            <span v-else>{{$t('login')}}</span>
+          <slot name="user-name" class="d-none">
+            <span v-if="isLoggedIn">{{ userName }}</span>
+            <span v-else>{{ $t('login') }}</span>
           </slot>
           <v-icon right>
             {{ value ? 'mdi-chevron-up' : 'mdi-chevron-down' }}
@@ -57,15 +57,8 @@
 </template>
 
 <script>
-  import { mapGetters } from 'vuex'
 
   export default {
-    computed: {
-      ...mapGetters({
-        isLoggedIn: 'auth/isLoggedIn',
-        userName:'userSettings/userName'
-      })
-    },
     methods: {
       async logout () {
         const confirmDialogText = {

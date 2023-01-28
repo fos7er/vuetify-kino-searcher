@@ -23,9 +23,8 @@ Vue.mixin({
     return {
       globalRules: globalRules.call(this)
     }
-  }, computed: {
-    authMixin
-  }
+  },
+  ...authMixin
 })
 
 new Vue({
