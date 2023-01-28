@@ -8,6 +8,7 @@ import vuetify from './plugins/vuetify'
 import store from './store'
 import { VueMaskDirective } from 'v-mask'
 import globalRules from '@/plugins/mixins/globalRules'
+import authMixin from '@/plugins/mixins/auth'
 import DialogConfirm from './components/common/DialogConfirm'
 
 Vue.prototype.MovieAPI = MovieAPI
@@ -22,6 +23,8 @@ Vue.mixin({
     return {
       globalRules: globalRules.call(this)
     }
+  }, computed: {
+    authMixin
   }
 })
 

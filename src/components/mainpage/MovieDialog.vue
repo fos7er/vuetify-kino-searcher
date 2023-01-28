@@ -55,7 +55,7 @@
             <div class="d-flex font-italic text--secondary mt-6 mb-2">
               <h4 v-if="movie.tagline">{{ movie.tagline }}</h4>
             </div>
-            <h3>{{ $t('rating') }}</h3>
+            <h3>{{ $t('yourRating') }}</h3>
             <v-rating
               class="py-2"
               @input="setRating"
@@ -64,6 +64,7 @@
               color="orange"
               length="10"
               :value="ratingValue"
+              :readonly="!isLoggedIn"
             ></v-rating>
             <v-divider/>
             <h3>{{ $t('overview') }}</h3>
