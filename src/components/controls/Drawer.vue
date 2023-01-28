@@ -5,6 +5,7 @@
     :mini-variant="$store.getters['controls/isMiniDrawer']"
     :style="`padding-top:${$store.getters['controls/headerHeight']}px`"
     fixed
+    @input="setDrawer"
   >
     <v-list>
       <template v-for="item in menu">
