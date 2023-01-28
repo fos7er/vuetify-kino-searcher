@@ -6,7 +6,7 @@
       </v-col>
     </v-row>
     <v-row v-show="movies.length" justify="center">
-      <v-pagination v-model="page" :length="500" :total-visible="7"></v-pagination>
+      <v-pagination v-model="page" :length="500" :total-visible="totalVisible"></v-pagination>
     </v-row>
   </v-container>
 </template>
@@ -27,6 +27,9 @@
     computed: {
       movies () {
         return this.$store.getters['mainPage/movies'](this.page)
+      },
+      totalVisible() {
+        return this.$vuetify.breakpoint.name === 'xs' ? 5 : 9
       }
     },
     created () {
