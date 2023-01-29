@@ -5,12 +5,15 @@ class MovieAPI {
   constructor (axios) {
     let service = axios.create({
       baseURL: process.env.VUE_APP_BASE_API_URL,
-      timeout: 5000
+      timeout: 5000,
+      params: {
+        api_key: process.env.VUE_APP_API_KEY,
+        include_adult: false
+      }
     })
     service.interceptors.request.use((config) => this.addRequestParams(config))
     service.interceptors.response.use(this.handleSuccess, this.handleError)
     this.service = service
-    this.API_KEY = process.env.VUE_APP_API_KEY
   }
 
   get language () {
@@ -27,12 +30,7 @@ class MovieAPI {
   }
 
   addRequestParams (config) {
-    let startSymbol = '&'
-    if (config.url.indexOf('?') === -1) {
-      startSymbol = '?'
-    }
-    config.url = `${config.url}${startSymbol}api_key=${this.API_KEY}&language=${this.language}&include_adult=false`
-
+    config.params.language = this.language
     return config
   }
 
