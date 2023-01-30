@@ -79,6 +79,15 @@ class MovieAPI {
     }
   }
 
+  async getMovieCredits (movieID = MovieAPI._required()) {
+    const path = `/movie/${movieID}/credits`
+    try {
+      return await this.get(path)
+    } catch (e) {
+      return Promise.reject(e)
+    }
+  }
+
   async searchMovies (query = MovieAPI._required(), sortBy = 'popularity') {
     const path = `/search/movie?query=${query}&page=1`
     try {
