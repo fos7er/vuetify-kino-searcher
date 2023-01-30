@@ -20,8 +20,11 @@
               <span class="release-year">&nbsp;({{ releaseDateYear }})</span>
             </v-card-title>
             <v-card-subtitle class="mt-n3">
-              <span v-for="genre in movie.genres" :key="genre.id">{{ genre.name }}&nbsp;</span> &#9679;
-              <span>{{ duration }}</span>
+              <div class="py-1">
+                <span v-for="genre in movie.genres" :key="genre.id">{{ genre.name }}&nbsp;</span> &#9679;
+                <span>{{ duration }}</span>
+              </div>
+              <div class="py-1">{{ movieCast }}</div>
             </v-card-subtitle>
             <div class="my-4 pl-2">
               <v-row align="center">
@@ -85,6 +88,9 @@
       },
       duration () {
         return dayjs.duration(this.movie.runtime || 0, 'minutes').format('HH:mm')
+      },
+      movieCast () {
+        return this.movie.cast.slice(0, 5).map(actor => actor.name).join(', ')
       }
     },
     methods: {

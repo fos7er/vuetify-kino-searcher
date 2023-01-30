@@ -13,6 +13,7 @@
 
 <script>
   import movieCard from './MovieCard'
+  import { deepMerge } from '@/utils/deep'
 
   export default {
     components: {
@@ -28,7 +29,7 @@
       movies () {
         return this.$store.getters['mainPage/movies'](this.page)
       },
-      totalVisible() {
+      totalVisible () {
         return this.$vuetify.breakpoint.name === 'xs' ? 5 : 9
       }
     },
@@ -42,8 +43,11 @@
     },
     methods: {
       async movieClick (movieID) {
-        const r = await this.MovieAPI.getMovie(movieID)
-        this.$emit('movieClick', r)
+        const [movie, credits] = await Promise.all([
+          this.MovieAPI.getMovie(movieID),
+          this.MovieAPI.getMovieCredits(movieID)
+        ])
+        this.$emit('movieClick', deepMerge(movie, credits))
       },
       getAllMovies () {
         const data = {
