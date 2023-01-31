@@ -90,7 +90,11 @@
         return dayjs.duration(this.movie.runtime || 0, 'minutes').format('HH:mm')
       },
       movieCast () {
-        return this.movie.cast.slice(0, 5).map(actor => actor.name).join(', ')
+        if (this.movie?.cast) {
+          return this.movie.cast?.slice(0, 5).map(actor => actor.name).join(', ')
+        }
+        return ''
+
       }
     },
     methods: {
