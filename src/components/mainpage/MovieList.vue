@@ -21,8 +21,7 @@
     },
     data () {
       return {
-        page: +this.$router.currentRoute.query.page || 1,
-        genres: ''
+        page: +this.$route.query?.page || 1
       }
     },
     computed: {
@@ -31,13 +30,13 @@
       },
       totalVisible () {
         return this.$vuetify.breakpoint.name === 'xs' ? 5 : 9
+      },
+      genreID() {
+        return this.$route.params.genreID
       }
     },
     created () {
       this.$store.commit('mainPage/CLEAR_MOVIES')
-      if (this.$route.path.includes('genre') && this.$route.params?.genreID) {
-        this.genres = this.$route.params.genreID
-      }
       this.getAllMovies()
     },
     methods: {
@@ -51,15 +50,20 @@
       getAllMovies () {
         const data = {
           page: this.page,
-          genres: this.genres
+          genres: this.genreID
         }
         this.$store.dispatch('mainPage/getAllMovies', data)
-        window.history.replaceState(null, null, `?page=${this.page}`)
+        if ( +this.$route.query?.page !== this.page ){
+          this.$router.push({ query: { page: `${this.page}` } })
+        }
       }
     },
     watch: {
-      page (val) {
+      page () {
         this.getAllMovies()
+      },
+      '$route.query.page'(val) {
+        this.page = parseInt(val) || 1
       }
     }
   }
