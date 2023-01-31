@@ -39,7 +39,6 @@
         this.genres = this.$route.params.genreID
       }
       this.getAllMovies()
-      window.history.replaceState(null, null, `?page=${this.page}`)
     },
     methods: {
       async movieClick (movieID) {
@@ -55,12 +54,12 @@
           genres: this.genres
         }
         this.$store.dispatch('mainPage/getAllMovies', data)
+        window.history.replaceState(null, null, `?page=${this.page}`)
       }
     },
     watch: {
       page (val) {
         this.getAllMovies()
-        window.history.replaceState(null, null, `?page=${val}`)
       }
     }
   }
