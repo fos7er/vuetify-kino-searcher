@@ -1,7 +1,7 @@
 <template>
   <v-card class="mx-auto card" max-width="344">
     <v-img height="200px" :key="srcFull" :src="srcFull" lazy-src="@/assets/images/placeholder-image-white.png">
-      <template v-if="srcFull !== ''" v-slot:placeholder>
+      <template v-if="srcFull" v-slot:placeholder>
         <v-row
           class="fill-height ma-0"
           align="center"
@@ -45,7 +45,7 @@
       <div v-show="show">
         <v-divider></v-divider>
         <v-card-text>
-          {{ movie.overview }}
+          {{ movie.overview ? movie.overview : $t('noDescription')  }}
         </v-card-text>
       </div>
     </v-expand-transition>
@@ -63,7 +63,7 @@
     },
     computed: {
       srcFull () {
-        return this.movie.backdrop_path ? `${process.env.VUE_APP_IMAGES_PATH}${this.movie.backdrop_path}` : ''
+        return this.movie.backdrop_path ? `${process.env.VUE_APP_IMAGES_PATH}${this.movie.backdrop_path}` : false
       }
     }
   }

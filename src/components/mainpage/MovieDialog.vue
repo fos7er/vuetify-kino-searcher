@@ -8,7 +8,7 @@
         <v-row>
           <v-col cols="12" md="4">
             <v-skeleton-loader
-              v-show="!imgLoaded"
+              v-show="posterSrcFull && !imgLoaded"
               height="100%"
               type="image"
             ></v-skeleton-loader>
@@ -81,7 +81,7 @@
     },
     computed: {
       posterSrcFull () {
-        return this.movie.poster_path ? `${process.env.VUE_APP_IMAGES_PATH}${this.movie.poster_path}` : ''
+        return this.movie.poster_path ? `${process.env.VUE_APP_IMAGES_PATH}${this.movie.poster_path}` : false
       },
       releaseDateYear () {
         return dayjs(this.movie.release_date || 0).format('YYYY')
