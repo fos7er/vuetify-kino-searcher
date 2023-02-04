@@ -31,9 +31,10 @@
   </v-container>
 </template>
 <script>
+  import redirectLoggedInUser from '@/plugins/mixins/redirectLoggedInUser'
 
   export default {
-
+    mixins: [redirectLoggedInUser],
     data () {
       return {
         resetSend: false

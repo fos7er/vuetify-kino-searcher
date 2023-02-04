@@ -42,12 +42,13 @@
 <script>
   import PasswordField from '@/components/common/fields/Password'
   import clearForm from '@/plugins/mixins/clearForm'
+  import redirectLoggedInUser from '@/plugins/mixins/redirectLoggedInUser'
 
   export default {
     components: {
       PasswordField
     },
-    mixins: [clearForm],
+    mixins: [clearForm,redirectLoggedInUser],
     data () {
       return {
         form: {
