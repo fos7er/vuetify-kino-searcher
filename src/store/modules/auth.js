@@ -1,5 +1,14 @@
 import AuthError from '@/error/authError'
-import { auth, createUserWithEmailAndPassword, DB, ref, set, signInWithEmailAndPassword, signOut } from '@/firebase'
+import {
+  auth,
+  createUserWithEmailAndPassword,
+  DB,
+  ref,
+  sendPasswordResetEmail,
+  set,
+  signInWithEmailAndPassword,
+  signOut
+} from '@/firebase'
 
 const state = {
   signInPassword: null,
@@ -40,11 +49,11 @@ const actions = {
       await set(ref(DB, `users/${userID}`), {
         userID: userID
       })
-      state.isLoading = false
       return userCredential
     } catch (e) {
-      state.isLoading = false
       throw new AuthError(e)
+    } finally {
+      state.isLoading = false
     }
   },
   async login ({ commit, state }, { email, password }) {
@@ -53,20 +62,20 @@ const actions = {
       const userCredential = await signInWithEmailAndPassword(auth, email, password)
       if (!validUser(userCredential.user)) return commit('SET_ERROR', 'Invalid user structure', { root: true })
       commit('SET_USER', userCredential.user)
-      state.isLoading = false
     } catch (e) {
-      state.isLoading = false
       throw new AuthError(e)
+    } finally {
+      state.isLoading = false
     }
   },
   async logout ({ state }) {
     try {
       state.isLoading = true
       await signOut(auth)
-      state.isLoading = false
     } catch (e) {
-      state.isLoading = false
       throw new AuthError(e)
+    } finally {
+      state.isLoading = false
     }
   },
   async refresh ({ commit }) {
@@ -82,15 +91,29 @@ const actions = {
             if (!validUser(user)) return commit('SET_ERROR', 'Invalid user structure', { root: true })
             commit('SET_USER', user)
           }
-          state.isLoading = false
           resolve()
         })
       })
     } catch (e) {
-      state.isLoading = false
       throw new AuthError(e)
+    } finally {
+      state.isLoading = false
     }
 
+  },
+
+  async resetPassword ({ commit }, email) {
+    if (!/^[A-Za-z0-9._%-]+@[a-z0-9.-]+[.][a-z]+$/.test(email)) {
+      return commit('SET_ERROR', 'Invalid email', { root: true })
+    }
+    try {
+      state.isLoading = true
+      await sendPasswordResetEmail(auth, email)
+    } catch (e) {
+      throw new AuthError(e)
+    } finally {
+      state.isLoading = false
+    }
   }
 
 }

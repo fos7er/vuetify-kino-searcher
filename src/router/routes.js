@@ -4,6 +4,7 @@ import MoviePage from '@/views/movie'
 import page404 from '@/views/404'
 import LoginPage from '@/views/login'
 import RegistrationPage from '@/views/registration'
+import RestorePage from '@/views/restore'
 import ProfilePage from '@/views/profile/'
 import UserSettings from '@/views/profile/userSettings'
 import FavoritesPage from '@/views/playlists/favorites'
@@ -27,6 +28,7 @@ const routes = [
       { path: 'genre/:genreID', component: MainPage, meta: { ...noAuth } },
       { path: 'login', component: LoginPage, meta: { ...noAuth } },
       { path: 'registration', component: RegistrationPage, meta: { ...noAuth } },
+      { path: 'restore', component: RestorePage, meta: { ...noAuth } },
       { path: 'favorites', component: FavoritesPage, meta: { ...reqAuth } },
       { path: 'watch-later', component: WatchLaterPage, meta: { ...reqAuth } },
       {

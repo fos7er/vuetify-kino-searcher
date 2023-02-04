@@ -38,7 +38,7 @@
             </v-card-text>
             <v-card-actions>
               <v-spacer/>
-              <v-btn :loading="loading" color="accent" depressed type="submit">{{
+              <v-btn :loading="loading" :disabled="loading" color="accent" depressed type="submit">{{
                   $t('registration')
                 }}
               </v-btn>

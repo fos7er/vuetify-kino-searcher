@@ -26,12 +26,12 @@
                 validate-on-blur
               />
               <div class="d-flex justify-end">
-                <router-link to="restore" v-text="$t('forgotPassword')"/>
+                <router-link :to="`/restore?email=${form.email}`" v-text="$t('forgotPassword')"/>
               </div>
             </v-card-text>
             <v-card-actions>
               <v-spacer/>
-              <v-btn :loading="loading" color="accent" depressed type="submit">{{ $t('login') }}</v-btn>
+              <v-btn :loading="loading" :disabled="loading" color="accent" depressed type="submit">{{ $t('login') }}</v-btn>
             </v-card-actions>
           </v-form>
         </v-card>
@@ -58,7 +58,7 @@
     },
     computed: {
       loading() {
-        return this.$store.state.isLoading
+        return this.$store.state.auth.isLoading
       }
     },
     methods: {
