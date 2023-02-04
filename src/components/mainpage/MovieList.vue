@@ -64,6 +64,10 @@
       },
       '$route.query.page'(val) {
         this.page = parseInt(val) || 1
+      },
+      '$vuetify.lang.current' () {
+        this.$store.commit('mainPage/CLEAR_MOVIES')
+        this.getAllMovies()
       }
     }
   }
