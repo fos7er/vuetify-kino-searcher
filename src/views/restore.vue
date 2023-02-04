@@ -3,13 +3,13 @@
     <v-row align="center" justify="center">
       <v-col cols="11" lg="5" md="7" sm="8" xl="4" class="d-flex justify-center">
         <v-btn v-if="!resetSend"
-          :loading="loading"
-          :disabled="loading"
-          color="blue-grey"
-          class="ma-2 white--text"
-          @click="resetPassword"
+               :loading="loading"
+               :disabled="loading"
+               color="blue-grey"
+               class="ma-2 white--text"
+               @click="resetPassword"
         >
-          {{$t('resetPassword')}}
+          {{ $t('resetPassword') }}
           <v-icon
             right
             dark
@@ -23,7 +23,7 @@
           text
           type="success"
         >
-          {{$t('successResetPassword')}} {{email}}
+          {{ $t('successResetPassword') }} {{ email }}
         </v-alert>
       </v-col>
     </v-row>
@@ -40,23 +40,26 @@
       }
     },
     computed: {
-      loading() {
+      loading () {
         return this.$store.state.auth.isLoading
       },
-      email() {
+      email () {
         return this.$route.query.email
       }
     },
     methods: {
-      async resetPassword() {
+      async resetPassword () {
         const confirmDialogText = {
-          title: this.$t('Reset'),
+          title: this.$t('resetPassword'),
           message: this.$t('resetPassword') + '?'
         }
         if (await this.$refs.dialogConfirm.open(confirmDialogText)) {
-          await this.$store.dispatch('auth/resetPassword', this.email)
-          this.$refs.dialogConfirm.close()
-          this.resetSend = true
+          try {
+            await this.$store.dispatch('auth/resetPassword', this.email)
+            this.resetSend = true
+          } finally {
+            this.$refs.dialogConfirm.close()
+          }
         }
       }
     }

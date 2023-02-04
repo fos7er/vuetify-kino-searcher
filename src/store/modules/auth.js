@@ -104,7 +104,8 @@ const actions = {
 
   async resetPassword ({ commit }, email) {
     if (!/^[A-Za-z0-9._%-]+@[a-z0-9.-]+[.][a-z]+$/.test(email)) {
-      return commit('SET_ERROR', 'Invalid email', { root: true })
+      commit('SET_ERROR', 'Invalid email', { root: true })
+      return Promise.reject()
     }
     try {
       state.isLoading = true
