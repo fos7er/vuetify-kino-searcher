@@ -24,6 +24,7 @@
               <round-rating :score="movie.vote_average"/>
               <btn-favorite :movieID="movieID"/>
               <btn-watch-later :movieID="movieID"/>
+              <btn-pirate :movieTitle="movie.title"/>
             </v-row>
           </div>
           <div class="d-flex font-italic text--secondary mt-6">
@@ -47,6 +48,7 @@
 <script>
   import BtnFavorite from '@/components/common/buttons/Favorite'
   import BtnWatchLater from '@/components/common/buttons/WatchLater'
+  import BtnPirate from '@/components/common/buttons/Parate'
   import dayjs from '@/utils/dayjs'
   import MovieRating from '@/components/common/ratings/MovieRating'
   import Note from '@/components/common/fields/Note'
@@ -55,6 +57,7 @@
   export default {
     components: {
       BtnFavorite,
+      BtnPirate,
       BtnWatchLater,
       MovieRating,
       Note,
