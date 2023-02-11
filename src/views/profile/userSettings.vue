@@ -71,6 +71,18 @@
                   />
                 </v-col>
               </v-row>
+              <v-row align="center">
+                <v-col cols="2">
+                  <v-icon aria-hidden="false" large> mdi-pirate</v-icon>
+                </v-col>
+                <v-col
+                >
+                  <v-switch
+                    v-model="form.pirate"
+                    :label="$t('imPirate')"
+                  />
+                </v-col>
+              </v-row>
             </v-card-text>
             <v-card-actions>
               <v-spacer/>
@@ -112,6 +124,7 @@
           birthDay: this.form.birthDay,
           gender: this.form.gender,
           name: this.form.name,
+          pirate:  this.form.pirate,
           theme: this.form.theme
         }
       }

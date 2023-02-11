@@ -14,6 +14,7 @@ const defaultSettings = () => {
     gender: 'male',
     lang: defaultLang() || 'en',
     name: 'anon',
+    pirate: false,
     theme: vuetify.framework.theme.dark === true ? 'dark' : 'light'
   }
 }
