@@ -111,34 +111,23 @@ const actions = {
     await update(ref(DB), updates)
     commit('UPDATE_USER_MOVIE', payload)
   },
-  async getFavoriteMovies ({ state, getters }) {
-    const promises = []
-    Object.values(getters.userMovies).forEach(item => {
-      if (getters.isFavorite(item.id) && !state.movies.find(el => el.id === item.id)) {
-        promises.push(MovieAPI.getMovie(item.id))
-      }
-    })
-    try {
-      state.isLoading = true
-      state.movies.push(...await Promise.all(promises))
-    } finally {
-      state.isLoading = false
-    }
+  async getFavoriteMovies ({ state, getters, dispatch }) {
+    const favoritesToFetch = Object.values(getters.userMovies).filter(movie => getters.isFavorite(movie.id) && !state.movies.find(el => el.id === movie.id))
+    await dispatch('getMovies', favoritesToFetch)
   },
-  async getWatchLaterMovies ({ state, getters }) {
+  async getWatchLaterMovies ({ state, getters, dispatch }) {
+    const watchLaterToFetch = Object.values(getters.userMovies).filter(movie => getters.isWatchLater(movie.id) && !state.movies.find(el => el.id === movie.id))
+    await dispatch('getMovies', watchLaterToFetch)
+  },
+  async getMovies ({ state }, movies) {
     const promises = []
-    Object.values(getters.userMovies).forEach(item => {
-      if (getters.isWatchLater(item.id) && !state.movies.find(el => el.id === item.id)) {
-        promises.push(MovieAPI.getMovie(item.id))
-      }
-    })
+    movies.forEach(movie => promises.push(MovieAPI.getMovie(movie.id)))
     try {
       state.isLoading = true
       state.movies.push(...await Promise.all(promises))
     } finally {
       state.isLoading = false
     }
-
   }
 }
 
