@@ -45,12 +45,12 @@ class MovieAPI {
 
   async getAllMovies ({ sortBy = 'popularity', page = 1, genres = '' } = {}) {
     store.commit('ADD_OVERLAY')
-    let path = `/discover/movie?sort_by=${sortBy}.desc&include_video=false&page=${page}&with_watch_monetization_types=flatrate`
+    let url = `/discover/movie?sort_by=${sortBy}.desc&include_video=false&page=${page}&with_watch_monetization_types=flatrate`
     if (genres.length) {
-      path += `&with_genres=${genres}`
+      url += `&with_genres=${genres}`
     }
     try {
-      return await this.get(path)
+      return await this.get(url)
     } catch (e) {
       return Promise.reject(e)
     } finally {
@@ -59,19 +59,19 @@ class MovieAPI {
   }
 
   async getAllGenres () {
-    const path = '/genre/movie/list'
+    const url = '/genre/movie/list'
     try {
-      return await this.get(path)
+      return await this.get(url)
     } catch (e) {
       return Promise.reject(e)
     }
   }
 
   async getMovie (movieID = MovieAPI._required()) {
-    const path = `/movie/${movieID}`
+    const url = `/movie/${movieID}`
     store.commit('ADD_OVERLAY')
     try {
-      return await this.get(path)
+      return await this.get(url)
     } catch (e) {
       return Promise.reject(e)
     } finally {
@@ -80,18 +80,18 @@ class MovieAPI {
   }
 
   async getMovieCredits (movieID = MovieAPI._required()) {
-    const path = `/movie/${movieID}/credits`
+    const url = `/movie/${movieID}/credits`
     try {
-      return await this.get(path)
+      return await this.get(url)
     } catch (e) {
       return Promise.reject(e)
     }
   }
 
   async searchMovies (query = MovieAPI._required(), sortBy = 'popularity') {
-    const path = `/search/movie?query=${query}&page=1`
+    const url = `/search/movie?query=${query}&page=1`
     try {
-      const res = await this.get(path)
+      const res = await this.get(url)
       return res.results.sort((a, b) => {
         return a[sortBy] < b[sortBy] ? 1 : -1
       })
@@ -100,15 +100,15 @@ class MovieAPI {
     }
   }
 
-  async get (path) {
-    return this.service.get(path)
+  async get (url) {
+    return this.service.get(url)
   }
 
-  async post (path, payload) {
+  async post (url, payload) {
     return this.service.request({
+      data: payload,
       method: 'POST',
-      url: path,
-      data: payload
+      url
     })
   }
 }
