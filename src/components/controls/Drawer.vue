@@ -69,23 +69,23 @@
     },
     computed: {
       menu () {
-        return [
+        const links =  [
           {
-            id: 0,
+            id: 'favorites',
             type: 'link',
             name: this.$t('favorites'),
             to: '/favorites',
             icon: 'mdi-cards-heart'
           },
           {
-            id: 1,
+            id: 'watchlater',
             type: 'link',
             name: this.$t('watchLater'),
             to: '/watch-later',
             icon: 'mdi-clock'
           },
           {
-            id: 2,
+            id: 'genres',
             type: 'group',
             name: this.$t('genres'),
             icon: 'mdi-view-list',
@@ -94,6 +94,16 @@
           }
 
         ]
+        if (this.isLoggedIn && this.$store.getters['userSettings/settings'].pirate) {
+          links.unshift( {
+            id: 'new_torrents',
+            type: 'link',
+            name: this.$t('newTorrents'),
+            to: '/new_torrents',
+            icon: 'mdi-new-box'
+          })
+        }
+        return links
       },
       mini () {
         return this.$store.getters['controls/isMiniDrawer']

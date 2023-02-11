@@ -63,7 +63,7 @@
     },
     computed: {
       srcFull () {
-        return this.movie.backdrop_path ? `${process.env.VUE_APP_IMAGES_PATH}${this.movie.backdrop_path}` : false
+        return this.movie.backdrop_path ? `${process.env.VUE_APP_IMAGES_PATH}${this.movie.backdrop_path}` : ''
       }
     }
   }

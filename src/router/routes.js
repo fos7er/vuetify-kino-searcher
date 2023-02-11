@@ -1,13 +1,14 @@
 import DefaultLayout from '@/layouts/Default'
+import FavoritesPage from '@/views/playlists/favorites'
+import LoginPage from '@/views/login'
 import MainPage from '@/views/mainpage'
 import MoviePage from '@/views/movie'
 import page404 from '@/views/404'
-import LoginPage from '@/views/login'
+import ProfilePage from '@/views/profile/'
 import RegistrationPage from '@/views/registration'
 import RestorePage from '@/views/restore'
-import ProfilePage from '@/views/profile/'
+import TorrentsPage from '@/views/new_torrents/'
 import UserSettings from '@/views/profile/userSettings'
-import FavoritesPage from '@/views/playlists/favorites'
 import WatchLaterPage from '@/views/playlists/watchlater'
 
 const reqAuth = {
@@ -31,6 +32,7 @@ const routes = [
       { path: 'restore', component: RestorePage, meta: { ...noAuth } },
       { path: 'favorites', component: FavoritesPage, meta: { ...reqAuth } },
       { path: 'watch-later', component: WatchLaterPage, meta: { ...reqAuth } },
+      { path: 'new_torrents', component: TorrentsPage, meta: { ...reqAuth } },
       {
         path: 'profile',
         component: ProfilePage,
