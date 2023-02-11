@@ -29,7 +29,7 @@
         size="14"
       ></v-rating>
       <div class="grey--text ms-4">
-        {{ `${movie.vote_average}` }}
+        {{ `${movie.vote_average.toFixed(1)}` }}
       </div>
     </v-row>
 
