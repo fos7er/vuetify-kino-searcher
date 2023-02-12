@@ -71,6 +71,13 @@
       menu () {
         const links =  [
           {
+            id: 'home',
+            type: 'link',
+            name: this.$t('home'),
+            to: '/',
+            icon: 'mdi-home'
+          },
+          {
             id: 'favorites',
             type: 'link',
             name: this.$t('favorites'),
@@ -95,7 +102,7 @@
 
         ]
         if (this.isLoggedIn && this.$store.getters['userSettings/settings'].pirate) {
-          links.unshift( {
+          links.splice(1,0, {
             id: 'new_torrents',
             type: 'link',
             name: this.$t('newTorrents'),
