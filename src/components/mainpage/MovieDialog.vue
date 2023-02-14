@@ -1,9 +1,11 @@
 <template>
-  <v-dialog v-model="dialog" max-width="1100px">
+  <v-dialog :fullscreen="breakpoint" v-model="dialog" max-width="1100px">
     <v-card class="card pa-3 pt-5 pa-md-0">
-      <v-btn class="closeBtn" icon @click="close">
-        <v-icon> mdi-close</v-icon>
-      </v-btn>
+      <div class="closeBtn d-flex justify-end">
+        <v-btn  icon @click="close">
+          <v-icon> mdi-close</v-icon>
+        </v-btn>
+      </div>
       <v-container>
         <v-row>
           <v-col cols="12" md="4">
@@ -83,6 +85,9 @@
       }
     },
     computed: {
+      breakpoint () {
+        return this.$vuetify.breakpoint.name === 'xs'
+      },
       posterSrcFull () {
         return this.movie.poster_path ? `${process.env.VUE_APP_IMAGES_PATH}${this.movie.poster_path}` : ''
       },
@@ -133,9 +138,9 @@
     }
 
     .closeBtn {
-      position: absolute;
+      position: sticky;
       top: 3px;
-      right: 3px;
+      z-index: 999;
     }
   }
 </style>
