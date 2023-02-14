@@ -2,7 +2,8 @@ import RutorAPI from '@/api/rutorAPI'
 import store from '@/store'
 
 const state = {
-  movieList: []
+  movieList: [],
+  isLoading: false
 }
 
 const getters = {
@@ -23,13 +24,13 @@ const mutations = {
 const actions = {
   async getMoviesOnTorrents ({ commit, state }) {
     try {
-      store.commit('ADD_OVERLAY')
+      state.isLoading = true
       if (!state.movieList.length) {
         const res = await RutorAPI.getNewReleases()
         commit('SET_MOVIES',res.results)
       }
     } finally {
-      store.commit('REMOVE_OVERLAY')
+      state.isLoading = false
     }
 
   }
