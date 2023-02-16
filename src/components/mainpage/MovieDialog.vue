@@ -1,20 +1,24 @@
 <template>
-  <v-dialog :fullscreen="breakpoint" v-model="dialog" max-width="1100px">
-    <v-card class="card pa-3 pt-5 pa-md-0">
+  <v-dialog v-model="dialog" :fullscreen="breakpoint" max-width="1100px">
+    <v-card class="card pa-0">
       <div class="closeBtn d-flex justify-end">
-        <v-btn  icon @click="close">
+        <v-btn icon @click="close">
           <v-icon> mdi-close</v-icon>
         </v-btn>
       </div>
-      <v-container>
+      <v-container class="mt-n3">
         <v-row>
           <v-col cols="12" md="4">
             <v-skeleton-loader
               v-show="posterSrcFull && !imgLoaded"
-              height="100%"
+              height="530px"
               type="image"
             ></v-skeleton-loader>
-            <v-img :class="{invisible:!imgLoaded}" :src="posterSrcFull" @load="loadIMGHandler"></v-img>
+            <v-img
+              :class="{invisible:!imgLoaded}"
+              :src="posterSrcFull"
+              @load="loadIMGHandler"
+            />
           </v-col>
           <v-col class="card__right-column" md="8">
             <v-card-title pt-0>

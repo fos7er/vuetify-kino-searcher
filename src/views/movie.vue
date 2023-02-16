@@ -4,11 +4,15 @@
       <v-row>
         <v-col cols="12" md="4">
           <v-skeleton-loader
-            v-show="!imgLoaded"
+            v-show="posterSrcFull && !imgLoaded"
+            height="530px"
             type="image"
-            height="100%"
           ></v-skeleton-loader>
-          <v-img :src="posterSrcFull" :class="{invisible:!imgLoaded}" @load="loadIMGHandler"></v-img>
+          <v-img
+            :class="{invisible:!imgLoaded}"
+            :src="posterSrcFull"
+            @load="loadIMGHandler"
+          />
         </v-col>
         <v-col class="card__right-column" cols="12" md="8">
           <v-card-title pt-0>
@@ -74,6 +78,7 @@
     },
     watch: {
       'movieID' () {
+        this.imgLoaded = false
         this.getMovie()
       }
     },
@@ -95,17 +100,17 @@
       loadIMGHandler () {
         this.imgLoaded = true
       },
-      getMovie () {
+      async getMovie () {
         this.$store.commit('ADD_OVERLAY')
-        this.MovieAPI
-          .getMovie(this.movieID)
-          .then((res) => (this.movie = res))
-          .catch(e => {
-            if (e.status === 404) {
-              this.$router.push('/404')
-            }
-          })
-          .finally(() => this.$store.commit('REMOVE_OVERLAY'))
+        try {
+          this.movie = await this.MovieAPI.getMovie(this.movieID)
+        } catch (e) {
+          if (e.status === 404) {
+            await this.$router.push('/404')
+          }
+        } finally {
+          this.$store.commit('REMOVE_OVERLAY')
+        }
       }
     },
     created () {
@@ -126,7 +131,6 @@
 
     & .v-card__subtitle {
       font-size: 1rem;
-      // margin-top: -4px;
     }
 
     & .card__right-column div {
