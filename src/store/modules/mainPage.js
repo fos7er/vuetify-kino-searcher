@@ -8,10 +8,10 @@ const state = {
 
 const getters = {
   movies: (state) => (page) => {
-    return state.movieList.filter((movie) => movie.page === page)
+    return state.movieList.filter(movie => movie.page === page)
   },
   genres: (state) => {
-    return state.genreList.map((genre) => {
+    return state.genreList.map(genre => {
       return {
         id: genre.id,
         icon: movieGenreIcons[genre.id],
@@ -21,7 +21,7 @@ const getters = {
     })
   },
   genre: (state, getters) => id => {
-    return getters.genres.find( item => item.id === id ) || null
+    return getters.genres.find(item => item.id === id) || null
   }
 }
 
@@ -39,12 +39,12 @@ const mutations = {
 
 const actions = {
   async getAllMovies ({ commit, state }, payload) {
-    if (state.movieList.some((movie) => movie.page === payload.page)) {
+    if (state.movieList.some(movie => movie.page === payload.page)) {
       console.log('already has this page, load from cache')
       return false
     }
     const res = await MovieAPI.getAllMovies(payload)
-    res.results.forEach((item) => (item.page = payload.page))
+    res.results.forEach(item => item.page = payload.page)
     commit('SET_MOVIES', res.results)
   },
   async getAllGenres ({ commit }) {

@@ -1,5 +1,4 @@
 import RutorAPI from '@/api/rutorAPI'
-import store from '@/store'
 
 const state = {
   movieList: [],
@@ -7,8 +6,8 @@ const state = {
 }
 
 const getters = {
-  movies: (state) =>  {
-    return state.movieList
+  movies: state => page => {
+    return state.movieList.filter(movie => movie.page === page)
   }
 }
 
@@ -22,12 +21,12 @@ const mutations = {
 }
 
 const actions = {
-  async getMoviesOnTorrents ({ commit, state }) {
+  async getMoviesOnTorrents ({ commit, state }, page) {
     try {
       state.isLoading = true
-      if (!state.movieList.length) {
-        const res = await RutorAPI.getNewReleases()
-        commit('SET_MOVIES',res.results)
+      if (!state.movieList.some(item => item.page === page)) {
+        const res = await RutorAPI.getNewReleases(page)
+        commit('SET_MOVIES', res.results)
       }
     } finally {
       state.isLoading = false

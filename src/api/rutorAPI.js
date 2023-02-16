@@ -5,7 +5,7 @@ class RutorAPI {
   constructor (axios) {
     let service = axios.create({
       baseURL: process.env.VUE_APP_RUTOR_PARSER_URL,
-      timeout: 18000
+      timeout: 15000
     })
     service.interceptors.response.use(this.handleSuccess, this.handleError)
     this.service = service
@@ -31,8 +31,8 @@ class RutorAPI {
     return Promise.reject(err.response)
   }
 
-  getNewReleases() {
-    return this.service.get('/new')
+  getNewReleases(page) {
+    return this.service.get(`/new/${page}`)
   }
 
   async get (url) {

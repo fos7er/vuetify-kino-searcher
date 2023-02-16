@@ -5,6 +5,9 @@
         <movie-card :movie="movie" @click.native="movieClick(movie.id)"/>
       </v-col>
     </v-row>
+    <v-row v-show="movies.length" justify="center">
+      <v-pagination v-model="page" :length="3"/>
+    </v-row>
   </v-container>
 </template>
 
@@ -18,7 +21,12 @@
       movieCard
     },
     created () {
-      this.$store.dispatch('torrents/getMoviesOnTorrents')
+      this.getPageMovies()
+    },
+    data () {
+      return {
+        page: 1
+      }
     },
     computed: {
       ...mapGetters({
@@ -32,6 +40,20 @@
           this.MovieAPI.getMovieCredits(movieID)
         ])
         this.$emit('movieClick', deepMerge(movie, credits))
+      },
+      getPageMovies () {
+        this.$store.dispatch('torrents/getMoviesOnTorrents', this.page)
+        if (+this.$route.query?.page !== this.page) {
+          this.$router.push({ query: { page: `${this.page}` } })
+        }
+      }
+    },
+    watch: {
+      page () {
+        this.getPageMovies()
+      },
+      '$route.query.page' (val) {
+        this.page = parseInt(val) || 1
       }
     }
   }

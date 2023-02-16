@@ -1,7 +1,7 @@
 <template>
   <v-row justify="center" align="center">
     <v-col xl="10">
-      <Progress v-if="loading" color="primary" :capacity="18000" style="margin-top:40vh"/>
+      <Progress v-if="loading" color="primary" :capacity="15000" style="margin-top:40vh"/>
       <torrents-list v-show="!loading" @movieClick="openMovieDialog"/>
       <movie-dialog :movie="movieDialogData" ref="dialog"/>
     </v-col>
