@@ -51,8 +51,8 @@
 
 <script>
   import BtnFavorite from '@/components/common/buttons/Favorite'
-  import BtnWatchLater from '@/components/common/buttons/WatchLater'
   import BtnPirate from '@/components/common/buttons/Parate'
+  import BtnWatchLater from '@/components/common/buttons/WatchLater'
   import dayjs from '@/utils/dayjs'
   import MovieRating from '@/components/common/ratings/MovieRating'
   import Note from '@/components/common/fields/Note'
