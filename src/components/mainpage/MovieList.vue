@@ -47,15 +47,15 @@
         ])
         this.$emit('movieClick', deepMerge(movie, credits))
       },
-      getAllMovies () {
+      async getAllMovies () {
         const data = {
           page: this.page,
           genres: this.genreID
         }
-        this.$store.dispatch('mainPage/getAllMovies', data)
         if ( +this.$route.query?.page !== this.page ){
-          this.$router.push({ query: { page: `${this.page}` } })
+          await this.$router.push({ query: { page: `${this.page}` } })
         }
+        await this.$store.dispatch('mainPage/getAllMovies', data)
       }
     },
     watch: {

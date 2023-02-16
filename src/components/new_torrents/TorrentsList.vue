@@ -14,7 +14,6 @@
 <script>
   import movieCard from '@/components/mainpage/MovieCard'
   import { deepMerge } from '@/utils/deep'
-  import { mapGetters } from 'vuex'
 
   export default {
     components: {
@@ -29,9 +28,9 @@
       }
     },
     computed: {
-      ...mapGetters({
-        movies: 'torrents/movies'
-      })
+      movies() {
+        return this.$store.getters['torrents/movies'](this.page)
+      }
     },
     methods: {
       async movieClick (movieID) {
@@ -41,11 +40,12 @@
         ])
         this.$emit('movieClick', deepMerge(movie, credits))
       },
-      getPageMovies () {
-        this.$store.dispatch('torrents/getMoviesOnTorrents', this.page)
+      async getPageMovies () {
         if (+this.$route.query?.page !== this.page) {
-          this.$router.push({ query: { page: `${this.page}` } })
+          await this.$router.push({ query: { page: `${this.page}` } })
         }
+        await this.$store.dispatch('torrents/getMoviesOnTorrents', this.page)
+
       }
     },
     watch: {
