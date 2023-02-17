@@ -63,6 +63,7 @@
   import BtnPirate from '@/components/common/buttons/Parate'
   import BtnWatchLater from '@/components/common/buttons/WatchLater'
   import dayjs from '@/utils/dayjs'
+  import mixinBackBtn from '@/plugins/mixins/backBtn'
   import MovieRating from '@/components/common/ratings/MovieRating'
   import Note from '@/components/common/fields/Note'
   import RoundRating from '@/components/common/ratings/RoundRating'
@@ -76,6 +77,7 @@
       Note,
       RoundRating
     },
+    mixins: [mixinBackBtn],
     props: ['movie'],
     data () {
       return {
