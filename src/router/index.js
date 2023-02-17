@@ -9,7 +9,10 @@ Vue.use(VueRouter)
 const router = new VueRouter({
   base: publicPath,
   mode: 'history',
-  routes
+  routes,
+  scrollBehavior () {
+    return { x: 0, y: 0 }
+  }
 })
 
 router.beforeEach(async (to, from, next) => {
