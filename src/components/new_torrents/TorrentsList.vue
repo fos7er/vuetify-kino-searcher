@@ -12,6 +12,7 @@
 </template>
 
 <script>
+  import mixinPagination from '@/plugins/mixins/pagination'
   import movieCard from '@/components/mainpage/MovieCard'
   import { deepMerge } from '@/utils/deep'
 
@@ -19,14 +20,7 @@
     components: {
       movieCard
     },
-    created () {
-      this.getPageMovies()
-    },
-    data () {
-      return {
-        page:  +this.$route.query?.page || 1
-      }
-    },
+    mixins:[mixinPagination],
     computed: {
       movies() {
         return this.$store.getters['torrents/movies'](this.page)
@@ -40,20 +34,11 @@
         ])
         this.$emit('movieClick', deepMerge(movie, credits))
       },
-      async getPageMovies () {
+      async getPage () {
         if (+this.$route.query?.page !== this.page) {
           await this.$router.push({ query: { page: `${this.page}` } })
         }
         await this.$store.dispatch('torrents/getMoviesOnTorrents', this.page)
-
-      }
-    },
-    watch: {
-      page () {
-        this.getPageMovies()
-      },
-      '$route.query.page' (val) {
-        this.page = parseInt(val) || 1
       }
     }
   }

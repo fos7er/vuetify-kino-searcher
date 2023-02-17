@@ -12,6 +12,7 @@
 </template>
 
 <script>
+  import mixinPagination from '@/plugins/mixins/pagination'
   import movieCard from './MovieCard'
   import { deepMerge } from '@/utils/deep'
 
@@ -19,11 +20,7 @@
     components: {
       movieCard
     },
-    data () {
-      return {
-        page: +this.$route.query?.page || 1
-      }
-    },
+    mixins:[mixinPagination],
     computed: {
       movies () {
         return this.$store.getters['mainPage/movies'](this.page)
@@ -37,7 +34,6 @@
     },
     created () {
       this.$store.commit('mainPage/CLEAR_MOVIES')
-      this.getAllMovies()
     },
     methods: {
       async movieClick (movieID) {
@@ -47,7 +43,7 @@
         ])
         this.$emit('movieClick', deepMerge(movie, credits))
       },
-      async getAllMovies () {
+      async getPage () {
         const data = {
           page: this.page,
           genres: this.genreID
@@ -59,15 +55,9 @@
       }
     },
     watch: {
-      page () {
-        this.getAllMovies()
-      },
-      '$route.query.page'(val) {
-        this.page = parseInt(val) || 1
-      },
       '$vuetify.lang.current' () {
         this.$store.commit('mainPage/CLEAR_MOVIES')
-        this.getAllMovies()
+        this.getPage()
       }
     }
   }
