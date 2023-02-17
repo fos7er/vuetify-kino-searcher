@@ -24,7 +24,7 @@
     },
     data () {
       return {
-        page: 1
+        page:  +this.$route.query?.page || 1
       }
     },
     computed: {
