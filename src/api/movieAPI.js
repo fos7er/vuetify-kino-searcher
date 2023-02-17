@@ -5,7 +5,7 @@ class MovieAPI {
   constructor (axios) {
     let service = axios.create({
       baseURL: process.env.VUE_APP_BASE_API_URL,
-      timeout: 5000,
+      timeout: 10000,
       params: {
         api_key: process.env.VUE_APP_API_KEY,
         include_adult: false
