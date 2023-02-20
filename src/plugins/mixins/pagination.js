@@ -1,5 +1,8 @@
 export default {
   created () {
+    if (+this.$route.query?.page !== this.page) {
+      this.$router.replace({ query: { page: `${this.page}` } })
+    }
     this.getPage()
   },
   data () {

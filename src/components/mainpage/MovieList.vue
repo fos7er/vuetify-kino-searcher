@@ -32,7 +32,7 @@
         return this.$route.params.genreID
       }
     },
-    created () {
+    beforeCreate () {
       this.$store.commit('mainPage/CLEAR_MOVIES')
     },
     methods: {
