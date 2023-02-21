@@ -37,7 +37,5 @@ export default {
   10752:'mdi-bow-arrow',
   //Western
   37:'mdi-account-cowboy-hat'
-
-
 }
 

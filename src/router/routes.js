@@ -15,21 +15,17 @@ const reqAuth = {
   reqAuth: true
 }
 
-const noAuth = {
-  reqAuth: false
-}
-
 const routes = [
   {
     path: '/',
     component: DefaultLayout,
     children: [
-      { path: '', component: MainPage, meta: { ...noAuth } },
-      { path: 'movie/:movieID', component: MoviePage, meta: { ...noAuth } },
-      { path: 'genre/:genreID', component: MainPage, meta: { ...noAuth } },
-      { path: 'login', component: LoginPage, meta: { ...noAuth } },
-      { path: 'registration', component: RegistrationPage, meta: { ...noAuth } },
-      { path: 'restore', component: RestorePage, meta: { ...noAuth } },
+      { path: '', component: MainPage},
+      { path: 'movie/:movieID', component: MoviePage},
+      { path: 'genre/:genreID', component: MainPage},
+      { path: 'login', component: LoginPage},
+      { path: 'registration', component: RegistrationPage},
+      { path: 'restore', component: RestorePage},
       { path: 'favorites', component: FavoritesPage, meta: { ...reqAuth } },
       { path: 'watch-later', component: WatchLaterPage, meta: { ...reqAuth } },
       { path: 'new_torrents', component: TorrentsPage, meta: { ...reqAuth } },
