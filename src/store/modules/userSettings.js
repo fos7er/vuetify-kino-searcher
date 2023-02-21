@@ -35,6 +35,7 @@ const getters = {
     for (const key in languages) {
       result.push(languages[key])
     }
+
     return result
   },
   theme (state) {

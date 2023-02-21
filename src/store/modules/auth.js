@@ -49,6 +49,7 @@ const actions = {
       await set(ref(DB, `users/${userID}`), {
         userID: userID
       })
+
       return userCredential
     } catch (e) {
       throw new AuthError(e)
