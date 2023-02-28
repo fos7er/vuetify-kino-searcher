@@ -15,8 +15,8 @@
             <span v-if="isLoggedIn">{{ userName }}</span>
             <span v-else>{{ $t('login') }}</span>
           </slot>
-          <v-icon right>
-            {{ value ? 'mdi-chevron-up' : 'mdi-chevron-down' }}
+          <v-icon class="user-menu__icon" :class="{'rotate': value}" right>
+            mdi-chevron-down
           </v-icon>
         </v-btn>
 
@@ -89,3 +89,13 @@
     }
   }
 </script>
+
+<style lang="scss" scoped>
+  .user-menu__icon {
+    transition: 0.3s cubic-bezier(0.25, 0.8, 0.5, 1), visibility 0s;
+  }
+
+  .rotate {
+    transform: rotate(-180deg);
+  }
+</style>
