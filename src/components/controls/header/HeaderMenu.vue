@@ -15,9 +15,7 @@
             <span v-if="isLoggedIn">{{ userName }}</span>
             <span v-else>{{ $t('login') }}</span>
           </slot>
-          <v-icon class="user-menu__icon" :class="{'rotate': value}" right>
-            mdi-chevron-down
-          </v-icon>
+          <chevron :open="value" right/>
         </v-btn>
 
       </template>
@@ -63,8 +61,12 @@
 </template>
 
 <script>
+  import chevron from '@/components/common/chevron'
 
   export default {
+    components: {
+      chevron
+    },
     computed: {
       breakpoint () {
         return this.$vuetify.breakpoint.name === 'xs'
@@ -89,13 +91,3 @@
     }
   }
 </script>
-
-<style lang="scss" scoped>
-  .user-menu__icon {
-    transition: 0.3s cubic-bezier(0.25, 0.8, 0.5, 1), visibility 0s;
-  }
-
-  .rotate {
-    transform: rotate(-180deg);
-  }
-</style>

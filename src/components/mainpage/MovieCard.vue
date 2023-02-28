@@ -37,7 +37,7 @@
       <v-btn color="orange lighten-2" text> {{ $t('explore') }}</v-btn>
       <v-spacer></v-spacer>
       <v-btn icon @click.stop="show = !show">
-        <v-icon>{{ show ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
+        <chevron :open="show"/>
       </v-btn>
     </v-card-actions>
 
@@ -54,7 +54,12 @@
 </template>
 
 <script>
+  import chevron from '@/components/common/chevron.vue'
+
   export default {
+    components: {
+      chevron
+    },
     props: ['movie'],
     data () {
       return {
