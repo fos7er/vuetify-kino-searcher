@@ -2,7 +2,7 @@ export default {
   watch: {
     isLoggedIn(v) {
       if (v) {
-        this.$router.push('/')
+        this.$router.push({ path: this.$route.query.redirect || '/' })
       }
     }
   }

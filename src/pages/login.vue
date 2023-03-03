@@ -70,7 +70,6 @@
           await this.$store.dispatch('auth/login', { email, password })
           this.$store.commit('SET_SUCCESS', this.$t('successLogin'), { root: true })
           this.clearForm()
-          this.$router.push('/')
         } catch (e) {
           this.form.email = email
         }
