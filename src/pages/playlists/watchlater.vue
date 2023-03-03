@@ -77,7 +77,6 @@
           { text: this.$t('yourRating'), align: 'left', value: 'userRating' },
           { text: this.$t('rating'), align: 'left', value: 'vote_average' },
           { text: this.$t('actions'), align: 'center', value: 'actions', sortable: false }
-
         ],
         search: '',
         movieDialogData: {}
