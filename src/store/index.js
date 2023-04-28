@@ -6,9 +6,7 @@ Vue.use(Vuex)
 
 const state = {
   overlay: false,
-  success: null,
-  warning: null,
-  error: null
+  snacks: []
 }
 
 const getters = {}
@@ -20,18 +18,11 @@ const mutations = {
   REMOVE_OVERLAY (state) {
     state.overlay = false
   },
-  RESET_SNACKBAR (state) {
-    state.success = state.warning = state.error = null
-  },
-  SET_SUCCESS (state, payload) {
-    state.success = payload
-  },
-  SET_WARNING (state, payload) {
-    state.warning = payload
-  },
-  SET_ERROR (state, payload) {
-    state.error = payload
-  }
+  SET_SUCCESS: (state, data) => state.snacks.push({ id: Date.now(), type: 'success', data, timeout: 2500 }),
+  SET_WARNING: (state, data) => state.snacks.push({ id: Date.now(), type: 'warning', data, timeout: 6000 }),
+  SET_ERROR: (state, data) => state.snacks.push({ id: Date.now(), type: 'error', data, timeout: 7000 }),
+  REMOVE_SNACK: (state, i) => state.snacks.splice(i, 1),
+  CLEAR_SNACKS: (state) => state.snacks = []
 }
 
 const actions = {}

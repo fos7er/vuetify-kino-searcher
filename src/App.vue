@@ -1,23 +1,27 @@
 <template>
   <v-app>
     <router-view></router-view>
-    <v-snackbar v-model="success" :timeout="2500" bottom color="success" multi-line>
-      {{ success }}
-      <v-btn text @click="$store.commit('SET_SUCCESS', false)">
-        {{ 'close' }}
-      </v-btn>
-    </v-snackbar>
-    <v-snackbar v-model="warning" :timeout="6000" bottom color="warning" multi-line>
-      {{ warning }}
-      <v-btn text @click="$store.commit('SET_WARNING', false)">
-        {{ 'close' }}
-      </v-btn>
-    </v-snackbar>
-    <v-snackbar v-model="error" :timeout="7000" bottom class="error-snackbar" color="error" multi-line>
-      {{ error }}
-      <v-btn text @click="$store.commit('SET_ERROR', false)">
-        {{ 'close' }}
-      </v-btn>
+    <v-snackbar
+      v-for="(item, i) in snacks"
+      :key="item.id"
+      :class="{'error-snackbar': item.type === 'error'}"
+      :color="item.type"
+      :style="`bottom:${80*i}px`"
+      :timeout="item.timeout"
+      :value="snacks[i]"
+      bottom
+      multi-line
+      @input="removeSnack(i)"
+    >
+      <template #default>{{ item.data }}
+      </template>
+      <template #action>
+        <v-btn
+          text
+          @click="removeSnack(i)"
+          v-text="$t('Close')"
+        />
+      </template>
     </v-snackbar>
     <v-overlay :value="overlay">
       <v-progress-circular indeterminate size="64"></v-progress-circular>
@@ -26,7 +30,7 @@
 </template>
 
 <script>
-  import { mapGetters, mapState } from 'vuex'
+  import { mapGetters, mapMutations, mapState } from 'vuex'
 
   export default {
     name: 'App',
@@ -38,7 +42,7 @@
       '$vuetify.lang.current' () {
         this.$store.dispatch('mainPage/getAllGenres')
       },
-      isLoggedIn(v) {
+      isLoggedIn (v) {
         if (v) {
           this.$store.dispatch('userSettings/getSettings')
           this.$store.dispatch('movies/getUserMovies')
@@ -46,37 +50,18 @@
       }
     },
     computed: {
-      ...mapState(['overlay']),
+      ...mapState(['overlay', 'snacks']),
       ...mapGetters({
         isLoggedIn: 'auth/isLoggedIn'
-      }),
-      success: {
-        get: function () {
-          return this.$store.state.success
-        },
-        set: function (e) {
-          if (!e) this.$store.commit('SET_SUCCESS', null)
-        }
-      },
-      warning: {
-        get: function () {
-          return this.$store.state.warning
-        },
-        set: function (e) {
-          if (!e) this.$store.commit('SET_WARNING', null)
-        }
-      },
-      error: {
-        get: function () {
-          return this.$store.state.error
-        },
-        set: function (e) {
-          if (!e) this.$store.commit('SET_ERROR', null)
-        }
-      }
+      })
+    },
+    methods: {
+      ...mapMutations({
+        removeSnack: 'REMOVE_SNACK'
+      })
     },
     beforeDestroy () {
-      this.$store.commit('RESET_SNACKBAR')
+      this.$store.commit('CLEAR_SNACKS')
     }
   }
 </script>
