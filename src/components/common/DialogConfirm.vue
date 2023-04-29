@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="dialog" max-width="500px" @keydown.esc="$_cancel">
+  <v-dialog v-model="dialog" max-width="500px" @keydown.esc="$_cancel" @keydown.enter="$_confirm">
     <v-card>
       <v-toolbar :color="color" class="mb-4" dark dense flat>
         <v-toolbar-title class="white--text">{{ titleText }}</v-toolbar-title>
