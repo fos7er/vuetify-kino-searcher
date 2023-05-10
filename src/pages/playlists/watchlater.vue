@@ -2,7 +2,7 @@
   <v-container>
     <v-row justify="center">
       <v-col lg="10">
-        <h3 class="mb-2">{{ $t('favorites') }}</h3>
+        <h3 class="mb-2">{{ $t('addToWatchLater') }}</h3>
         <v-data-table
           @click:row="openDialog"
           :footer-props="{ 'items-per-page-text': '', 'items-per-page-options': [15, 30, 50, 100] }"

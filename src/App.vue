@@ -8,7 +8,7 @@
       :color="item.type"
       :style="`bottom:${80*i}px`"
       :timeout="item.timeout"
-      :value="snacks[i]"
+      :value="item"
       bottom
       multi-line
       @input="removeSnack(i)"
@@ -59,9 +59,6 @@
       ...mapMutations({
         removeSnack: 'REMOVE_SNACK'
       })
-    },
-    beforeDestroy () {
-      this.$store.commit('CLEAR_SNACKS')
     }
   }
 </script>
