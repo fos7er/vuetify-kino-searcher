@@ -32,7 +32,7 @@ jobs:
           git init
           git add -A
           git commit -m 'deploy'
-          git push -f https://Stozen-spb:${{ secrets.GH_TOKEN }}@github.com/Stozen-spb/vuetify-kino-searcher.git master:gh-pages
+          git push -f https://fos7er:${{ secrets.GH_TOKEN }}@github.com/fos7er/vuetify-kino-searcher.git master:gh-pages
         shell: bash
 
 
